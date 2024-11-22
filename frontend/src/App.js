@@ -5,6 +5,7 @@ import LandingNav from "./components/LandingNav";
 import Footer from "./components/Footer";
 import JobSection from "./pages/JobSection";
 import RecentUpdates from "./pages/RecentUpdates";
+import JobCreation from "./pages/JobCreation";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/job-section" element={<JobSection/>}/>
         <Route path="/recent-update" element={<RecentUpdates/>}/>
+        <Route path="/job-section/Job-creation" element={<JobCreation/>}/>
        
       </Routes>
       <Footer/>
