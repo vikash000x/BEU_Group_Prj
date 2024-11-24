@@ -9,6 +9,7 @@ import JobCreation from "./pages/JobCreation";
 import CollegeLogin from "./components/CollegeLogin";
 import StartupLogin from "./components/StartupLogin";
 import StudentLogin from "./components/StudentLogin";
+import SingleCollege from "./components/SingleCollege";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login/college" element={<CollegeLogin />} />
         <Route path="/login/startup" element={<StartupLogin />} />
         <Route path="/login/student" element={<StudentLogin />} />
+        <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
       </Routes>
       <Footer />
     </div>
