@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import JobSection from "./pages/JobSection";
 import RecentUpdates from "./pages/RecentUpdates";
 import JobCreation from "./pages/JobCreation";
+import AppliedList from "./pages/AppliedList";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/job-section" element={<JobSection />} />
         <Route path="/recent-update" element={<RecentUpdates />} />
         <Route path="/job-section/Job-creation" element={<JobCreation />} />
+        <Route path="/job-section/applied-list" element={<AppliedList />} />
       </Routes>
       <Footer />
     </div>
