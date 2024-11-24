@@ -11,6 +11,9 @@ import StartupLogin from "./components/StartupLogin";
 import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
+import AppliedList from "./pages/AppliedList";
+
+
 function App() {
   return (
     <div className="App ">
@@ -20,12 +23,14 @@ function App() {
         <Route path="/job-section" element={<JobSection />} />
         <Route path="/recent-update" element={<RecentUpdates />} />
         <Route path="/job-section/Job-creation" element={<JobCreation />} />
-
-        {/* ---- Amir's Routes------- */}
         <Route path="/login/college" element={<CollegeLogin />} />
         <Route path="/login/startup" element={<StartupLogin />} />
         <Route path="/login/student" element={<StudentLogin />} />
+
         <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
+
+        <Route path="/job-section/applied-list" element={<AppliedList />} />
+
       </Routes>
       <Footer />
     </div>
