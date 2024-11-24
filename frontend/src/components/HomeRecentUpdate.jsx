@@ -5,7 +5,7 @@ const HomeRecentUpdate = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setShowNew(!showNew);
-    }, 500);
+    }, 800);
     return () => clearInterval(interval);
   });
   return (
@@ -15,7 +15,7 @@ const HomeRecentUpdate = () => {
         className="relative block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
       >
         {showNew && (
-          <p className=" font-bold text-red-500 absolute -top-3 right-0">
+          <p className=" font-thin text-sm bg-red-500 py-1 px-1 text-white rounded-[50%]  absolute -top-3 -right-2">
             New!
           </p>
         )}
