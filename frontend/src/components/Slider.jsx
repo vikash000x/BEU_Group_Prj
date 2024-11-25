@@ -84,7 +84,7 @@ const Slider = ({ slides }) => {
         </div>
       </div>
       <div style={slideStylesWidthBackground}></div>
-      <div style={dotsContainerStyles}>
+      {/* <div style={dotsContainerStyles}>
         {slides.map((slide, slideIndex) => (
           <div
             style={dotStyle}
@@ -94,7 +94,7 @@ const Slider = ({ slides }) => {
             ●
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

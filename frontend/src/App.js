@@ -16,6 +16,31 @@ import AppliedList from "./pages/AppliedList";
 
 function App() {
   return (
+<<<<<<< HEAD
+    <>
+      <div className="App">
+        <LandingNav />
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/job-section" element={<JobSection />} />
+            <Route path="/recent-update" element={<RecentUpdates />} />
+            <Route path="/job-section/Job-creation" element={<JobCreation />} />
+
+            {/* ---- Amir's Routes------- */}
+            <Route path="/login/college" element={<CollegeLogin />} />
+            <Route path="/login/startup" element={<StartupLogin />} />
+            <Route path="/login/student" element={<StudentLogin />} />
+            <Route
+              path="beu/colleges/:college_id"
+              element={<SingleCollege />}
+            />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </>
+=======
     <div className="App ">
       <LandingNav />
       <Routes>
@@ -34,6 +59,7 @@ function App() {
       </Routes>
       <Footer />
     </div>
+>>>>>>> 288fa730364648a62eb12b3c4ae185caba583a9f
   );
 }
 
