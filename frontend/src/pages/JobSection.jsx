@@ -30,7 +30,7 @@ const JobSection = () => {
  // const [input, setInput] = useState("");
  const navigate = useNavigate();
   return (
-    <div  >
+    <div  className = 'w-[1200px] my-3 mx-auto' >
 
 <div className='flex items-center justify-between my-5 mx-5'>
           <Input
@@ -46,7 +46,7 @@ const JobSection = () => {
 
        <Table>
                 <TableCaption>A list of your recent  posted jobs</TableCaption>
-                <TableHeader>
+                <TableHeader className="bg-gray-500 text-white">
                     <TableRow>
                         {/* <TableHead>Company Name</TableHead> */}
                         <TableHead>Role</TableHead>
@@ -57,7 +57,7 @@ const JobSection = () => {
                 <TableBody className="space-y-4" >
                     {
                         filterJobs?.map((job) => (
-                            <tr className="py-4 bg-pink-400 text-white border-b border-white  hover:bg-purple-300  rounded-lg ">
+                            <tr className="py-4 bg-blue-950 text-white border-b border-white  hover:bg-purple-300  rounded-lg ">
                                 {/* <TableCell>{job?.company?.name}</TableCell> */}
                                 <TableCell>{job?.job_title}</TableCell>
                                 <TableCell>{job?.created_at.split("T")[0]}</TableCell>
