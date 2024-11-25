@@ -12,30 +12,34 @@ import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
-import StudentJob from "./pages/StudentJob";
 
 
 function App() {
   return (
-    <div className="App ">
-      <LandingNav />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/job-section" element={<JobSection />} />
-        <Route path="/recent-update" element={<RecentUpdates />} />
-        <Route path="/job-section/Job-creation" element={<JobCreation />} />
-        <Route path="/login/college" element={<CollegeLogin />} />
-        <Route path="/login/startup" element={<StartupLogin />} />
-        <Route path="/login/student" element={<StudentLogin />} />
+ <>
+      <div className="App">
+        <LandingNav />
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/job-section" element={<JobSection />} />
+            <Route path="/recent-update" element={<RecentUpdates />} />
+            <Route path="/job-section/Job-creation" element={<JobCreation />} />
+            <Route path="/job-section/applied-list" element={<AppliedList />} />
 
-        <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
-
-        <Route path="/job-section/applied-list" element={<AppliedList />} />
-        <Route path="/student/student-job" element={<StudentJob />} />
-
-      </Routes>
-      <Footer />
-    </div>
+            {/* ---- Amir's Routes------- */}
+            <Route path="/login/college" element={<CollegeLogin />} />
+            <Route path="/login/startup" element={<StartupLogin />} />
+            <Route path="/login/student" element={<StudentLogin />} />
+            <Route
+              path="beu/colleges/:college_id"
+              element={<SingleCollege />}
+            />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 
