@@ -3,6 +3,8 @@ import logo from "../images/Screenshot 2024-11-23 023731.png";
 import { useNavigate } from "react-router-dom";
 import { colleges } from "../lib/utils";
 import { Link } from "react-router-dom";
+
+
 const LandingNav = () => {
   const navigate = useNavigate();
   // const colleges = [
@@ -102,8 +104,10 @@ const LandingNav = () => {
   //   },
   //   { name: "NALANDA COLLEGE OF ENGINEERING", shortName: "nce-chandi" },
   // ];
+  
 
   return (
+    
     <div className="bg-[#173B45] text-blue-600 w-full h-[65px] flex items-center justify-center">
       <nav className="flex items-center justify-between w-[1200px]   px-2 text-white font-semibold">
         <img
@@ -131,7 +135,8 @@ const LandingNav = () => {
           </li>
 
           <li className="cursor-pointer">Recent Updates</li>
-          <li className="cursor-pointer">Jobs</li>
+          <li  className="cursor-pointer">Jobs</li>
+        
           <li className="cursor-pointer relative group py-2">
             <span>Login</span>
             <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">

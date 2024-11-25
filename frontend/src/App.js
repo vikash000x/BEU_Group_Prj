@@ -12,6 +12,7 @@ import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
+import StudentJob from "./pages/StudentJob";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
 
         <Route path="/job-section/applied-list" element={<AppliedList />} />
+        <Route path="/student/student-job" element={<StudentJob />} />
 
       </Routes>
       <Footer />
