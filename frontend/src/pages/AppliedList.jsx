@@ -112,7 +112,7 @@ const AppliedList = () => {
                 <TableBody >
                     {
                         applicants && applicants?.applications?.map((item) => (
-                            <tr className= 'py-50 bg-pink-400 text-white border-b border-white  hover:bg-purple-300  rounded-lg ' key={item._id}>
+                            <tr className= 'py-50 bg-blue-950 text-white border-b border-white  hover:bg-purple-300  rounded-lg ' key={item._id}>
                                 <TableCell>{item?.applicant?.fullname}</TableCell>
                                 <TableCell>{item?.applicant?.email}</TableCell>
                                 <TableCell>{item?.applicant?.phoneNumber}</TableCell>
