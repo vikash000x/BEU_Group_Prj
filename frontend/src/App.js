@@ -13,10 +13,9 @@ import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
 
-
 function App() {
   return (
- <>
+    <>
       <div className="App">
         <LandingNav />
         <div className="min-h-[80vh]">
