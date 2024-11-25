@@ -96,10 +96,10 @@ const AppliedList = () => {
   
 
     return (
-        <div>
+        <div className='w-[1200px] my-3 mx-auto'>
             <Table>
                 <TableCaption>A list of your recent applied user</TableCaption>
-                <TableHeader>
+                <TableHeader className="bg-gray-500 text-white">
                     <TableRow>
                         <TableHead>FullName</TableHead>
                         <TableHead>Email</TableHead>
