@@ -64,7 +64,9 @@ const LandingNav = () => {
               </ul>
             </li>
           ) : (
-            <li className="cursor-pointer">Recent Updates</li>
+            <Link to='recent-update'>
+              <li className="cursor-pointer">Recent Updates</li>
+            </Link>
           )}
           {singleCollege ? (
             <li className="cursor-pointer">Updates</li>
