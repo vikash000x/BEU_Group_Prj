@@ -13,10 +13,8 @@ import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
 
-
 function App() {
   return (
-<<<<<<< HEAD
     <>
       <div className="App">
         <LandingNav />
@@ -26,6 +24,7 @@ function App() {
             <Route path="/job-section" element={<JobSection />} />
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
+            <Route path="/job-section/applied-list" element={<AppliedList />} />
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />
@@ -40,26 +39,6 @@ function App() {
         <Footer />
       </div>
     </>
-=======
-    <div className="App ">
-      <LandingNav />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/job-section" element={<JobSection />} />
-        <Route path="/recent-update" element={<RecentUpdates />} />
-        <Route path="/job-section/Job-creation" element={<JobCreation />} />
-        <Route path="/login/college" element={<CollegeLogin />} />
-        <Route path="/login/startup" element={<StartupLogin />} />
-        <Route path="/login/student" element={<StudentLogin />} />
-
-        <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
-
-        <Route path="/job-section/applied-list" element={<AppliedList />} />
-
-      </Routes>
-      <Footer />
-    </div>
->>>>>>> 288fa730364648a62eb12b3c4ae185caba583a9f
   );
 }
 
