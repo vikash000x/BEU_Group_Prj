@@ -13,22 +13,29 @@ import SingleCollege from "./components/SingleCollege";
 
 function App() {
   return (
-    <div className="App ">
-      <LandingNav />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/job-section" element={<JobSection />} />
-        <Route path="/recent-update" element={<RecentUpdates />} />
-        <Route path="/job-section/Job-creation" element={<JobCreation />} />
+    <>
+      <div className="App">
+        <LandingNav />
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/job-section" element={<JobSection />} />
+            <Route path="/recent-update" element={<RecentUpdates />} />
+            <Route path="/job-section/Job-creation" element={<JobCreation />} />
 
-        {/* ---- Amir's Routes------- */}
-        <Route path="/login/college" element={<CollegeLogin />} />
-        <Route path="/login/startup" element={<StartupLogin />} />
-        <Route path="/login/student" element={<StudentLogin />} />
-        <Route path="beu/colleges/:college_id" element={<SingleCollege />} />
-      </Routes>
-      <Footer />
-    </div>
+            {/* ---- Amir's Routes------- */}
+            <Route path="/login/college" element={<CollegeLogin />} />
+            <Route path="/login/startup" element={<StartupLogin />} />
+            <Route path="/login/student" element={<StudentLogin />} />
+            <Route
+              path="beu/colleges/:college_id"
+              element={<SingleCollege />}
+            />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 
