@@ -148,3 +148,514 @@ export const colleges = [
   },
   // Continue adding other colleges similarly...
 ];
+
+export const allJobs =[
+  {
+    "id": "1",
+    "title": "Frontend Developer",
+    "position": 5,
+    "jobType": "Full-Time",
+    "salary": "42-1",
+    "location": "Bangalore",
+    "company": {
+      "name": "TechCorp Solutions"
+    },
+    "description": "Develop and maintain the user interface.",
+    "experience": 2,
+    "applications": ["John", "Alice", "Bob"],
+    "createdAt": "2024-11-01T09:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Backend Developer",
+    "position": 3,
+    "jobType": "Part-Time",
+    "salary": "1 to 5",
+    "location": "Mumbai",
+    "company": {
+      "name": "DataPulse Analytics"
+    },
+    "description": "Develop server-side logic.",
+    "experience": 1,
+    "applications": ["David", "Sophia"],
+    "createdAt": "2024-11-02T09:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "FullStack Developer",
+    "position": 2,
+    "jobType": "Contract",
+    "salary": "0-40k",
+    "location": "Hyderabad",
+    "company": {
+      "name": "CloudWorks Inc."
+    },
+    "description": "Develop end-to-end software solutions.",
+    "experience": 5,
+    "applications": ["Emma"],
+    "createdAt": "2024-11-03T09:00:00Z"
+  },
+  {
+    "id": "4",
+    "title": "Frontend Developer",
+    "position": 4,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Delhi NCR",
+    "company": {
+      "name": "Pixel Studio"
+    },
+    "description": "Create interactive designs.",
+    "experience": 3,
+    "applications": ["Olivia", "James"],
+    "createdAt": "2024-11-04T09:00:00Z"
+  },
+  {
+    "id": "5",
+    "title": "Backend Developer",
+    "position": 1,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Pune",
+    "company": {
+      "name": "CodeCrafters"
+    },
+    "description": "Manage APIs and data services.",
+    "experience": 4,
+    "applications": ["Liam"],
+    "createdAt": "2024-11-05T09:00:00Z"
+  },
+  {
+    "id": "6",
+    "title": "FullStack Developer",
+    "position": 3,
+    "jobType": "Full-Time",
+    "salary": "0-40k",
+    "location": "Mumbai",
+    "company": {
+      "name": "InnoTech Solutions"
+    },
+    "description": "Work on both frontend and backend.",
+    "experience": 2,
+    "applications": ["Ethan", "Mia"],
+    "createdAt": "2024-11-06T09:00:00Z"
+  },
+  {
+    "id": "7",
+    "title": "Frontend Developer",
+    "position": 2,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Hyderabad",
+    "company": {
+      "name": "CreativeEdge"
+    },
+    "description": "Design UI components.",
+    "experience": 6,
+    "applications": ["Ava"],
+    "createdAt": "2024-11-07T09:00:00Z"
+  },
+  {
+    "id": "8",
+    "title": "Backend Developer",
+    "position": 6,
+    "jobType": "Full-Time",
+    "salary": "1lakh to 5lakh",
+    "location": "Delhi NCR",
+    "company": {
+      "name": "TechNet Systems"
+    },
+    "description": "Optimize database operations.",
+    "experience": 3,
+    "applications": ["Noah", "Sophia", "Evelyn"],
+    "createdAt": "2024-11-08T09:00:00Z"
+  },
+  {
+    "id": "9",
+    "title": "FullStack Developer",
+    "position": 4,
+    "jobType": "Full-Time",
+    "salary": "0-40k",
+    "location": "Pune",
+    "company": {
+      "name": "CodeBridge"
+    },
+    "description": "Develop scalable web applications.",
+    "experience": 2,
+    "applications": ["Alexander"],
+    "createdAt": "2024-11-09T09:00:00Z"
+  },
+  {
+    "id": "10",
+    "title": "Frontend Developer",
+    "position": 5,
+    "jobType": "Full-Time",
+    "salary": "42-1lakh",
+    "location": "Bangalore",
+    "company": {
+      "name": "Visionary Designs"
+    },
+    "description": "Design responsive layouts.",
+    "experience": 3,
+    "applications": ["William", "Charlotte"],
+    "createdAt": "2024-11-10T09:00:00Z"
+  }
+];
+
+export const filterData = [
+  {
+      fitlerType: "Location",
+      array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"]
+  },
+  {
+      fitlerType: "Industry",
+      array: ["Frontend Developer", "Backend Developer", "FullStack Developer"]
+  },
+  {
+      fitlerType: "Salary",
+      array: ["0-40k", "42-1lakh", "1lakh to 5lakh"]
+  },
+];
+
+export const noticeList = [
+  {
+    id: "64f32adf4b23456789abc001",
+    title: "Annual Sports Meet Announcement",
+    description:
+      "Join us for the Annual Sports Meet. Various events and competitions will be held.",
+    date: "2024-12-01",
+    CollegeId: "C001",
+    College: "BHAGALPUR COLLEGE OF ENGINEERING",
+    category: "Event",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "SportsMeetSchedule.pdf",
+        fileUrl: "https://collegewebsite.com/notices/SportsMeetSchedule.pdf",
+      },
+    ],
+    createdAt: "2024-11-20T12:00:00.000Z",
+    updatedAt: "2024-11-20T12:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc002",
+    title: "New Library Rules",
+    description:
+      "The library hours have been updated. Please refer to the attached document for new rules and timings.",
+    date: "2024-11-18",
+    CollegeId: "C002",
+    College: "GAYA COLLEGE OF ENGINEERING",
+    category: "Notice",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "LibraryRules.pdf",
+        fileUrl: "https://collegewebsite.com/notices/LibraryRules.pdf",
+      },
+    ],
+    createdAt: "2024-11-10T08:30:00.000Z",
+    updatedAt: "2024-11-10T08:30:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc003",
+    title: "Semester Exam Schedule Released",
+    description:
+      "The examination schedule for the upcoming semester has been released. Please check the PDF for details.",
+    date: "2024-11-25",
+    CollegeId: "C003",
+    College: "GAYA COLLEGE OF ENGINEERING",
+    category: "Exam",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "ExamSchedule.pdf",
+        fileUrl: "https://collegewebsite.com/notices/ExamSchedule.pdf",
+      },
+    ],
+    createdAt: "2024-11-15T09:00:00.000Z",
+    updatedAt: "2024-11-15T09:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc004",
+    title: "Winter Break Announcement",
+    description:
+      "Winter break will begin from December 20th. Classes will resume on January 5th.",
+    date: "2024-12-10",
+    CollegeId: "C001",
+    College: "GAYA COLLEGE OF ENGINEERING",
+    category: "Announcement",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-22T11:00:00.000Z",
+    updatedAt: "2024-11-22T11:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc005",
+    title: "Internship Opportunities",
+    description:
+      "New internship opportunities are available for final-year students. Check the details on the college website.",
+    date: "2024-11-30",
+    CollegeId: "C004",
+    College: "Future Leaders University",
+    category: "Announcement",
+    targetAudience: "Local",
+    attachments: [],
+    createdAt: "2024-11-18T14:30:00.000Z",
+    updatedAt: "2024-11-18T14:30:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc006",
+    title: "Guest Lecture on AI",
+    description:
+      "A guest lecture on Artificial Intelligence will be held on December 5th. All students are encouraged to attend.",
+    date: "2024-12-05",
+    CollegeId: "C003",
+    College: "GAYA COLLEGE OF ENGINEERING",
+    category: "Event",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "GuestLecturePoster.jpg",
+        fileUrl: "https://collegewebsite.com/notices/GuestLecturePoster.jpg",
+      },
+    ],
+    createdAt: "2024-11-21T10:00:00.000Z",
+    updatedAt: "2024-11-21T10:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc007",
+    title: "New Course Introduction: Data Science",
+    description:
+      "A new elective course on Data Science will be introduced next semester. Interested students can register online.",
+    date: "2024-11-28",
+    CollegeId: "C002",
+    College: "GAYA COLLEGE OF ENGINEERING",
+    category: "Announcement",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "CourseDetails.pdf",
+        fileUrl: "https://collegewebsite.com/notices/CourseDetails.pdf",
+      },
+    ],
+    createdAt: "2024-11-12T13:15:00.000Z",
+    updatedAt: "2024-11-12T13:15:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc008",
+    title: "Blood Donation Camp",
+    description:
+      "A blood donation camp will be organized in collaboration with Red Cross Society on December 3rd. Volunteers are welcome.",
+    date: "2024-12-03",
+    CollegeId: "C004",
+    College: "Future Leaders University",
+    category: "Event",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "DonationCampDetails.pdf",
+        fileUrl: "https://collegewebsite.com/notices/DonationCampDetails.pdf",
+      },
+    ],
+    createdAt: "2024-11-19T16:45:00.000Z",
+    updatedAt: "2024-11-19T16:45:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc009",
+    title: "Alumni Meet 2024",
+    description:
+      "The Alumni Meet 2024 will take place on December 25th. Alumni are invited to register online for the event.",
+    date: "2024-12-25",
+    CollegeId: "C001",
+    College: "Greenfield College",
+    category: "Sports",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-23T10:20:00.000Z",
+    updatedAt: "2024-11-23T10:20:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc010",
+    title: "Holiday Notice: Christmas",
+    description:
+      "The college will remain closed on December 25th for Christmas. Happy Holidays!",
+    date: "2024-12-20",
+    CollegeId: "C002",
+    College: "Bright Future College",
+    category: "Announcement",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-22T09:50:00.000Z",
+    updatedAt: "2024-11-22T09:50:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc001",
+    title: "Annual Sports Meet Announcement",
+    description:
+      "Join us for the Annual Sports Meet. Various events and competitions will be held.",
+    date: "2024-12-01",
+    CollegeId: "C001",
+    College: "Greenfield College",
+    category: "Event",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "SportsMeetSchedule.pdf",
+        fileUrl: "https://collegewebsite.com/notices/SportsMeetSchedule.pdf",
+      },
+    ],
+    createdAt: "2024-11-20T12:00:00.000Z",
+    updatedAt: "2024-11-20T12:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc002",
+    title: "New Library Rules",
+    description:
+      "The library hours have been updated. Please refer to the attached document for new rules and timings.",
+    date: "2024-11-18",
+    CollegeId: "C002",
+    College: "Bright Future College",
+    category: "Announcement",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "LibraryRules.pdf",
+        fileUrl: "https://collegewebsite.com/notices/LibraryRules.pdf",
+      },
+    ],
+    createdAt: "2024-11-10T08:30:00.000Z",
+    updatedAt: "2024-11-10T08:30:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc003",
+    title: "Semester Exam Schedule Released",
+    description:
+      "The examination schedule for the upcoming semester has been released. Please check the PDF for details.",
+    date: "2024-11-25",
+    CollegeId: "C003",
+    College: "Tech Institute",
+    category: "Exam",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "ExamSchedule.pdf",
+        fileUrl: "https://collegewebsite.com/notices/ExamSchedule.pdf",
+      },
+    ],
+    createdAt: "2024-11-15T09:00:00.000Z",
+    updatedAt: "2024-11-15T09:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc004",
+    title: "Winter Break Announcement",
+    description:
+      "Winter break will begin from December 20th. Classes will resume on January 5th.",
+    date: "2024-12-10",
+    CollegeId: "C001",
+    College: "Greenfield College",
+    category: "Announcement",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-22T11:00:00.000Z",
+    updatedAt: "2024-11-22T11:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc005",
+    title: "Internship Opportunities",
+    description:
+      "New internship opportunities are available for final-year students. Check the details on the college website.",
+    date: "2024-11-30",
+    CollegeId: "C004",
+    College: "Future Leaders University",
+    category: "General",
+    targetAudience: "Local",
+    attachments: [],
+    createdAt: "2024-11-18T14:30:00.000Z",
+    updatedAt: "2024-11-18T14:30:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc006",
+    title: "Guest Lecture on AI",
+    description:
+      "A guest lecture on Artificial Intelligence will be held on December 5th. All students are encouraged to attend.",
+    date: "2024-12-05",
+    CollegeId: "C003",
+    College: "Tech Institute",
+    category: "Event",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "GuestLecturePoster.jpg",
+        fileUrl: "https://collegewebsite.com/notices/GuestLecturePoster.jpg",
+      },
+    ],
+    createdAt: "2024-11-21T10:00:00.000Z",
+    updatedAt: "2024-11-21T10:00:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc007",
+    title: "New Course Introduction: Data Science",
+    description:
+      "A new elective course on Data Science will be introduced next semester. Interested students can register online.",
+    date: "2024-11-28",
+    CollegeId: "C002",
+    College: "Bright Future College",
+    category: "Announcement",
+    targetAudience: "Local",
+    attachments: [
+      {
+        fileName: "CourseDetails.pdf",
+        fileUrl: "https://collegewebsite.com/notices/CourseDetails.pdf",
+      },
+    ],
+    createdAt: "2024-11-12T13:15:00.000Z",
+    updatedAt: "2024-11-12T13:15:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc008",
+    title: "Blood Donation Camp",
+    description:
+      "A blood donation camp will be organized in collaboration with Red Cross Society on December 3rd. Volunteers are welcome.",
+    date: "2024-12-03",
+    CollegeId: "C004",
+    College: "Future Leaders University",
+    category: "Event",
+    targetAudience: "Global",
+    attachments: [
+      {
+        fileName: "DonationCampDetails.pdf",
+        fileUrl: "https://collegewebsite.com/notices/DonationCampDetails.pdf",
+      },
+    ],
+    createdAt: "2024-11-19T16:45:00.000Z",
+    updatedAt: "2024-11-19T16:45:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc009",
+    title: "Alumni Meet 2024",
+    description:
+      "The Alumni Meet 2024 will take place on December 25th. Alumni are invited to register online for the event.",
+    date: "2024-12-25",
+    CollegeId: "C001",
+    College: "Greenfield College",
+    category: "Event",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-23T10:20:00.000Z",
+    updatedAt: "2024-11-23T10:20:00.000Z",
+  },
+  {
+    id: "64f32adf4b23456789abc010",
+    title: "Holiday Notice: Christmas",
+    description:
+      "The college will remain closed on December 25th for Christmas. Happy Holidays!",
+    date: "2024-12-20",
+    CollegeId: "C002",
+    College: "Bright Future College",
+    category: "Holiday",
+    targetAudience: "Global",
+    attachments: [],
+    createdAt: "2024-11-22T09:50:00.000Z",
+    updatedAt: "2024-11-22T09:50:00.000Z",
+  },
+];
