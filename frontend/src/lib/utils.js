@@ -148,3 +148,171 @@ export const colleges = [
   },
   // Continue adding other colleges similarly...
 ];
+
+export const allJobs =[
+  {
+    "id": "1",
+    "title": "Frontend Developer",
+    "position": 5,
+    "jobType": "Full-Time",
+    "salary": "42-1",
+    "location": "Bangalore",
+    "company": {
+      "name": "TechCorp Solutions"
+    },
+    "description": "Develop and maintain the user interface.",
+    "experience": 2,
+    "applications": ["John", "Alice", "Bob"],
+    "createdAt": "2024-11-01T09:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Backend Developer",
+    "position": 3,
+    "jobType": "Part-Time",
+    "salary": "1 to 5",
+    "location": "Mumbai",
+    "company": {
+      "name": "DataPulse Analytics"
+    },
+    "description": "Develop server-side logic.",
+    "experience": 1,
+    "applications": ["David", "Sophia"],
+    "createdAt": "2024-11-02T09:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "FullStack Developer",
+    "position": 2,
+    "jobType": "Contract",
+    "salary": "0-40k",
+    "location": "Hyderabad",
+    "company": {
+      "name": "CloudWorks Inc."
+    },
+    "description": "Develop end-to-end software solutions.",
+    "experience": 5,
+    "applications": ["Emma"],
+    "createdAt": "2024-11-03T09:00:00Z"
+  },
+  {
+    "id": "4",
+    "title": "Frontend Developer",
+    "position": 4,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Delhi NCR",
+    "company": {
+      "name": "Pixel Studio"
+    },
+    "description": "Create interactive designs.",
+    "experience": 3,
+    "applications": ["Olivia", "James"],
+    "createdAt": "2024-11-04T09:00:00Z"
+  },
+  {
+    "id": "5",
+    "title": "Backend Developer",
+    "position": 1,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Pune",
+    "company": {
+      "name": "CodeCrafters"
+    },
+    "description": "Manage APIs and data services.",
+    "experience": 4,
+    "applications": ["Liam"],
+    "createdAt": "2024-11-05T09:00:00Z"
+  },
+  {
+    "id": "6",
+    "title": "FullStack Developer",
+    "position": 3,
+    "jobType": "Full-Time",
+    "salary": "0-40k",
+    "location": "Mumbai",
+    "company": {
+      "name": "InnoTech Solutions"
+    },
+    "description": "Work on both frontend and backend.",
+    "experience": 2,
+    "applications": ["Ethan", "Mia"],
+    "createdAt": "2024-11-06T09:00:00Z"
+  },
+  {
+    "id": "7",
+    "title": "Frontend Developer",
+    "position": 2,
+    "jobType": "Full-Time",
+    "salary": "1 to 5",
+    "location": "Hyderabad",
+    "company": {
+      "name": "CreativeEdge"
+    },
+    "description": "Design UI components.",
+    "experience": 6,
+    "applications": ["Ava"],
+    "createdAt": "2024-11-07T09:00:00Z"
+  },
+  {
+    "id": "8",
+    "title": "Backend Developer",
+    "position": 6,
+    "jobType": "Full-Time",
+    "salary": "1lakh to 5lakh",
+    "location": "Delhi NCR",
+    "company": {
+      "name": "TechNet Systems"
+    },
+    "description": "Optimize database operations.",
+    "experience": 3,
+    "applications": ["Noah", "Sophia", "Evelyn"],
+    "createdAt": "2024-11-08T09:00:00Z"
+  },
+  {
+    "id": "9",
+    "title": "FullStack Developer",
+    "position": 4,
+    "jobType": "Full-Time",
+    "salary": "0-40k",
+    "location": "Pune",
+    "company": {
+      "name": "CodeBridge"
+    },
+    "description": "Develop scalable web applications.",
+    "experience": 2,
+    "applications": ["Alexander"],
+    "createdAt": "2024-11-09T09:00:00Z"
+  },
+  {
+    "id": "10",
+    "title": "Frontend Developer",
+    "position": 5,
+    "jobType": "Full-Time",
+    "salary": "42-1lakh",
+    "location": "Bangalore",
+    "company": {
+      "name": "Visionary Designs"
+    },
+    "description": "Design responsive layouts.",
+    "experience": 3,
+    "applications": ["William", "Charlotte"],
+    "createdAt": "2024-11-10T09:00:00Z"
+  }
+];
+
+export const filterData = [
+  {
+      fitlerType: "Location",
+      array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"]
+  },
+  {
+      fitlerType: "Industry",
+      array: ["Frontend Developer", "Backend Developer", "FullStack Developer"]
+  },
+  {
+      fitlerType: "Salary",
+      array: ["0-40k", "42-1lakh", "1lakh to 5lakh"]
+  },
+];

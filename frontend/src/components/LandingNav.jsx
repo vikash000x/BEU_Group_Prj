@@ -71,7 +71,7 @@ const LandingNav = () => {
           {singleCollege ? (
             <li className="cursor-pointer">Updates</li>
           ) : (
-            <li className="cursor-pointer">Jobs</li>
+            <li onClick={()=>navigate("/alljob")} className="cursor-pointer">Jobs</li>
           )}
           {singleCollege ? (
             <li className="cursor-pointer">Students</li>

@@ -12,6 +12,8 @@ import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
+import AllJob from "./pages/AllJob";
+import JobDescription from "./pages/JobDescription";
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
             <Route path="/job-section/applied-list" element={<AppliedList />} />
+            <Route path="/alljob" element={<AllJob/>} />
+            <Route path="/description/:id" element={<JobDescription/>}/>
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />
