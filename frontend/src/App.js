@@ -15,10 +15,9 @@ import AppliedList from "./pages/AppliedList";
 import AllJob from "./pages/AllJob";
 import JobDescription from "./pages/JobDescription";
 
-
 function App() {
   return (
- <>
+    <>
       <div className="App">
         <LandingNav />
         <div className="min-h-[80vh]">
