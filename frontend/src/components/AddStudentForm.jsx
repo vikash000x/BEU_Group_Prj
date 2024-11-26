@@ -30,11 +30,11 @@ const AddStudentForm = ({ collegeShortName }) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add Student</h2>
+    <div className="max-w-2xl mx-auto p-6 bg-zinc-700 shadow-md rounded-lg mt-10">
+      <h2 className="text-2xl font-bold mb-6 text-center text-white">Student Registration</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Name:</label>
+          <label className="block text-white font-medium mb-2">Name:</label>
           <input
             type="text"
             name="name"
@@ -46,7 +46,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Registration No:</label>
+          <label className="block text-white font-medium mb-2">Registration No:</label>
           <input
             type="text"
             name="registrationNo"
@@ -58,7 +58,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Roll No:</label>
+          <label className="block text-white font-medium mb-2">Roll No:</label>
           <input
             type="text"
             name="rollNo"
@@ -70,7 +70,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Gender:</label>
+          <label className="block text-white font-medium mb-2">Gender:</label>
           <select
             name="gender"
             value={studentData.gender}
@@ -88,7 +88,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Date of Birth:</label>
+          <label className="block text-white font-medium mb-2">Date of Birth:</label>
           <input
             type="date"
             name="dob"
@@ -100,7 +100,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Year:</label>
+          <label className="block text-white font-medium mb-2">Year:</label>
           <input
             type="number"
             name="year"
@@ -114,7 +114,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Semester:</label>
+          <label className="block text-white font-medium mb-2">Semester:</label>
           <input
             type="number"
             name="semester"
@@ -128,7 +128,7 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Branch:</label>
+          <label className="block text-white font-medium mb-2">Branch:</label>
           <input
             type="text"
             name="branch"

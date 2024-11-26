@@ -15,6 +15,7 @@ import AppliedList from "./pages/AppliedList";
 import CollegeAdmin from "./pages/CollegeAdmin";
 import AddFacultyForm from "./components/AddFacultyForm";
 import AddStudentForm from "./components/AddStudentForm";
+import PostUpdateForm from "./components/PostUpdateForm";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/:collegeName/admin" element ={<CollegeAdmin />} />
             <Route path=":collegeShortName/addFaculty" element={<AddFacultyForm />} />
             <Route path=":collegeShortName/addStudent" element={<AddStudentForm />} />
+            <Route path=":collegeShortName/post-update" element={<PostUpdateForm />} />
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />

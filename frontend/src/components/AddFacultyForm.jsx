@@ -54,8 +54,8 @@ const AddFacultyForm = () => {
 
   return (
     <div className="bg-gray-100 h-auto flex items-center justify-center pt-8">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl">
-        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+      <div className="bg-zinc-700 p-8 rounded-lg shadow-md w-full max-w-3xl">
+        <h2 className="text-2xl text-center font-bold text-white mb-6">
           Faculty Registration
         </h2>
         <form onSubmit={handleSubmit}>
@@ -64,7 +64,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Full Name
               </label>
@@ -84,7 +84,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="gender"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Gender
               </label>
@@ -107,7 +107,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="department"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Department
               </label>
@@ -127,7 +127,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="position"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Position
               </label>
@@ -147,7 +147,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="imageURL"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Image URL
               </label>
@@ -167,7 +167,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="college"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 College
               </label>
@@ -196,7 +196,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="subject"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Subject(s)
               </label>
@@ -216,7 +216,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Email
               </label>
@@ -236,7 +236,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Phone
               </label>
@@ -256,7 +256,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="experience"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Experience
               </label>
@@ -276,7 +276,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="qualification"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Qualification
               </label>
@@ -296,7 +296,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="researchInterests"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Research Interests
               </label>
@@ -315,7 +315,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="publications"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Publications
               </label>
@@ -334,7 +334,7 @@ const AddFacultyForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="officeHours"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-white"
               >
                 Office Hours
               </label>
