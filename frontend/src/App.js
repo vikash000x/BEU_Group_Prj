@@ -12,6 +12,8 @@ import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
+import CollegeAdmin from "./pages/CollegeAdmin";
+import AddFacultyForm from "./components/AddFacultyForm";
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function App() {
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
             <Route path="/job-section/applied-list" element={<AppliedList />} />
+
+            <Route path="/:collegeName/admin" element ={<CollegeAdmin />} />
+            <Route path=":collegeShortName/addFaculty" element={<AddFacultyForm />} />
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />
