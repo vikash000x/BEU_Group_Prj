@@ -10,6 +10,12 @@ import CollegeLogin from "./components/CollegeLogin";
 import StartupLogin from "./components/StartupLogin";
 import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
+import AllJob from "./pages/AllJob";
+import JobDescription from "./pages/JobDescription";
+import CollegeAdmin from "./pages/CollegeAdmin";
+import AddFacultyForm from "./components/AddFacultyForm";
+import AddStudentForm from "./components/AddStudentForm";
+import PostUpdateForm from "./components/PostUpdateForm";
 
 import AppliedList from "./pages/AppliedList";
 import FacultiesList from "./pages/FacultiesList";
@@ -29,6 +35,13 @@ function App() {
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
             <Route path="/job-section/applied-list" element={<AppliedList />} />
+            <Route path="/alljob" element={<AllJob/>} />
+            <Route path="/description/:id" element={<JobDescription/>}/>
+
+            <Route path="/:collegeName/admin" element ={<CollegeAdmin />} />
+            <Route path=":collegeShortName/addFaculty" element={<AddFacultyForm />} />
+            <Route path=":collegeShortName/addStudent" element={<AddStudentForm />} />
+            <Route path=":collegeShortName/post-update" element={<PostUpdateForm />} />
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />
