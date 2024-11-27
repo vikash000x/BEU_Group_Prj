@@ -5,7 +5,7 @@ import { Bookmark } from 'lucide-react';
 import Button from './Button';
 import { Avatar, AvatarImage } from './Avatar';
 
-const LatestJobCards = ({job}) => {
+const LatestJobCards = ({job, id}) => {
     const navigate = useNavigate();
     return (
         <div  className='p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer'>
