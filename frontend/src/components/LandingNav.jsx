@@ -6,14 +6,17 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { singleCollege } = useContext(StoreContext);
+  const { singleCollege, setSingleCollege } = useContext(StoreContext);
   console.log("singlecollege", singleCollege);
   const navigate = useNavigate();
   return (
     <div className="bg-[#173B45] text-blue-600 w-full h-[65px] flex items-center justify-center">
       <nav className="flex items-center justify-between w-[1200px]   px-2 text-white font-semibold">
         <img
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            setSingleCollege(null);
+          }}
           className="w-14 h-14 rounded-full mr-8"
           src={logo}
           alt=""
@@ -46,25 +49,13 @@ const LandingNav = () => {
           )}
 
           {singleCollege ? (
-            <li className="cursor-pointer relative group py-2">
-              <span>Faculties</span>
-              <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Computer Science and Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Electrical Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Mechanical Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Civil Engineering
-                </li>
-              </ul>
-            </li>
+            <Link to="/college/faculties">
+              <li className="cursor-pointer relative group py-2">
+                <span>Faculties</span>
+              </li>
+            </Link>
           ) : (
-            <Link to='recent-update'>
+            <Link to="recent-update">
               <li className="cursor-pointer">Recent Updates</li>
             </Link>
           )}
@@ -74,7 +65,9 @@ const LandingNav = () => {
             <li className="cursor-pointer">Jobs</li>
           )}
           {singleCollege ? (
-            <li className="cursor-pointer">Students</li>
+            <Link to="/college/students">
+              <li className="cursor-pointer">Students</li>
+            </Link>
           ) : (
             <li className="cursor-pointer relative group py-2">
               <span>Login</span>

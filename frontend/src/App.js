@@ -12,6 +12,10 @@ import StudentLogin from "./components/StudentLogin";
 import SingleCollege from "./components/SingleCollege";
 
 import AppliedList from "./pages/AppliedList";
+import FacultiesList from "./pages/FacultiesList";
+import SingleFaculty from "./pages/SingleFaculty";
+import StudentList from "./pages/StudentList";
+import SingleStudent from "./pages/SingleStudent";
 
 function App() {
   return (
@@ -33,6 +37,16 @@ function App() {
             <Route
               path="beu/colleges/:college_id"
               element={<SingleCollege />}
+            />
+            <Route path="/college/faculties" element={<FacultiesList />} />
+            <Route path="/college/students" element={<StudentList />} />
+            <Route
+              path="/college/faculty/:faculty_id"
+              element={<SingleFaculty />}
+            />
+            <Route
+              path="/college/student/:student_id"
+              element={<SingleStudent />}
             />
           </Routes>
         </div>
