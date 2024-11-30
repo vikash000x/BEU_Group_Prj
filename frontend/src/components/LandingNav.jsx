@@ -79,25 +79,12 @@ const LandingNav = () => {
             
           
 
-          {flag1 &&  (
-            <li className="cursor-pointer relative group py-2">
-              <span>Faculties</span>
-              <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Computer Science and Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Electrical Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Mechanical Engineering
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b">
-                  Civil Engineering
-                </li>
-              </ul>
-            </li>
-          ) }
+          {flag1 && 
+            <Link to="/colleges/faculties">
+              Faculties
+            </Link>
+           
+           }
           { flag3 &&
             <Link to='recent-update'>
               <li className="cursor-pointer">Recent Updates</li>
@@ -121,7 +108,9 @@ const LandingNav = () => {
             
           
           {flag1 &&
-            <li className="cursor-pointer">Students</li>
+            <Link to="/college/students">
+              Students
+            </Link>
           }
           {
             flag3 && userType==="anonymous" &&

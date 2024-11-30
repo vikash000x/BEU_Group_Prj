@@ -9,7 +9,7 @@ import { allJobs } from '../lib/utils';
 const JobDescription = () => {
 
     const [singleJob, setSinglejob] = useState(null);
-   
+    const [buttonText, setButtonText] = useState("Apply");
     
     const params = useParams();
     const jobId= params.id;
@@ -34,7 +34,8 @@ const JobDescription = () => {
                         <Badge className={'text-[#7209b7] font-bold'} variant="ghost">{singleJob?.salary}LPA</Badge>
                     </div>
                 </div>
-                <Button text="Applied"  className="bg-purple-600 hover:bg-yellow-500" />
+                <Button text={buttonText}
+                onClick={() => setButtonText(buttonText === "Apply" ? " Allready Applied" : "Apply")}  className="bg-purple-600 hover:bg-yellow-500" />
              
             </div>
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>

@@ -5,9 +5,12 @@ import Marquee from "react-fast-marquee";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import Slider from "./Slider";
+import TopFiveStudent from "./TopFiveStudent";
+import TopFiveFaculties from "./TopFiveFaculties";
 
 const SingleCollege = () => {
-  const { singleCollege, setSingleCollege } = useContext(StoreContext);
+  const { singleCollege, setSingleCollege, setCollegeFacultyData } =
+    useContext(StoreContext);
   // const [singleCollege, setSingleCollege] = useState(null);
   const { college_id } = useParams();
   const fetchSingleCollege = () => {
@@ -16,13 +19,11 @@ const SingleCollege = () => {
     );
 
     setSingleCollege(singleCollegInfo);
+    setCollegeFacultyData(singleCollegInfo?.faculties);
   };
 
   useEffect(() => {
     fetchSingleCollege();
-    return () => {
-      setSingleCollege(null);
-    };
   }, [college_id, setSingleCollege]);
 
   const slides = [
@@ -64,6 +65,12 @@ const SingleCollege = () => {
         <p className="font-thin leading-8 tracking-[1.5 px] text-left mt-2 text-white h-auto ">
           {singleCollege?.description}
         </p>
+      </div>
+      <div>
+        <TopFiveFaculties faculties={singleCollege?.faculties} />
+      </div>
+      <div className="">
+        <TopFiveStudent students={singleCollege?.students} />
       </div>
     </div>
   );
