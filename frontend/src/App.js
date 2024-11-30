@@ -26,7 +26,7 @@ import SingleStudent from "./pages/SingleStudent";
 function App() {
   return (
     <>
-      <div className="App">
+      <div className="App bg-[#0B192C] ">
         <LandingNav />
         <div className="min-h-[80vh]">
           <Routes>
@@ -35,13 +35,22 @@ function App() {
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
             <Route path="/job-section/applied-list" element={<AppliedList />} />
-            <Route path="/alljob" element={<AllJob/>} />
-            <Route path="/description/:id" element={<JobDescription/>}/>
+            <Route path="/alljob" element={<AllJob />} />
+            <Route path="/description/:id" element={<JobDescription />} />
 
-            <Route path="/:collegeName/admin" element ={<CollegeAdmin />} />
-            <Route path=":collegeShortName/addFaculty" element={<AddFacultyForm />} />
-            <Route path=":collegeShortName/addStudent" element={<AddStudentForm />} />
-            <Route path=":collegeShortName/post-update" element={<PostUpdateForm />} />
+            <Route path="/:collegeName/admin" element={<CollegeAdmin />} />
+            <Route
+              path=":collegeShortName/addFaculty"
+              element={<AddFacultyForm />}
+            />
+            <Route
+              path=":collegeShortName/addStudent"
+              element={<AddStudentForm />}
+            />
+            <Route
+              path=":collegeShortName/post-update"
+              element={<PostUpdateForm />}
+            />
 
             {/* ---- Amir's Routes------- */}
             <Route path="/login/college" element={<CollegeLogin />} />

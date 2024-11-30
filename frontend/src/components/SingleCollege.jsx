@@ -32,11 +32,11 @@ const SingleCollege = () => {
       title: "beach",
     },
     {
-      url: "https://media.istockphoto.com/id/1288579028/photo/buildings-of-at-the-campus-of-the-university-of-mumbai-one-of-the-first-state-universities-of.jpg?s=2048x2048&w=is&k=20&c=sbrWnUf9IsDC8QIfPB033nPfnJZq2AUiWRr5ZsnAmS4=",
+      url: "https://lh3.googleusercontent.com/p/AF1QipNUXehQEfTANt870xauVvDL7GIIeBHFkc7k3fdz=s1360-w1360-h1020",
       title: "dog",
     },
     {
-      url: "https://media.istockphoto.com/id/483479827/photo/indian-college-students-preparing-for-examination.jpg?s=2048x2048&w=is&k=20&c=D3yVXeQ5HubC6U-gbyfGSw2LBOpFyvjOOEVwq8ocVL4=",
+      url: "https://ncechandi.ac.in/wp-content/uploads/2020/12/3.jpg",
       title: "beach",
     },
   ];
@@ -47,8 +47,8 @@ const SingleCollege = () => {
   };
   // console.log(singleCollege);
   return (
-    <div className=" w-[1200px] mx-auto my-1">
-      <div className="bg-[#FAB12F] rounded-md">
+    <div className=" w-[1200px] mx-auto my-2">
+      <div className="bg-slate-800  rounded-md">
         <Marquee speed={100} gradient={false}>
           <h1 className="text-[2rem] font-bold my-4 text-center  text-white">
             {singleCollege?.name}

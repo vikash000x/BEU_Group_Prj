@@ -56,9 +56,9 @@ const LandingNav = () => {
                 className="absolute left-0 mt-2 w-60 h-[600px] overflow-y-scroll  bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10"
               >
                 {colleges.map((college, index) => (
-                  <Link to={`beu/colleges/${college.shortName}`}>
+                  <Link to={beu/colleges/${college.shortName}}>
                     <li
-                      // onClick={() => navigate(`beu/colleges/${college.shortName}`)}
+                      // onClick={() => navigate(beu/colleges/${college.shortName})}
                       key={index}
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"
                     >
@@ -71,7 +71,7 @@ const LandingNav = () => {
           }
 
           {flag2 && 
-            <Link  to={`/${"collegeShortName"}/addStudent`}>
+            <Link  to={/${"collegeShortName"}/addStudent}>
               <p>Add Faculty</p>
             </Link>
             
@@ -92,7 +92,7 @@ const LandingNav = () => {
           }
 
           {flag2 && 
-            <Link to={`/${"collegeShortName"}/addStudent`}>
+            <Link to={/${"collegeShortName"}/addStudent}>
               <li >Add Student</li>
             </Link>
           }
@@ -144,7 +144,7 @@ const LandingNav = () => {
           }
 
           {flag2 && 
-            <Link to={`/${"collegeShortName"}/post-update`}>
+            <Link to={/${"collegeShortName"}/post-update}>
               <li>Post an Update</li>
           </Link>  
           }
