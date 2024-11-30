@@ -24,7 +24,7 @@ const StudentList = () => {
   ];
 
   const handleSearch = () => {
-    const searchData = students.filter((student) =>
+    const searchData = students?.filter((student) =>
       student.name.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredStudents(searchData);
