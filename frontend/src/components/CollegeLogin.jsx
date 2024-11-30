@@ -1,15 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
 
 const CollegeLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {userType, setUserType} = useContext(StoreContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Email:", email, "Password:", password);
+    //console.log("Email:", email, "Password:", password);
+    setUserType("college");
+    //console.log(userType);
+     navigate('/collegename/admin')
   };
+
+
   return (
     <div className="bg-gray-100 h-[100vh] flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
