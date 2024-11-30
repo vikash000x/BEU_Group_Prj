@@ -9,8 +9,10 @@ const LandingNav = () => {
   const { singleCollege, setSingleCollege } = useContext(StoreContext);
   console.log("singlecollege", singleCollege);
   const navigate = useNavigate();
+
+  // bg-[#173B45]
   return (
-    <div className="bg-[#173B45] text-blue-600 w-full h-[65px] flex items-center justify-center">
+    <div className="bg-slate-800  w-full h-[65px] flex items-center justify-center">
       <nav className="flex items-center justify-between w-[1200px]   px-2 text-white font-semibold">
         <img
           onClick={() => {
@@ -62,7 +64,9 @@ const LandingNav = () => {
           {singleCollege ? (
             <li className="cursor-pointer">Updates</li>
           ) : (
-            <li onClick={()=>navigate("/alljob")} className="cursor-pointer">Jobs</li>
+            <li onClick={() => navigate("/alljob")} className="cursor-pointer">
+              Jobs
+            </li>
           )}
           {singleCollege ? (
             <Link to="/college/students">

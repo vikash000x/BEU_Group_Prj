@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const FacultiesList = () => {
   const navigate = useNavigate();
-  const { collegeFacultyData } = useContext(StoreContext);
+  const { collegeFacultyData, singleCollege } = useContext(StoreContext);
   // const [department, setDepartment] = useState("");
   // const [filterDepartment, setFilterDepartment] = useState(collegeFacultyData);
   const [search, setSearch] = useState("");
@@ -42,7 +42,9 @@ const FacultiesList = () => {
 
   return (
     <div className="w-[1200px] mx-auto m-12">
-      <h1 className="text-2xl font-bold text-center mb-6">Faculty List</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">
+        FACULTIES LIST OF {singleCollege.name}
+      </h1>
       <div className="flex flex-row rounded-md justify-between items-center my-2 bg-slate-400 gap-2 p-3">
         <div className="flex-1 ">
           <label

@@ -5,15 +5,15 @@ import HomeRecentUpdates from "../components/HomeRecentUpdates";
 const LandingPage = () => {
   const slides = [
     {
-      url: "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg",
+      url: "https://i.ytimg.com/vi/3mADt-wLj7k/maxresdefault.jpg",
       title: "beach",
     },
     {
-      url: "https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=600",
+      url: "https://static.toiimg.com/thumb/msid-96413561,width-1070,height-580,imgsize-2053069,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
       title: "dog",
     },
     {
-      url: "https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=600",
+      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEOCrzyKST0XqO0CU--MWIOyza7QuSZqh2MQ&s",
       title: "beach",
     },
   ];

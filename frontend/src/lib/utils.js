@@ -7,8 +7,8 @@ export function cn(...inputs) {
 
 export const colleges = [
   {
-    name: "BHAGALPUR COLLEGE OF ENGINEERING",
-    shortName: "bce-bhagalpur",
+    name: "NALANDA COLLEGE OF ENGINEERING",
+    shortName: "nce-chandi",
     college_id: "001",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent facilisis dui ut magna hendrerit, non fermentum justo pharetra. Sed venenatis quam non orci interdum, in consequat ex sodales. Nullam id turpis nec eros bibendum dictum ac a magna. Vivamus porttitor, eros eget interdum molestie, risus nisi cursus dolor, et euismod velit erat a risus. Duis nec gravida libero, vel faucibus odio. Ut malesuada sem et lectus tincidunt, sit amet dictum metus viverra. Nam vel metus eget urna tristique posuere non in arcu. Suspendisse sit amet felis at magna vehicula fermentum.Curabitur sagittis varius lectus, nec interdum sapien iaculis vel. Fusce ac ligula sem. Vestibulum egestas sodales lacus. Aenean auctor nunc sed tellus dignissim, nec suscipit lacus tempus. Vivamus venenatis volutpat libero, vel efficitur ante fringilla sit amet. Sed in erat at lorem iaculis gravida. Proin ac risus eu risus iaculis ultrices. Maecenas posuere mi vitae velit ultricies posuere. Nulla luctus est ac nibh auctor, ut tincidunt justo pretium. Quisque posuere consequat elit, eget egestas sapien finibus sed. Suspendisse potenti. Pellentesque fringilla, nisl ut ultrices sagittis, eros arcu lacinia eros, vel accumsan purus odio at metus.",
@@ -987,171 +987,171 @@ export const colleges = [
   // Continue adding other colleges similarly...
 ];
 
-export const allJobs =[
+export const allJobs = [
   {
-    "id": "1",
-    "title": "Frontend Developer",
-    "position": 5,
-    "jobType": "Full-Time",
-    "salary": "42-1",
-    "location": "Bangalore",
-    "company": {
-      "name": "TechCorp Solutions"
+    id: "1",
+    title: "Frontend Developer",
+    position: 5,
+    jobType: "Full-Time",
+    salary: "42-1",
+    location: "Bangalore",
+    company: {
+      name: "TechCorp Solutions",
     },
-    "description": "Develop and maintain the user interface.",
-    "experience": 2,
-    "applications": ["John", "Alice", "Bob"],
-    "createdAt": "2024-11-01T09:00:00Z"
+    description: "Develop and maintain the user interface.",
+    experience: 2,
+    applications: ["John", "Alice", "Bob"],
+    createdAt: "2024-11-01T09:00:00Z",
   },
   {
-    "id": "2",
-    "title": "Backend Developer",
-    "position": 3,
-    "jobType": "Part-Time",
-    "salary": "1 to 5",
-    "location": "Mumbai",
-    "company": {
-      "name": "DataPulse Analytics"
+    id: "2",
+    title: "Backend Developer",
+    position: 3,
+    jobType: "Part-Time",
+    salary: "1 to 5",
+    location: "Mumbai",
+    company: {
+      name: "DataPulse Analytics",
     },
-    "description": "Develop server-side logic.",
-    "experience": 1,
-    "applications": ["David", "Sophia"],
-    "createdAt": "2024-11-02T09:00:00Z"
+    description: "Develop server-side logic.",
+    experience: 1,
+    applications: ["David", "Sophia"],
+    createdAt: "2024-11-02T09:00:00Z",
   },
   {
-    "id": "3",
-    "title": "FullStack Developer",
-    "position": 2,
-    "jobType": "Contract",
-    "salary": "0-40k",
-    "location": "Hyderabad",
-    "company": {
-      "name": "CloudWorks Inc."
+    id: "3",
+    title: "FullStack Developer",
+    position: 2,
+    jobType: "Contract",
+    salary: "0-40k",
+    location: "Hyderabad",
+    company: {
+      name: "CloudWorks Inc.",
     },
-    "description": "Develop end-to-end software solutions.",
-    "experience": 5,
-    "applications": ["Emma"],
-    "createdAt": "2024-11-03T09:00:00Z"
+    description: "Develop end-to-end software solutions.",
+    experience: 5,
+    applications: ["Emma"],
+    createdAt: "2024-11-03T09:00:00Z",
   },
   {
-    "id": "4",
-    "title": "Frontend Developer",
-    "position": 4,
-    "jobType": "Full-Time",
-    "salary": "1 to 5",
-    "location": "Delhi NCR",
-    "company": {
-      "name": "Pixel Studio"
+    id: "4",
+    title: "Frontend Developer",
+    position: 4,
+    jobType: "Full-Time",
+    salary: "1 to 5",
+    location: "Delhi NCR",
+    company: {
+      name: "Pixel Studio",
     },
-    "description": "Create interactive designs.",
-    "experience": 3,
-    "applications": ["Olivia", "James"],
-    "createdAt": "2024-11-04T09:00:00Z"
+    description: "Create interactive designs.",
+    experience: 3,
+    applications: ["Olivia", "James"],
+    createdAt: "2024-11-04T09:00:00Z",
   },
   {
-    "id": "5",
-    "title": "Backend Developer",
-    "position": 1,
-    "jobType": "Full-Time",
-    "salary": "1 to 5",
-    "location": "Pune",
-    "company": {
-      "name": "CodeCrafters"
+    id: "5",
+    title: "Backend Developer",
+    position: 1,
+    jobType: "Full-Time",
+    salary: "1 to 5",
+    location: "Pune",
+    company: {
+      name: "CodeCrafters",
     },
-    "description": "Manage APIs and data services.",
-    "experience": 4,
-    "applications": ["Liam"],
-    "createdAt": "2024-11-05T09:00:00Z"
+    description: "Manage APIs and data services.",
+    experience: 4,
+    applications: ["Liam"],
+    createdAt: "2024-11-05T09:00:00Z",
   },
   {
-    "id": "6",
-    "title": "FullStack Developer",
-    "position": 3,
-    "jobType": "Full-Time",
-    "salary": "0-40k",
-    "location": "Mumbai",
-    "company": {
-      "name": "InnoTech Solutions"
+    id: "6",
+    title: "FullStack Developer",
+    position: 3,
+    jobType: "Full-Time",
+    salary: "0-40k",
+    location: "Mumbai",
+    company: {
+      name: "InnoTech Solutions",
     },
-    "description": "Work on both frontend and backend.",
-    "experience": 2,
-    "applications": ["Ethan", "Mia"],
-    "createdAt": "2024-11-06T09:00:00Z"
+    description: "Work on both frontend and backend.",
+    experience: 2,
+    applications: ["Ethan", "Mia"],
+    createdAt: "2024-11-06T09:00:00Z",
   },
   {
-    "id": "7",
-    "title": "Frontend Developer",
-    "position": 2,
-    "jobType": "Full-Time",
-    "salary": "1 to 5",
-    "location": "Hyderabad",
-    "company": {
-      "name": "CreativeEdge"
+    id: "7",
+    title: "Frontend Developer",
+    position: 2,
+    jobType: "Full-Time",
+    salary: "1 to 5",
+    location: "Hyderabad",
+    company: {
+      name: "CreativeEdge",
     },
-    "description": "Design UI components.",
-    "experience": 6,
-    "applications": ["Ava"],
-    "createdAt": "2024-11-07T09:00:00Z"
+    description: "Design UI components.",
+    experience: 6,
+    applications: ["Ava"],
+    createdAt: "2024-11-07T09:00:00Z",
   },
   {
-    "id": "8",
-    "title": "Backend Developer",
-    "position": 6,
-    "jobType": "Full-Time",
-    "salary": "1lakh to 5lakh",
-    "location": "Delhi NCR",
-    "company": {
-      "name": "TechNet Systems"
+    id: "8",
+    title: "Backend Developer",
+    position: 6,
+    jobType: "Full-Time",
+    salary: "1lakh to 5lakh",
+    location: "Delhi NCR",
+    company: {
+      name: "TechNet Systems",
     },
-    "description": "Optimize database operations.",
-    "experience": 3,
-    "applications": ["Noah", "Sophia", "Evelyn"],
-    "createdAt": "2024-11-08T09:00:00Z"
+    description: "Optimize database operations.",
+    experience: 3,
+    applications: ["Noah", "Sophia", "Evelyn"],
+    createdAt: "2024-11-08T09:00:00Z",
   },
   {
-    "id": "9",
-    "title": "FullStack Developer",
-    "position": 4,
-    "jobType": "Full-Time",
-    "salary": "0-40k",
-    "location": "Pune",
-    "company": {
-      "name": "CodeBridge"
+    id: "9",
+    title: "FullStack Developer",
+    position: 4,
+    jobType: "Full-Time",
+    salary: "0-40k",
+    location: "Pune",
+    company: {
+      name: "CodeBridge",
     },
-    "description": "Develop scalable web applications.",
-    "experience": 2,
-    "applications": ["Alexander"],
-    "createdAt": "2024-11-09T09:00:00Z"
+    description: "Develop scalable web applications.",
+    experience: 2,
+    applications: ["Alexander"],
+    createdAt: "2024-11-09T09:00:00Z",
   },
   {
-    "id": "10",
-    "title": "Frontend Developer",
-    "position": 5,
-    "jobType": "Full-Time",
-    "salary": "42-1lakh",
-    "location": "Bangalore",
-    "company": {
-      "name": "Visionary Designs"
+    id: "10",
+    title: "Frontend Developer",
+    position: 5,
+    jobType: "Full-Time",
+    salary: "42-1lakh",
+    location: "Bangalore",
+    company: {
+      name: "Visionary Designs",
     },
-    "description": "Design responsive layouts.",
-    "experience": 3,
-    "applications": ["William", "Charlotte"],
-    "createdAt": "2024-11-10T09:00:00Z"
-  }
+    description: "Design responsive layouts.",
+    experience: 3,
+    applications: ["William", "Charlotte"],
+    createdAt: "2024-11-10T09:00:00Z",
+  },
 ];
 
 export const filterData = [
   {
-      fitlerType: "Location",
-      array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"]
+    fitlerType: "Location",
+    array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"],
   },
   {
-      fitlerType: "Industry",
-      array: ["Frontend Developer", "Backend Developer", "FullStack Developer"]
+    fitlerType: "Industry",
+    array: ["Frontend Developer", "Backend Developer", "FullStack Developer"],
   },
   {
-      fitlerType: "Salary",
-      array: ["0-40k", "42-1lakh", "1lakh to 5lakh"]
+    fitlerType: "Salary",
+    array: ["0-40k", "42-1lakh", "1lakh to 5lakh"],
   },
 ];
 
