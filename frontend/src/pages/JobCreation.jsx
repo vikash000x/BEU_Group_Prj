@@ -58,8 +58,8 @@ const PostJob = () => {
       
         <div>
             
-            <div className='flex items-center justify-center w-screen my-5'>
-                <form  className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
+            <div className='flex items-center justify-center w-screen my-10'>
+                <form  className='text-white p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
                     <div className='grid grid-cols-2 gap-2'>
                         <div>
                             <Label>Title</Label>
@@ -68,7 +68,7 @@ const PostJob = () => {
                                 name="title"
                                 // value={input.title}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1 text-black font-serif"
                             />
                         </div>
                         <div>
@@ -78,7 +78,7 @@ const PostJob = () => {
                                 name="description"
                                 // value={input.description}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -88,7 +88,7 @@ const PostJob = () => {
                                 name="requirements"
                                 // value={input.requirements}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -98,7 +98,7 @@ const PostJob = () => {
                                 name="salary"
                                 // value={input.salary}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -108,7 +108,7 @@ const PostJob = () => {
                                 name="location"
                                 // value={input.location}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -118,7 +118,7 @@ const PostJob = () => {
                                 name="jobType"
                                 // value={input.jobType}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -128,7 +128,7 @@ const PostJob = () => {
                                 name="experience"
                                 // value={input.experience}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         <div>
@@ -138,7 +138,7 @@ const PostJob = () => {
                                 name="position"
                                 // value={input.position}
                                 // onChange={changeEventHandler}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                                className="text-black font-serif focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                     

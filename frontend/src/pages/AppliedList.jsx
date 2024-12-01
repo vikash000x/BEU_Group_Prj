@@ -96,7 +96,7 @@ const AppliedList = () => {
   
 
     return (
-        <div className='w-[1200px] my-3 mx-auto'>
+        <div className='w-[1200px] my-10 mx-auto'>
             <Table>
                 <TableCaption>A list of your recent applied user</TableCaption>
                 <TableHeader className="bg-gray-500 text-white">
@@ -112,7 +112,7 @@ const AppliedList = () => {
                 <TableBody >
                     {
                         applicants && applicants?.applications?.map((item) => (
-                            <tr className= 'py-50 bg-blue-950 text-white border-b border-white  hover:bg-purple-300  rounded-lg ' key={item._id}>
+                            <tr className= 'py-50 bg-slate-800 hover:text-black text-white border-b border-white  hover:bg-purple-300  rounded-lg ' key={item._id}>
                                 <TableCell>{item?.applicant?.fullname}</TableCell>
                                 <TableCell>{item?.applicant?.email}</TableCell>
                                 <TableCell>{item?.applicant?.phoneNumber}</TableCell>
