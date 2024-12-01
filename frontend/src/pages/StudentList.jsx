@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const StudentList = () => {
   const navigate = useNavigate();
   const { singleCollege } = useContext(StoreContext);
@@ -30,10 +32,17 @@ const StudentList = () => {
     setFilteredStudents(searchData);
     setSearch("");
   };
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    });
+  }, []);
   return (
     <div className="w-[1200px] mx-auto m-12">
-      <h1 className="text-2xl font-bold text-center mb-6">Students List</h1>
-      <div className="flex flex-row rounded-md justify-between items-center my-2 bg-slate-400 gap-2 p-3">
+      <h1 className="text-2xl font-bold text-center mb-6 text-white">
+        Students List
+      </h1>
+      <div className="flex flex-row rounded-md justify-between items-center my-2 bg-slate-700 gap-2 p-3">
         <div className="flex-1 ">
           <label
             className="text-white font-semibold px-2 text-xl"
@@ -69,16 +78,16 @@ const StudentList = () => {
           />
           <button
             onClick={handleSearch}
-            className="ml-3 bg-[#173B45] rounded-md px-8 cursor-pointer h-10 text-white"
+            className="ml-3 bg-[#0B192C]  rounded-md px-8 cursor-pointer h-10 text-white"
           >
             Search
           </button>
         </div>
       </div>
 
-      <table className="table-auto border-collapse border border-gray-300 w-full text-left">
+      <table className="table-auto border-collapse border mt-3 border-gray-300 w-full text-left bg-slate-800 text-white">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="">
             <th className="border border-gray-300 px-4 py-2">Profile Image</th>
             <th className="border border-gray-300 px-4 py-2">Name</th>
             <th className="border border-gray-300 px-4 py-2">Branch</th>
@@ -91,7 +100,8 @@ const StudentList = () => {
               <tr
                 key={student.id}
                 onClick={() => navigate(`/college/student/${student.id}`)}
-                className="hover:bg-gray-100 cursor-pointer"
+                className="hover:bg-[#0B192C] cursor-pointer"
+                data-aos="fade-up"
               >
                 <td className="border border-gray-300 px-4 py-2">
                   <img

@@ -5,7 +5,7 @@ import { StoreContext } from "../context/StoreContext";
 const CollegeLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {userType, setUserType} = useContext(StoreContext);
+  const { userType, setUserType } = useContext(StoreContext);
 
   const navigate = useNavigate();
 
@@ -14,9 +14,8 @@ const CollegeLogin = () => {
     //console.log("Email:", email, "Password:", password);
     setUserType("college");
     //console.log(userType);
-     navigate('/collegename/admin')
+    navigate("/collegename/admin");
   };
-
 
   return (
     <div className="bg-gray-100 h-[100vh] flex items-center justify-center">

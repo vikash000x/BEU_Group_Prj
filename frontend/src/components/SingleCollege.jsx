@@ -7,7 +7,8 @@ import { StoreContext } from "../context/StoreContext";
 import Slider from "./Slider";
 import TopFiveStudent from "./TopFiveStudent";
 import TopFiveFaculties from "./TopFiveFaculties";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const SingleCollege = () => {
   const { singleCollege, setSingleCollege, setCollegeFacultyData } =
     useContext(StoreContext);
@@ -26,6 +27,11 @@ const SingleCollege = () => {
     fetchSingleCollege();
   }, [college_id, setSingleCollege]);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    });
+  }, []);
   const slides = [
     {
       url: "https://cdn.pixabay.com/photo/2024/01/30/12/59/women-8541959_640.jpg",
@@ -58,11 +64,17 @@ const SingleCollege = () => {
       <div style={containerStyles}>
         <Slider slides={slides} />
       </div>
-      <div className="about bg-slate-800 p-4">
-        <h3 className=" underline  leading-12  decoration-[#FAB12F]   mt-4 text-4xl text-white">
+      <div className="about bg-slate-800 p-4 my-4 ">
+        <h3
+          className=" underline  leading-12    mt-4 text-4xl text-white"
+          data-aos="fade-right"
+        >
           ABOUT {singleCollege?.name}
         </h3>
-        <p className="font-thin leading-8 tracking-[1.5 px] text-left mt-2 text-white h-auto ">
+        <p
+          className="font-thin leading-8 tracking-[1.5 px] text-left mt-2 text-white h-auto "
+          data-aos="fade-left"
+        >
           {singleCollege?.description}
         </p>
       </div>
