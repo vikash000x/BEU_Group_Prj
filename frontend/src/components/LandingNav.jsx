@@ -1,35 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/Screenshot 2024-11-23 023731.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { colleges } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { singleCollege, setSingleCollege } = useContext(StoreContext);
-  console.log("singlecollege", singleCollege);
+  const { userType } = useContext(StoreContext);
+  const [active, setActive] = useState("");
+
+  const [flag1, setFlag1] = useState(false); //Single College Page
+  const [flag2, setFlag2] = useState(false); //College Admin Dashboard
+  const [flag3, setFlag3] = useState(false); //Rest all
+
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // bg-[#173B45]
+  useEffect(() => {
+    if (location.pathname.includes("colleges")) {
+      setFlag1(true);
+      setFlag2(false);
+      setFlag3(false);
+    }
+    if (location.pathname.includes("admin")) {
+      setFlag1(false);
+      setFlag2(true);
+      setFlag3(false);
+    }
+    if (
+      !location.pathname.includes("colleges") &&
+      !location.pathname.includes("admin")
+    ) {
+      setFlag1(false);
+      setFlag2(false);
+      setFlag3(true);
+    }
+  }, [location.pathname]);
+
   return (
-    <div className="bg-slate-800  w-full h-[65px] flex items-center justify-center">
+    <div className="bg-[#0B192C] shadow-lg border-b-[0.01rem] font-popins [&>*]:font-light border-b-white border-opacity-50  w-full h-[65px] flex items-center justify-center">
       <nav className="flex items-center justify-between w-[1200px]   px-2 text-white font-semibold">
         <img
-          onClick={() => {
-            navigate("/");
-            setSingleCollege(null);
-          }}
+          onClick={() => navigate("/")}
           className="w-14 h-14 rounded-full mr-8"
           src={logo}
           alt=""
         />
-        <ul className="flex items-center justify-between flex-1 text-2xl">
-          {singleCollege ? (
-            <li className="cursor-pointer relative group py-2 ">
-              <span>Gallery</span>
+        <ul className="flex items-center justify-between flex-1 text-2xl ">
+          {flag1 && (
+            <li className="cursor-pointer relative group py-2 px-3">
+              <span className="">Gallery</span>
             </li>
-          ) : (
-            <li className="cursor-pointer relative group py-2 ">
+          )}
+          {flag3 && (
+            <li
+              className={`cursor-pointer relative group py-2 px-3 hover:bg-white hover:text-slate-800 ${
+                active === "colleges" ? "bg-white text-slate-800" : ""
+              }`}
+              onClick={() => setActive("colleges")}
+            >
               <span>Colleges</span>
               <ul
                 style={{ scrollbarWidth: "none" }}
@@ -50,30 +79,55 @@ const LandingNav = () => {
             </li>
           )}
 
-          {singleCollege ? (
-            <Link to="/college/faculties">
-              <li className="cursor-pointer relative group py-2">
-                <span>Faculties</span>
-              </li>
-            </Link>
-          ) : (
-            <Link to="recent-update">
-              <li className="cursor-pointer">Recent Updates</li>
+          {flag2 && (
+            <Link to={`/${"collegeShortName"}/addStudent`}>
+              <li className="bg-red-500 px-3 py-2">Add Faculty</li>
             </Link>
           )}
-          {singleCollege ? (
-            <li className="cursor-pointer">Updates</li>
-          ) : (
-            <li onClick={() => navigate("/alljob")} className="cursor-pointer">
+
+          {flag1 && <Link to="/colleges/faculties">Faculties</Link>}
+          {flag3 && (
+            <Link to="recent-update">
+              <li
+                className={`cursor-pointer px-3 py-2 hover:bg-white hover:text-slate-800 ${
+                  active === "rupdates" ? "bg-white text-slate-800" : ""
+                }`}
+                onClick={() => setActive("rupdates")}
+              >
+                Recent Updates
+              </li>
+            </Link>
+          )}
+
+          {flag2 && (
+            <Link to={`/${"collegeShortName"}/addStudent`}>
+              <li>Add Student</li>
+            </Link>
+          )}
+
+          {flag1 && <li className="cursor-pointer">Updates</li>}
+          {flag3 && (
+            <li
+              onClick={() => {
+                navigate("/alljob");
+                setActive("jobs");
+              }}
+              className={`cursor-pointer px-3 py-2 hover:bg-white hover:text-slate-800 ${
+                active === "jobs" ? "bg-white text-slate-800" : ""
+              }`}
+            >
               Jobs
             </li>
           )}
-          {singleCollege ? (
-            <Link to="/college/students">
-              <li className="cursor-pointer">Students</li>
-            </Link>
-          ) : (
-            <li className="cursor-pointer relative group py-2">
+
+          {flag1 && <Link to="/college/students">Students</Link>}
+          {flag3 && userType === "anonymous" && (
+            <li
+              className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
+                active === "login" ? "bg-white text-slate-800" : ""
+              }`}
+              onClick={() => setActive("login")}
+            >
               <span>Login</span>
               <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
                 <li
@@ -96,6 +150,14 @@ const LandingNav = () => {
                 </li>
               </ul>
             </li>
+          )}
+
+          {flag3 && userType !== "anonymous" && <li>View Dashboard</li>}
+
+          {flag2 && (
+            <Link to={`/${"collegeShortName"}/post-update`}>
+              <li>Post an Update</li>
+            </Link>
           )}
         </ul>
       </nav>
