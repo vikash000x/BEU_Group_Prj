@@ -57,7 +57,7 @@ const JobSection = () => {
                 <TableBody className="space-y-4" >
                     {
                         filterJobs?.map((job) => (
-                            <tr className="py-4 bg-blue-950 text-white border-b border-white  hover:bg-purple-300  rounded-lg ">
+                            <tr className=" hover:border-red-400 py-4 bg-slate-800 text-white border-b border-white   rounded-lg ">
                                 {/* <TableCell>{job?.company?.name}</TableCell> */}
                                 <TableCell>{job?.job_title}</TableCell>
                                 <TableCell>{job?.created_at.split("T")[0]}</TableCell>

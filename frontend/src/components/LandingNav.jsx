@@ -67,7 +67,7 @@ const LandingNav = () => {
                 {colleges.map((college, index) => (
                   <Link to={`beu/colleges/${college.shortName}`}>
                     <li
-                      // onClick={() => navigate(`beu/colleges/${college.shortName}`)}
+                      // onClick={() => navigate(beu/colleges/${college.shortName})}
                       key={index}
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"
                     >
