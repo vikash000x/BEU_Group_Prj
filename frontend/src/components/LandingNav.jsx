@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
   const { userType } = useContext(StoreContext);
+  const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
   const [flag2, setFlag2] = useState(false); //College Admin Dashboard
@@ -35,7 +36,7 @@ const LandingNav = () => {
   }, [location.pathname])
 
   return (
-    <div className="bg-[#173B45] text-blue-600 w-full h-[65px] flex items-center justify-center">
+    <div className="bg-[#0B192C] shadow-lg border-b-[0.01rem] font-popins [&>*]:font-light border-b-white border-opacity-50  w-full h-[65px] flex items-center justify-center">
       <nav className="flex items-center justify-between w-[1200px]   px-2 text-white font-semibold">
         <img
           onClick={() => navigate("/")}
@@ -72,8 +73,8 @@ const LandingNav = () => {
           }
 
           {flag2 && 
-            <Link  to={`/${"collegeShortName"}/addFaculty`}>
-              <p>Add Faculty</p>
+            <Link to={`/${"collegeShortName"}/addFaculty`}>
+              <li className="bg-red-500 px-3 py-2">Add Faculty</li>
             </Link>
             
           }
@@ -85,8 +86,15 @@ const LandingNav = () => {
            
            }
           { flag3 &&
-            <Link to='recent-update'>
-              <li className="cursor-pointer">Recent Updates</li>
+            <Link to="recent-update">
+              <li
+                className={`cursor-pointer px-3 py-2 hover:bg-white hover:text-slate-800 ${
+                  active === "rupdates" ? "bg-white text-slate-800" : ""
+                }`}
+                onClick={() => setActive("rupdates")}
+              >
+                Recent Updates
+              </li>
             </Link>
           }
 
@@ -102,7 +110,17 @@ const LandingNav = () => {
           }
           {
             flag3 &&
-            <li onClick={()=>navigate("/alljob")} className="cursor-pointer">Jobs</li>
+            <li
+              onClick={() => {
+                navigate("/alljob");
+                setActive("jobs");
+              }}
+              className={`cursor-pointer px-3 py-2 hover:bg-white hover:text-slate-800 ${
+                active === "jobs" ? "bg-white text-slate-800" : ""
+              }`}
+            >
+              Jobs
+            </li>
           }
             
           
@@ -113,7 +131,10 @@ const LandingNav = () => {
           }
           {
             flag3 && userType==="anonymous" &&
-            <li className="cursor-pointer relative group py-2">
+            <li className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
+                active === "login" ? "bg-white text-slate-800" : ""
+              }`}
+              onClick={() => setActive("login")}>
               <span>Login</span>
               <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
                 <li

@@ -35,9 +35,9 @@ const AllJob = () => {
   }, [selectedCategory]);
 
   return (
-    <div className="w-[1300px] my-3 mx-auto flex">
+    <div className="w-[1300px] my-3  mx-auto flex">
       {/* Filter Sidebar */}
-      <div className="w-[20%] mt-[76px]">
+      <div className="w-[15%] mt-10">
         <FilterCard
           categories={categories}
           selectedCategory={selectedCategory}
@@ -46,9 +46,9 @@ const AllJob = () => {
       </div>
 
       {/* Main Job Listings */}
-      <div className="max-w-9xl mx-auto my-20">
-        <h1 className="text-4xl font-bold">
-          <span className="text-[#6A38C2]">Latest & Top </span> Job Openings
+      <div className="max-w-9xl mx-auto ">
+        <h1 className="flex justify-center text-white text-4xl font-bold">
+          <span className=" text-[#eff369] pr-3 ">Latest & Top </span> Job Openings
         </h1>
 
         <div className="grid grid-cols-3 gap-4 my-5">
