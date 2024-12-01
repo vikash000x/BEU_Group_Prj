@@ -25,12 +25,12 @@ const AddStudentForm = ({ collegeShortName }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(studentData);
+    //console.log(studentData);
     navigate(`/${collegeShortName}/admin`);
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-zinc-700 shadow-md rounded-lg mt-10">
+    <div className="max-w-2xl mx-auto p-6 bg-slate-800 shadow-md rounded-lg mt-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-white">Student Registration</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -141,7 +141,7 @@ const AddStudentForm = ({ collegeShortName }) => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-[#0B192C] text-white py-2 rounded-md hover:bg-slate-700 transition duration-200"
         >
           Add Student
         </button>

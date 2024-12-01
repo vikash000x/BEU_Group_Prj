@@ -16,20 +16,21 @@ const LandingNav = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(location.pathname.includes("colleges")) {
+    if(location.pathname === "/") {
+      setFlag1(false);
+      setFlag2(false);
+      setFlag3(true);
+    }
+    else if((location.pathname.includes("colleges")) && (location.pathname.includes("beu"))) {
       setFlag1(true);
       setFlag2(false);
       setFlag3(false);
     }
-    if(location.pathname.includes("admin")) {
+    else if(userType === "college" && (location.pathname.includes("admin") || location.pathname.includes("addFaculty") || location.pathname.includes("addStudent") 
+          || location.pathname.includes("post-update"))) {
       setFlag1(false);
       setFlag2(true);
       setFlag3(false);
-    }
-    if(!(location.pathname.includes("colleges")) && !(location.pathname.includes("admin"))) {
-      setFlag1(false);
-      setFlag2(false);
-      setFlag3(true);
     }
   }, [location.pathname])
 
@@ -71,13 +72,11 @@ const LandingNav = () => {
           }
 
           {flag2 && 
-            <Link  to={`/${"collegeShortName"}/addStudent`}>
+            <Link  to={`/${"collegeShortName"}/addFaculty`}>
               <p>Add Faculty</p>
             </Link>
             
           }
-            
-          
 
           {flag1 && 
             <Link to="/colleges/faculties">
@@ -139,17 +138,23 @@ const LandingNav = () => {
             </li>
           }
 
-          {flag3 && userType!=="anonymous" && 
-            <li>View Dashboard</li>
-          }
-
           {flag2 && 
             <Link to={`/${"collegeShortName"}/post-update`}>
               <li>Post an Update</li>
           </Link>  
           }
-            
-          
+
+          {(userType === "college" ) &&
+            <Link to={`collegename/admin`}>
+              <p>View Dashboard</p>
+            </Link>
+          }
+          {(userType === "startup" ) && 
+            <Link to={`job-section`}>
+              <p>View Dashboard</p>
+            </Link>
+          }
+
         </ul>
       </nav>
     </div>

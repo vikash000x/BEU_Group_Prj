@@ -1,34 +1,101 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { noticeList, colleges } from "../lib/utils";
+import UpdatesCard from "../components/UpdatesCard";
+import TopFiveFaculties from "../components/TopFiveFaculties";
+import TopFiveStudent from "../components/TopFiveStudent";
+import { StoreContext } from "../context/StoreContext";
 
 const CollegeAdmin = () => {
-  const collegeShortName = "bce-bhagalpur"
-  return (
-    <div className="w-[1200px] flex flex-col items-center gap-12 mx-auto pt-10 h-screen bg-slate-600 py-4">
-      <div className="w-1/2 rounded-md bg-gray-700 p-12 hover:scale-105 transition-all duration-200 cursor-pointer">
-        <p className="text-3xl mx-auto text-center text-white font-semibold">
+  const [facultyList, setFacultyList] = useState({});
+  const [studentList, setStudentList] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { singleCollege, setSingleCollege, setCollegeFacultyData } =
+    useContext(StoreContext);
+
+  const collegeShortName = "bce-bhagalpur";
+  const currentCollegeId = "C001";
+  //const { currentCollegeId } = useParams();
+
+  let filteredNoticeList = noticeList.filter(
+    (notice) => notice.CollegeId === currentCollegeId
+  );
+  if (filteredNoticeList.length > 3) {
+    filteredNoticeList = filteredNoticeList.slice(0, 3);
+  }
+
+  const fetchSingleCollege = () => {
+    const singleCollegInfo = colleges.find(
+      (colleg) => colleg.college_id === "001"
+    );
+
+    setSingleCollege(singleCollegInfo);
+    setCollegeFacultyData(singleCollegInfo?.faculties);
+
+    setFacultyList(singleCollegInfo?.faculties.slice(0, 4));
+    setStudentList(singleCollegInfo?.students.slice(0, 4));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchSingleCollege();
+  });
+
+  return loading ? (
+    <div>Loading</div>
+  ) : (
+    <div className="w-[1200px] flex flex-col items-center gap-4 py-4 mx-auto text-white">
+      <div className="">
+        <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
           BEU Recent Instructions
         </p>
+        <div>
+          {filteredNoticeList.map((notice, index) => {
+            return (
+              <UpdatesCard data={notice} key={notice.id}>
+                hi
+              </UpdatesCard>
+            );
+          })}
+        </div>
+        <button className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
+          Read More Updates
+        </button>
       </div>
-      <div className="w-1/2 rounded-md bg-gray-700 p-12 hover:scale-105 transition-all duration-200 cursor-pointer">
-        <p className="text-3xl mx-auto text-center font-semibold text-white">
+
+      <div>
+        <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
           Faculty List
         </p>
+        <TopFiveFaculties faculties={facultyList} />
+        <Link
+          to={`/colleges/Faculties`}
+          className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4"
+        >
+          <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
+            See All Faculties
+          </p>
+        </Link>
       </div>
-      <div className="w-1/2 rounded-md bg-gray-700 p-12 hover:scale-105 transition-all duration-200 cursor-pointer">
-        <p className="text-3xl mx-auto text-center font-semibold text-white">
-          Students List
+
+      <div>
+        <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
+          Faculty List
         </p>
+        <div className="">
+          <TopFiveStudent students={singleCollege?.students} />
+        </div>
+        <Link
+          to={`/college/students`}
+          className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4"
+        >
+          <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
+            See All Students
+          </p>
+        </Link>
       </div>
-      {/* <Link to={`/${collegeShortName}/addFaculty`}>
-        <p className="bg-gray-800 p-2 cursor-pointer text-white rounded-lg px-3">Add Faculty</p>
-      </Link>
-      <Link to={`/${collegeShortName}/addStudent`}>
-        <p className="bg-gray-800 p-2 cursor-pointer text-white rounded-lg px-3">Add Student</p>
-      </Link>
-      <Link to={`/${collegeShortName}/post-update`}>
-        <p className="bg-gray-800 p-2 cursor-pointer text-white rounded-lg px-3">Post an Update</p>
-      </Link>         */}
+
+      
     </div>
   );
 };

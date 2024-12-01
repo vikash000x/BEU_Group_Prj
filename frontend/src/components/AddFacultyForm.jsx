@@ -53,8 +53,8 @@ const AddFacultyForm = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-auto flex items-center justify-center pt-8">
-      <div className="bg-zinc-700 p-8 rounded-lg shadow-md w-full max-w-3xl">
+    <div className=" h-auto flex items-center justify-center pt-8">
+      <div className="bg-slate-800 p-8 rounded-lg shadow-md w-full max-w-3xl">
         <h2 className="text-2xl text-center font-bold text-white mb-6">
           Faculty Registration
         </h2>
@@ -352,7 +352,7 @@ const AddFacultyForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#173B45] text-white py-2 px-4 rounded-lg hover:bg-[#156d7b] transition-colors duration-200"
+            className="w-full bg-[#0B192C] text-white py-2 px-4 rounded-lg hover:bg-slate-700 transition-colors duration-200"
           >
             Submit
           </button>

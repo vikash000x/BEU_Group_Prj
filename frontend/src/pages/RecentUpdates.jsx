@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import UpdatesCard from "../components/UpdatesCard";
 import UpdatesPagination from "../components/UpdatesPagination";
 import UpdatesPageFilter from "../components/UpdatesPageFilter";
-import Button from "../components/Button";
 import { noticeList } from "../lib/utils";
 
 const RecentUpdates = () => {
@@ -44,7 +43,7 @@ const RecentUpdates = () => {
   };
 
   return (
-    <div className="w-[1200px] mx-auto mt-6 mb-8">
+    <div className="w-[1200px] mx-auto mt-6 mb-8 text-white">
       <p className="text-3xl text-center font-serif my-2 mb-6">
         Recent Updates
       </p>
@@ -53,15 +52,17 @@ const RecentUpdates = () => {
           TypeSetter={setFilterType}
           OptionSetter={setFilterOption}
         />
-        <div>
+        <div className="flex gap-2 items-center">
           <input
             type="text"
             placeholder="Search"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className=" ml-2 mr-1 border border-gray-300 rounded-md text-sm w-40 h-8 focus:outline-none focus:ring-1 "
+            className="p-1 border border-gray-300 rounded-md text-sm w-40 text-white bg-slate-700 h-10 focus:outline-none focus:ring-1"
           />
-          <Button text="Search" onClick={handleSearch} className="h-8" />
+          <button onClick={handleSearch} className="bg-slate-800 p-2 px-4 rounded-md hover:bg-slate-700">
+            Search
+          </button>
         </div>
       </div>
 
