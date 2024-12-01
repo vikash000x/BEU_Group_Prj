@@ -26,9 +26,9 @@ const UpdatesPagination = ({totalItems, itemsPerPage, setterFunction, currentIte
         {pages.map((page, index) => {
           return (
             <button
-              className={`w-10 h-10 font-semibold text-lg mx-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out bg-transparent text-gray-600 border border-gray-400 ${
+              className={`w-10 h-10 font-semibold text-lg mx-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out bg-transparent text-gray-400 border border-gray-400 ${
                 currentItem === page
-                  ? "font-bold border-y-2 border-x-2 border-slate-400 outline outline-gray-200"
+                  ? "font-bold border-1 border-slate-200 outline outline-1 outline-gray-100"
                   : ""
               } `}
               key={index}
@@ -39,15 +39,15 @@ const UpdatesPagination = ({totalItems, itemsPerPage, setterFunction, currentIte
           );
         })}
       </div>
-      <div className="flex gap-4">
-        <p className="font-semibold text-gray-600">Jump to</p>
+      <div className="flex gap-2">
+        <p className="font-semibold">Jump to</p>
         <input
-          className="border border-gray-900"
+          className="border text-black border-gray-900 rounded-md"
           type="number"
           min="1"
           max={pages.length}
           step="1"
-          placeholder="page no."
+          placeholder=" page no."
           value={inputValue}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

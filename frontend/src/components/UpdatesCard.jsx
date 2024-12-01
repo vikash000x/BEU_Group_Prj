@@ -17,10 +17,10 @@ const UpdatesCard = ({ data }) => {
   }
 
   return (
-    <div className="bg-gray-100 shadow-md rounded-lg p-6 mb-4 hover:bg-pink-200 transition-all duration-1000 ease-in-out">
-      <h2 className="text-xl text-gray-800 font-semibold mb-2">{title}</h2>
+    <div className="bg-slate-800 shadow-md rounded-lg p-6 mb-4 hover:bg-slate-700 transition-all duration-400 ease-in-out">
+      <h2 className="text-xl font-semibold mb-2">{title}</h2>
 
-      <div className="text-sm text-gray-500 mb-2">
+      <div className="text-sm mb-2">
         <div className="flex items-center gap-2 mb-1">
           <div className="w-6 h-6 rounded-full bg-fuchsia-400"></div>
           <p className="text-xl">{College}</p>
@@ -39,7 +39,7 @@ const UpdatesCard = ({ data }) => {
 
       {isExpanded && (
         <>
-          <p className="text-gray-800 mb-4">{description}</p>
+          <p className="mb-4">{description}</p>
 
           {/* Render attachments if there are any */}
           {attachments && attachments.length > 0 && (
@@ -65,7 +65,7 @@ const UpdatesCard = ({ data }) => {
       )}
 
       <div className="flex justify-end" onClick={handleExpanding}>
-      <p className="bg-gray-400 px-2 rounded-xl">
+      <p className="bg-slate-600 cursor-pointer px-2 rounded-xl">
         {isExpanded ? "See less" : "Read more.."}
       </p> 
       </div>

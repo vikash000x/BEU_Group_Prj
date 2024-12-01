@@ -1327,7 +1327,7 @@ export const noticeList = [
     updatedAt: "2024-11-22T09:50:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc001",
+    id: "64f32adf4b23456789abc011",
     title: "Annual Sports Meet Announcement",
     description:
       "Join us for the Annual Sports Meet. Various events and competitions will be held.",
@@ -1346,7 +1346,7 @@ export const noticeList = [
     updatedAt: "2024-11-20T12:00:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc002",
+    id: "64f32adf4b23456789abc012",
     title: "New Library Rules",
     description:
       "The library hours have been updated. Please refer to the attached document for new rules and timings.",
@@ -1365,7 +1365,7 @@ export const noticeList = [
     updatedAt: "2024-11-10T08:30:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc003",
+    id: "64f32adf4b23456789abc013",
     title: "Semester Exam Schedule Released",
     description:
       "The examination schedule for the upcoming semester has been released. Please check the PDF for details.",
@@ -1384,7 +1384,7 @@ export const noticeList = [
     updatedAt: "2024-11-15T09:00:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc004",
+    id: "64f32adf4b23456789abc014",
     title: "Winter Break Announcement",
     description:
       "Winter break will begin from December 20th. Classes will resume on January 5th.",
@@ -1398,7 +1398,7 @@ export const noticeList = [
     updatedAt: "2024-11-22T11:00:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc005",
+    id: "64f32adf4b23456789abc015",
     title: "Internship Opportunities",
     description:
       "New internship opportunities are available for final-year students. Check the details on the college website.",
@@ -1412,7 +1412,7 @@ export const noticeList = [
     updatedAt: "2024-11-18T14:30:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc006",
+    id: "64f32adf4b23456789abc016",
     title: "Guest Lecture on AI",
     description:
       "A guest lecture on Artificial Intelligence will be held on December 5th. All students are encouraged to attend.",
@@ -1431,7 +1431,7 @@ export const noticeList = [
     updatedAt: "2024-11-21T10:00:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc007",
+    id: "64f32adf4b23456789abc017",
     title: "New Course Introduction: Data Science",
     description:
       "A new elective course on Data Science will be introduced next semester. Interested students can register online.",
@@ -1450,7 +1450,7 @@ export const noticeList = [
     updatedAt: "2024-11-12T13:15:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc008",
+    id: "64f32adf4b23456789abc018",
     title: "Blood Donation Camp",
     description:
       "A blood donation camp will be organized in collaboration with Red Cross Society on December 3rd. Volunteers are welcome.",
@@ -1469,7 +1469,7 @@ export const noticeList = [
     updatedAt: "2024-11-19T16:45:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc009",
+    id: "64f32adf4b23456789abc019",
     title: "Alumni Meet 2024",
     description:
       "The Alumni Meet 2024 will take place on December 25th. Alumni are invited to register online for the event.",
@@ -1483,7 +1483,7 @@ export const noticeList = [
     updatedAt: "2024-11-23T10:20:00.000Z",
   },
   {
-    id: "64f32adf4b23456789abc010",
+    id: "64f32adf4b23456789abc020",
     title: "Holiday Notice: Christmas",
     description:
       "The college will remain closed on December 25th for Christmas. Happy Holidays!",

@@ -39,7 +39,7 @@ const PostNoticeForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 pt-4  bg-zinc-700 shadow-md rounded-lg mt-10">
+    <div className="max-w-2xl mx-auto p-6 pt-4  bg-slate-800 shadow-md rounded-lg mt-10">
       <h2 className="text-2xl font-bold mb-6 text-white text-center">Post a Notice</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -125,7 +125,7 @@ const PostNoticeForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-[#0B192C] text-white py-2 rounded-md hover:bg-slate-700 transition duration-200"
         >
           Post Notice
         </button>
