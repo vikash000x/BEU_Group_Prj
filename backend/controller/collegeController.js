@@ -27,21 +27,24 @@ export const uploadImage = async (req, res) => {
   const { image } = req.files;
   try {
     const thumbnailImage = await uploadImageToCloudinary(
-      image
-      // process.env.FOLDER_NAME
+      image,
+      "beu"
     );
+    //const allcolleges = collegeModel.find();
     const imagePaths = thumbnailImage.secure_url;
-    const updatedCollege = await College.findByIdAndUpdate(
-      id,
-      { $push: { images: { $each: imagePaths } } },
-      { new: true }
-    );
+   
+    const college = await collegeModel.findOne({id});
+    college.images.push(imagePaths);
+    await college.save();
+    
     res.json({
       message: "uploaded",
       updatedCollege,
+      allcolleges
     });
     console.log(thumbnailImage);
   } catch (error) {
+    console.log("ji")
     console.log(error);
   }
 };
