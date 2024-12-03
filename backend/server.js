@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import fileUpload from "express-fileupload";
+// import fileUpload from "express-fileupload";
 import { connectDB } from "./config/db.js";
 import collegeAdminRouter from "./routes/collegAdminRoutes.js";
 import studentRouter from "./routes/studentRoutes.js";
@@ -12,16 +12,18 @@ const app = express();
 const port = 4000;
 
 app.use(express.json());
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
+// cloudinaryConnect();
+// app.use(
+//   fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: "/tmp/",
+//   })
+// );
 
 // Connecting to cloudinary
-cloudinaryConnect();
 app.use(cors());
+app.use(express.static("public"));
+// app.use(cookieParser())
 connectDB();
 
 app.use("/api/collegeadmin", collegeAdminRouter);
