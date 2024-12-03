@@ -24,28 +24,22 @@ export const addCollegeDetails = async (req, res) => {
 
 export const uploadImage = async (req, res) => {
   const { id } = req.params;
+  const { image } = req.files;
   // const collegeimage = req.files?.image;
-  let image_filename = `${req.file.filename}`;
   try {
-    // const thumbnailImage = await uploadImageToCloudinary(
-    //   collegeimage
-    //   // process.env.FOLDER_NAME
-    // );
-    // const imagePaths = thumbnailImage.url;
-    const updatedCollege = await collegeModel.findByIdAndUpdate(
-      id, // 1. The ID of the document to update
-      { $push: { images: image_filename } }, // 2. Update operation using $push
-      { new: true }
-      // id,
-      // { $push: { images: { $each: [imagePaths] } } },
-      // { new: true }
-    );
+    const thumbnailImage = await uploadImageToCloudinary(image, "beu");
+    const imagePaths = thumbnailImage.secure_url;
+    const college = await collegeModel.findOne({ id });
+    college.images.push(imagePaths);
+    await college.save();
     res.json({
       message: "uploaded",
       updatedCollege,
+      allcolleges,
     });
     console.log(thumbnailImage);
   } catch (error) {
+    console.log("ji");
     console.log(error);
   }
 };

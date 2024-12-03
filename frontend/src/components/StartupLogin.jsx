@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
 
 const StartupLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserType } = useContext(StoreContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setUserType("startup")
     navigate("/job-section");
 
     console.log("Email:", email, "Password:", password);
