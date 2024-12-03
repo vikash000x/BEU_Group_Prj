@@ -1,4 +1,4 @@
-import { uploadImageToCloudinary } from "../config/cloudinary.js";
+// import { uploadImageToCloudinary } from "../config/cloudinary.js";
 import collegeModel from "../models/collegeModel.js";
 
 export const addCollegeDetails = async (req, res) => {
@@ -24,17 +24,21 @@ export const addCollegeDetails = async (req, res) => {
 
 export const uploadImage = async (req, res) => {
   const { id } = req.params;
-  const { image } = req.files;
+  // const collegeimage = req.files?.image;
+  let image_filename = `${req.file.filename}`;
   try {
-    const thumbnailImage = await uploadImageToCloudinary(
-      image
-      // process.env.FOLDER_NAME
-    );
-    const imagePaths = thumbnailImage.secure_url;
-    const updatedCollege = await College.findByIdAndUpdate(
-      id,
-      { $push: { images: { $each: imagePaths } } },
+    // const thumbnailImage = await uploadImageToCloudinary(
+    //   collegeimage
+    //   // process.env.FOLDER_NAME
+    // );
+    // const imagePaths = thumbnailImage.url;
+    const updatedCollege = await collegeModel.findByIdAndUpdate(
+      id, // 1. The ID of the document to update
+      { $push: { images: image_filename } }, // 2. Update operation using $push
       { new: true }
+      // id,
+      // { $push: { images: { $each: [imagePaths] } } },
+      // { new: true }
     );
     res.json({
       message: "uploaded",
