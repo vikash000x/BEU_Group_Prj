@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const noticeSchema = new mongoose.Schema({
   postedBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, ref: "college",
     required: true,
   },
   headline: {
@@ -25,6 +25,17 @@ const noticeSchema = new mongoose.Schema({
     type: Date, // The expiry date for the notice (optional)
     required: false,
   },
+  category: {
+    type: String,
+    enum: ["Event", "Sports", "Exam", "Announcement"],
+    required: true,
+  },
+  targetAudience: {
+    type: String,
+    enum: ["Local", "Global"],
+    required: true,
+  },
+  attachements: [{ type: String}],
   department: {
     type: String, // Department related to the notice (e.g., "IT", "HR", etc.)
     required: false,
