@@ -144,9 +144,10 @@ const PostJob = () => {
                     
                     </div> 
                     
-                        <Button onClick={()=>navigate('/job-section')} text="submit" type="submit" className="w-full my-4"/>
+                        {/* <Button onClick={()=>navigate('/job-section')} text="submit" type="submit" className="w-full my-4"/> */}
                     
-                  
+                        <button className="w-full my-4 px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out 
+     sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm "  onClick={()=>navigate('/job-section')}> Submit </button>
                 </form>
             </div>
         </div>

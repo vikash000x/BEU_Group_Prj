@@ -1497,3 +1497,139 @@ export const noticeList = [
     updatedAt: "2024-11-22T09:50:00.000Z",
   },
 ];
+
+
+import mongoose from "mongoose";
+
+const jobSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    requirements: [{
+        type: String
+    }],
+    salary: {
+        type: Number,
+        required: true
+    },
+    experienceLevel:{
+        type:Number,
+        required:true,
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    jobType: {
+        type: String,
+        required: true
+    },
+    position: {
+        type: Number,
+        required: true
+    },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+        required: true
+    },
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+        required: true
+    },
+    applications: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Application',
+        }
+    ]
+},{timestamps:true});
+export const Job = mongoose.model("Job", jobSchema);
+
+const companySchema = new mongoose.Schema({
+  name:{
+      type:String,
+      required:true,
+      unique:true
+  },
+  description:{
+      type:String, 
+  },
+  website:{
+      type:String 
+  },
+  location:{
+      type:String 
+  },
+  logo:{
+      type:String // URL to company logo
+  },
+  userId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true
+  }
+},{timestamps:true})
+export const Company = mongoose.model("Company", companySchema);
+
+const applicationSchema = new mongoose.Schema({
+  job:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Job',
+      required:true
+  },
+  applicant:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true
+  },
+  status:{
+      type:String,
+      enum:['pending', 'accepted', 'rejected'],
+      default:'pending'
+  }
+},{timestamps:true});
+export const Application  = mongoose.model("Application", applicationSchema);
+
+const userSchema = new mongoose.Schema({
+  fullname: {
+      type: String,
+      required: true
+  },
+  email: {
+      type: String,
+      required: true,
+      unique: true
+  },
+  phoneNumber: {
+      type: Number,
+      required: true
+  },
+  password:{
+      type:String,
+      required:true,
+  },
+  role:{
+      type:String,
+      enum:['student','recruiter'],
+      required:true
+  },
+  profile:{
+      bio:{type:String},
+      skills:[{type:String}],
+      resume:{type:String}, // URL to resume file
+      resumeOriginalName:{type:String},
+   
+      profilePhoto:{
+          type:String,
+          default:""
+      }
+  },
+},{timestamps:true});
+export const User = mongoose.model('User', userSchema);

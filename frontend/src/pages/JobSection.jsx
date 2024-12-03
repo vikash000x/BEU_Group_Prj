@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Input } from '../components/input'
 // import {Button} from '../components/Button'
-import Button from '../components/Button'
+//import Button from '../components/Button'
 
 const filterJobs = [
   { job_title: "Software Engineer", created_at: "2024-11-22T10:30:00Z" },
@@ -41,8 +41,10 @@ const JobSection = () => {
           {/* <Button className="border border-gray-500">New Jobs</Button>
           
           */}
-                  <Button text='Job' onClick={()=>navigate('/job-section/Job-creation')} />
-        </div>
+         <button className="px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out 
+     sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm "  onClick={()=>navigate('/job-section/Job-creation')}>Job</button>
+                   {/* <Button text='Job' onClick={()=>navigate('/job-section/Job-creation')} /> */}
+        </div> 
 
        <Table>
                 <TableCaption>A list of your recent  posted jobs</TableCaption>
