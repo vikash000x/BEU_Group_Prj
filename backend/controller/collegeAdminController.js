@@ -49,6 +49,7 @@ const registerCollege = async (req, res) => {
     // const token = createToken(collegeAdmin._id);
     res.json({
       success: true,
+      message: "College Added Successfully",
       collegeAdmin,
     });
   } catch (error) {
