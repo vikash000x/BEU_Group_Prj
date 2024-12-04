@@ -1,29 +1,28 @@
 import express from "express";
 import cors from "cors";
-// import fileUpload from "express-fileupload";
+import fileUpload from "express-fileupload";
 import { connectDB } from "./config/db.js";
 import collegeAdminRouter from "./routes/collegAdminRoutes.js";
 import studentRouter from "./routes/studentRoutes.js";
 import collegeRouter from "./routes/collegeRoutes.js";
-import { cloudinaryConnect } from "./config/cloudinary.js";
 import noticeRouter from "./routes/noticeRoutes.js";
+import { cloudinaryConnect } from "./config/cloudinary.js";
 const app = express();
 
 const port = 4000;
 
 app.use(express.json());
-// cloudinaryConnect();
-// app.use(
-//   fileUpload({
-//     useTempFiles: true,
-//     tempFileDir: "/tmp/",
-//   })
-// );
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
 // Connecting to cloudinary
+cloudinaryConnect();
+
 app.use(cors());
-app.use(express.static("public"));
-// app.use(cookieParser())
 connectDB();
 
 app.use("/api/collegeadmin", collegeAdminRouter);
