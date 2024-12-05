@@ -30,9 +30,10 @@ const PostJob = () => {
    
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
+        console.log("hey");
     };
   
-  
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
