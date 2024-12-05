@@ -1,101 +1,120 @@
-import { Job } from "../models/jobModel.js";
+import { Job } from "../models/jobModel.js"; // Adjust the path based on your file structure
 
-// startup  post krega job
-export const postJob = async (req, res) => {
+// Controller to create a new job
+export const createJob = async (req, res) => {
     try {
-        const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
-        
+       // const job = new Job(req.body);
+        const { title, description, requirements, salary, location, jobType, experience, position } = req.body;
+        const userId = req.id;
+       if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position) {
+        return res.status(400).json({
+            message: "some fields have missing data",
+            succecc : false
+        })
+       };
 
-        if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
-            return res.status(400).json({
-                message: "Somethin is missing.",
-                success: false
-            })
-        };
-        const job = await Job.create({
-            title,
-            description,
-            requirements: requirements.split(","),
-            salary: Number(salary),
-            location,
-            jobType,
-            experience,
-            position,
-            company: companyId,
-        });
-        return res.status(201).json({
-            message: "New job created successfully.",
+       const job = await Job.create({
+        id :  userId,
+        title,
+        description,
+        requirements,
+        salary,
+        location,
+        jobType,
+        experience,
+        position
+       
+       });
+
+        
+     return    res.status(201).json({
+            message: "Job created successfully",
             job,
-            success: true
+            success : true
         });
     } catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: "Failed to create job",
+            error: error.message,
+        });
     }
-}
-// student k liye
+};
+
+// Controller to get all jobs
 export const getAllJobs = async (req, res) => {
     try {
-        const keyword = req.query.keyword || "";
-        const query = {
-            $or: [
-                { title: { $regex: keyword, $options: "i" } },
-                { description: { $regex: keyword, $options: "i" } },
-            ]
-        };
-        const jobs = await Job.find(query).populate({
-            path: "company"
-        }).sort({ createdAt: -1 });
-        if (!jobs) {
-            return res.status(404).json({
-                message: "Jobs not found.",
-                success: false
-            })
-        };
-        return res.status(200).json({
-            jobs,
-            success: true
-        })
+        const jobs = await Job.find();
+        res.status(200).json({
+            message: "Jobs fetched successfully",
+            data: jobs,
+        });
     } catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: "Failed to fetch jobs",
+            error: error.message,
+        });
     }
-}
-// student ke liye
+};
+
+// Controller to get a single job by ID
 export const getJobById = async (req, res) => {
     try {
-        const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate({
-            path:"applications"
-        });
+        const job = await Job.findById(req.params.id);
         if (!job) {
             return res.status(404).json({
-                message: "Jobs not found.",
-                success: false
-            })
-        };
-        return res.status(200).json({ job, success: true });
-    } catch (error) {
-        console.log(error);
-    }
-}
-// startup kitne job create kra hai abhi tk
-export const getAdminJobs = async (req, res) => {
-    try {
-        const adminId = req.id;
-        const jobs = await Job.find({ created_by: adminId }).populate({
-            path:'company',
-            createdAt:-1
+                message: "Job not found",
+            });
+        }
+        res.status(200).json({
+            message: "Job fetched successfully",
+            data: job,
         });
-        if (!jobs) {
-            return res.status(404).json({
-                message: "Jobs not found.",
-                success: false
-            })
-        };
-        return res.status(200).json({
-            jobs,
-            success: true
-        })
     } catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: "Failed to fetch job",
+            error: error.message,
+        });
     }
-}
+};
+
+// Controller to update a job by ID
+export const updateJob = async (req, res) => {
+    try {
+        const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!updatedJob) {
+            return res.status(404).json({
+                message: "Job not found",
+            });
+        }
+        res.status(200).json({
+            message: "Job updated successfully",
+            data: updatedJob,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to update job",
+            error: error.message,
+        });
+    }
+};
+
+// Controller to delete a job by ID
+export const deleteJob = async (req, res) => {
+    try {
+        const deletedJob = await Job.findByIdAndDelete(req.params.id);
+        if (!deletedJob) {
+            return res.status(404).json({
+                message: "Job not found",
+            });
+        }
+        res.status(200).json({
+            message: "Job deleted successfully",
+            data: deletedJob,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to delete job",
+            error: error.message,
+        });
+    }
+};

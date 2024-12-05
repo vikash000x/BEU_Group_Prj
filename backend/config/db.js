@@ -7,3 +7,8 @@ export const connectDB = async () => {
     )
     .then(() => console.log("db connected successfully"));
 };
+
+
+
+
+

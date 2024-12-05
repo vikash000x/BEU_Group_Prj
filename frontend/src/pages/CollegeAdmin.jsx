@@ -39,7 +39,7 @@ const CollegeAdmin = () => {
 
   useEffect(() => {
     fetchSingleCollege();
-  });
+  }, []);
 
   return loading ? (
     <div>Loading</div>
@@ -94,8 +94,6 @@ const CollegeAdmin = () => {
           </p>
         </Link>
       </div>
-
-      
     </div>
   );
 };

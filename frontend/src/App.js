@@ -22,15 +22,20 @@ import FacultiesList from "./pages/FacultiesList";
 import SingleFaculty from "./pages/SingleFaculty";
 import StudentList from "./pages/StudentList";
 import SingleStudent from "./pages/SingleStudent";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import BeuAdmin from "./pages/BeuAdmin";
 function App() {
   return (
     <>
       <div className="App bg-[#0B192C] ">
+        <ToastContainer />
         <LandingNav />
+
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/beu/admin" element={<BeuAdmin />} />
             <Route path="/job-section" element={<JobSection />} />
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
