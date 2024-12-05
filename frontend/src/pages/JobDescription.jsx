@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Badge } from '../components/BadgeCard'
-import  Button  from '../components/Button'
+
 import { useParams } from 'react-router-dom';
 import { allJobs } from '../lib/utils';
 
@@ -34,9 +34,11 @@ const JobDescription = () => {
                         <Badge className={'text-[#f47d7f] font-bold'} variant="ghost">{singleJob?.salary}LPA</Badge>
                     </div>
                 </div>
-                <Button text={buttonText}
+                <button className="px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out 
+     sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm "  onClick={() => setButtonText(buttonText === "Apply" ? " Allready Applied" : "Apply")} >{buttonText}</button>
+                {/* <Button text={buttonText}
                 onClick={() => setButtonText(buttonText === "Apply" ? " Allready Applied" : "Apply")}  className="bg-purple-600 hover:bg-yellow-500" />
-             
+              */}
             </div>
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
             <div className='my-4'>

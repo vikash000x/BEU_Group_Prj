@@ -3,6 +3,7 @@ import LatestJobs from '../components/LatestJobs';
 import FilterCard from '../components/FilterCard';
 import { allJobs } from '../lib/utils';
 import LatestJobCards from '../components/LatestJobCards';
+import axios from 'axios';
 
 const AllJob = () => {
   const [data, setData] = useState([]); // All jobs
@@ -12,27 +13,96 @@ const AllJob = () => {
 
   const categories = ['all', 'location', 'title', 'salary']; // Define filter options
 
+//   useEffect(() => {
+//     const fetchAllAdminJobs = async () => {
+//         try {
+//             const res = await axios.get('http://localhost:4000/api/job/job-get', { withCredentials: true });
+//             console.log(res);
+//             if (res.status === 200) {
+//                 // Access the nested data structure
+//                 setData(res.data.data); // Update the state with jobs
+//             } else {
+//                 console.error("Failed to fetch jobs:", res.data.message);
+//             } 
+//         }  catch (error) {
+//             console.error("Error fetching jobs:", error);
+//         }
+//     };
+
+    
+//     fetchAllAdminJobs();
+// }, []);
+
+//   // Show loader and filter jobs when `selectedCategory` changes
+//   useEffect(() => {
+//     setLoading(true); // Show loader
+//     const timer = setTimeout(() => {
+//       if (selectedCategory === 'all') {
+//         setFilteredData(data); // Show all jobs
+//     //filteredData;
+
+//       } else {
+//         setFilteredData(
+//           data.filter(
+//             (item) =>
+//               item.location === selectedCategory ||
+//               item.salary === selectedCategory ||
+//               item.title === selectedCategory
+//           )
+//         );
+//       }
+//       setLoading(false); // Hide loader after 500 ms
+//     }, 300);
+
+  //   return () => clearTimeout(timer); // Cleanup timeout
+  // }, [selectedCategory]);
+
+
+   // Fetch jobs from the API
+   useEffect(() => {
+    const fetchAllAdminJobs = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/api/job/job-get', { withCredentials: true });
+        console.log(res);
+        if (res.status === 200) {
+          setData(res.data.data); // Update the state with jobs
+        } else {
+          console.error("Failed to fetch jobs:", res.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+
+    fetchAllAdminJobs();
+  }, []);
+
   // Show loader and filter jobs when `selectedCategory` changes
   useEffect(() => {
     setLoading(true); // Show loader
     const timer = setTimeout(() => {
-      if (selectedCategory === 'all') {
-        setFilteredData(allJobs); // Show all jobs
+      if (data.length > 0) { // Ensure data is fetched before filtering
+        if (selectedCategory === 'all') {
+          setFilteredData(data); // Show all jobs
+        } else {
+          setFilteredData(
+            data.filter(
+              (item) =>
+                item.location === selectedCategory ||
+                item.salary === selectedCategory ||
+                item.title === selectedCategory
+            )
+          );
+        }
       } else {
-        setFilteredData(
-          allJobs.filter(
-            (item) =>
-              item.location === selectedCategory ||
-              item.salary === selectedCategory ||
-              item.title === selectedCategory
-          )
-        );
+        setFilteredData([]); // Clear data if no jobs available
       }
-      setLoading(false); // Hide loader after 500 ms
+      setLoading(false); // Hide loader after filtering
     }, 300);
 
     return () => clearTimeout(timer); // Cleanup timeout
-  }, [selectedCategory]);
+  }, [selectedCategory, data]); // Run filtering logic when either `selectedCategory` or `data` changes
+
 
   return (
     <div className="w-[1300px] my-3  mx-auto flex">

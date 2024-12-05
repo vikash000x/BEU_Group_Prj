@@ -2,7 +2,7 @@ import React from 'react'
 import {Badge} from './BadgeCard'
 import { useNavigate } from 'react-router-dom'
 import { Bookmark } from 'lucide-react';
-import Button from './Button';
+
 import { Avatar, AvatarImage } from './Avatar';
 
 const LatestJobCards = ({job, id}) => {
@@ -33,8 +33,15 @@ const LatestJobCards = ({job, id}) => {
                 <Badge className={'text-[#f47d7f] font-bold py-1'} variant="ghost">{job?.salary}LPA</Badge>
             </div>
             <div className='flex items-center gap-4 mt-4'>
-                <Button text="Details" onClick={()=> navigate(`/description/${job?.id}`)} className=" hover:bg-yellow-400 hover:text-gray-500" />
-                <Button text="Save For Later" className=" hover:bg-yellow-400 text-white hover:text-gray-500" />
+                {/* <Button text="Details" onClick={()=> navigate(`/description/${job?.id}`)} className=" hover:bg-yellow-400 hover:text-gray-500" /> */}
+                {/* <Button text="Save For Later" className=" hover:bg-yellow-400 text-white hover:text-gray-500" /> */}
+           
+                <button className="hover:bg-yellow-400 hover:text-gray-500 px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg  active:bg-blue-700 transition duration-200 ease-in-out 
+     sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm " onClick={()=> navigate(`/description/${job?.id}`)} >Submit</button>
+
+<button className="hover:bg-yellow-400 hover:text-gray-500 px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg  active:bg-blue-700 transition duration-200 ease-in-out 
+     sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm " onClick={()=> navigate(`/description/${job?.id}`)} >Save For Later</button>
+           
             </div>
         </div>
     )
