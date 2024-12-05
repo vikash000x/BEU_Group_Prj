@@ -3,14 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "./loader/Loader";
 const CollegeLogin = () => {
   const [collegecode, setCollegeCode] = useState("");
   const [password, setPassword] = useState("");
-  const { userType, setUserType, setToken, url, setLoggedInCollegeCode } = useContext(StoreContext);
+  const { userType, setUserType, setToken, url, loading, setLoading, setLoggedInCollegeCode } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const response = await axios.post(`${url}/collegeadmin/login-college`, {
       collegecode,
       password,
@@ -21,13 +23,16 @@ const CollegeLogin = () => {
       localStorage.setItem("token", response.data.token);
       toast.success("LogedIn as college");
       setUserType("college");
+      setLoading(false);
       navigate("/collegename/admin");
     } else {
       toast.error(response.data.message);
     }
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="bg-gray-100 h-[100vh] flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">

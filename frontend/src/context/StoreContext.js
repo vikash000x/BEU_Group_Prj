@@ -7,8 +7,11 @@ const StoreContextProvider = (props) => {
   const [userType, setUserType] = useState("anonymous");
   const [token, setToken] = useState(null);
   const [loggedInCollegeCode, setLoggedInCollegeCode] = useState(null);
+  const [loading, setLoading] = useState(null);
   const url = "http://localhost:4000/api";
   const contextValue = {
+    loading,
+    setLoading,
     singleCollege,
     setSingleCollege,
     collegeFacultyData,
