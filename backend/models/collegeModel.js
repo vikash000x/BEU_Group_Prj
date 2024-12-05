@@ -6,7 +6,7 @@ const collegeSchema = new mongoose.Schema({
   collegeCode: { type: String, required: true, unique: true },
   description: { type: String },
   images: [{ type: String }],
-  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }], // Array of student IDs
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "student" }], // Array of student IDs
   faculties: [{ type: mongoose.Schema.Types.ObjectId, ref: "Faculty" }], // Array of faculty IDs
 });
 

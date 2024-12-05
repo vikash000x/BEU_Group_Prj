@@ -21,8 +21,11 @@ app.use(
 
 // Connecting to cloudinary
 cloudinaryConnect();
-
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 connectDB();
 
 app.use("/api/collegeadmin", collegeAdminRouter);
