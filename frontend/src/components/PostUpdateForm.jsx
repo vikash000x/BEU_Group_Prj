@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../context/StoreContext';
 
 const PostNoticeForm = () => {
+
+  const { url, loggedInCollegeCode } = useContext(StoreContext);
 
     const navigate = useNavigate();
     const collegeShortName = 'bce-bhagalpur';
   const [noticeData, setNoticeData] = useState({
-    title: '',
+    headline: '',
     description: '',
     date: '',
     category: '',
     targetAudience: '',
     attachments: null,
+    postedBy: '',
   });
 
   const handleChange = (e) => {
@@ -29,25 +34,42 @@ const PostNoticeForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Smooth scroll animation
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    noticeData.collegeCode = loggedInCollegeCode;
+    try {
+      // Prepare data for the request
+      console.log("lllll", noticeData)
+      const response = await axios.post(`${url}/notice/addNotice`, noticeData, {
+        headers: {
+          "Content-Type": "application/json",  // Ensure JSON content-type
+        },
       });
-    navigate(`/${collegeShortName}/admin`);
+    
+      if (response.status === 201) {
+        alert("Notice added successfully!");
+        console.log("API Response:", response.data);
+        navigate(`/${collegeShortName}/admin`); // Navigate to the admin page
+      } else {
+        alert(`Error: ${response.data.message}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to add notice.");
+    }
   };
+  
 
   return (
     <div className="max-w-2xl mx-auto p-6 pt-4  bg-slate-800 shadow-md rounded-lg mt-10">
       <h2 className="text-2xl font-bold mb-6 text-white text-center">Post a Notice</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-white font-medium mb-2">Title:</label>
+          <label className="block text-white font-medium mb-2">headline:</label>
           <input
             type="text"
-            name="title"
-            value={noticeData.title}
+            name="headline"
+            value={noticeData.headline}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

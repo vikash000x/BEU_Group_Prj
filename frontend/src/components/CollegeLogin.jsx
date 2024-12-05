@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const CollegeLogin = () => {
   const [collegecode, setCollegeCode] = useState("");
   const [password, setPassword] = useState("");
-  const { userType, setUserType, setToken, url } = useContext(StoreContext);
+  const { userType, setUserType, setToken, url, setLoggedInCollegeCode } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,6 +16,7 @@ const CollegeLogin = () => {
       password,
     });
     if (response.data.success) {
+      setLoggedInCollegeCode(collegecode)
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       toast.success("LogedIn as college");

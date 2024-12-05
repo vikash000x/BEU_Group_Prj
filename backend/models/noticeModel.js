@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const noticeSchema = new mongoose.Schema({
   postedBy: {
     type: mongoose.Schema.Types.ObjectId, ref: "college",
-    required: true,
+    required: false,
+  },
+  collegeCode: {
+    type: String
   },
   headline: {
     type: String,
@@ -27,7 +30,7 @@ const noticeSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["Event", "Sports", "Exam", "Announcement"],
+    enum: ["Event", "Notice", "Exam", "Announcement"],
     required: true,
   },
   targetAudience: {

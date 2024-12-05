@@ -3,7 +3,7 @@ import noticeModel from "../models/noticeModel.js";
 export const postNotice = async (req, res) => {
     try {
       const {
-        postedBy,
+        collegeCode,
         headline,
         description,
         category,
@@ -12,17 +12,20 @@ export const postNotice = async (req, res) => {
         department,
       } = req.body;
   
-      const files = req.files?.attachments || [];
+      const files = req.body.attachments;
       const uploadedFiles = [];
+
+      console.log("img", files)
   
-      // Handle file uploads to Cloudinary
-    //   for (const file of files) {
-    //     const uploadedFile = await uploadToCloudinary(file);
-    //     uploadedFiles.push(uploadedFile.secure_url);
-    //   }
+      //Handle file uploads to Cloudinary
+      // for (const file of files) {
+      //   const uploadedFile = await uploadToCloudinary(file);
+      //   uploadedFiles.push(uploadedFile.secure_url);
+      // }
+      console.log("lll", files)
   
       const newNotice = new noticeModel({
-        postedBy,
+        collegeCode,
         headline,
         description,
         category,
