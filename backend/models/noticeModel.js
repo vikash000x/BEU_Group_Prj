@@ -38,7 +38,7 @@ const noticeSchema = new mongoose.Schema({
     enum: ["Local", "Global"],
     required: true,
   },
-  attachements: [{ type: String}],
+  attachments: [{ type: String}],
   department: {
     type: String, // Department related to the notice (e.g., "IT", "HR", etc.)
     required: false,
