@@ -7,8 +7,7 @@ import Loader from "./loader/Loader";
 const CollegeLogin = () => {
   const [collegecode, setCollegeCode] = useState("");
   const [password, setPassword] = useState("");
-  const { userType, setUserType, setToken, url, loading, setLoading } =
-    useContext(StoreContext);
+  const { userType, setUserType, setToken, url, loading, setLoading, setLoggedInCollegeCode } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,6 +18,7 @@ const CollegeLogin = () => {
       password,
     });
     if (response.data.success) {
+      setLoggedInCollegeCode(collegecode)
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       toast.success("LogedIn as college");

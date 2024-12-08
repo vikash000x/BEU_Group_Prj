@@ -36,7 +36,7 @@ const UpdatesPageFilter = ({ TypeSetter, OptionSetter }) => {
         {/* College Dropdown */}
         <div>
           <select
-            className="max-w-40 border border-gray-300 rounded-md h-8 bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="max-w-40 border border-gray-300 text-black rounded-md h-8 bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="collegeDropdown"
             value={selectedCollege}
             onChange={handleCollegeChange}
@@ -55,7 +55,7 @@ const UpdatesPageFilter = ({ TypeSetter, OptionSetter }) => {
         {/* category Dropdown */}
         <div>
           <select
-            className="max-w-40 border border-gray-300 rounded-md h-8 bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="max-w-40 border border-gray-300 rounded-md h-8 text-black bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="typeDropdown"
             value={selectedType}
             onChange={handleLabelChange}
