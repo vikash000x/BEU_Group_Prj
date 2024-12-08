@@ -1,6 +1,6 @@
-import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
 import facultyModel from "../models/facultyModel.js";
+import { uploadImageToCloudinary } from "../config/cloudinary.js";
 export const addFaculty = async (req, res) => {
   const {
     name,
@@ -15,26 +15,30 @@ export const addFaculty = async (req, res) => {
     courses,
     collegeCode,
   } = req.body;
-  const { image } = req.files;
+
   try {
+    const { image } = req.files;
+    console.log("collegecode", collegeCode, "name", name);
+
     const college = await collegeModel.findOne({ collegeCode });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
-    const imageURL = uploadI;
+    const thumbnailImage = await uploadImageToCloudinary(image, "beu");
+    const imagePaths = thumbnailImage.secure_url;
     const newFaculty = await facultyModel.create({
       name,
       department,
       designation,
       experience,
       rating,
-      profileImage: email,
+      profileImage: imagePaths,
+      email,
       phone,
       office,
       specialization,
       courses,
       collegeCode,
-      // profileImage: image_filename,
     });
     college.faculties.push(newFaculty._id);
     await college.save();
