@@ -12,17 +12,11 @@ export const postNotice = async (req, res) => {
         department,
       } = req.body;
   
-      const files = req.body.attachments;
-      const uploadedFiles = [];
-
-      console.log("img", files)
-  
-      //Handle file uploads to Cloudinary
-      // for (const file of files) {
-      //   const uploadedFile = await uploadToCloudinary(file);
-      //   uploadedFiles.push(uploadedFile.secure_url);
-      // }
-      console.log("lll", files)
+      let uploadedFiles = [];
+      if(req.body.attachments != null) {
+        uploadedFiles.push(req.body.attachments);
+      }
+      
   
       const newNotice = new noticeModel({
         collegeCode,

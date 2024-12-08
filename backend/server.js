@@ -8,6 +8,7 @@ import collegeRouter from "./routes/collegeRoutes.js";
 import noticeRouter from "./routes/noticeRoutes.js";
 import { cloudinaryConnect } from "./config/cloudinary.js";
 import jobRouter from "./routes/jobRoutes.js";
+import facultyRouter from "./routes/facultyRoutes.js";
 const app = express();
 
 const port = 4000;
@@ -33,6 +34,7 @@ connectDB();
 app.use("/api/collegeadmin", collegeAdminRouter);
 app.use("/api/college", collegeRouter);
 app.use("/api/student", studentRouter);
+app.use("/api/faculty", facultyRouter);
 app.use("/api/job", jobRouter);
 app.use("/api/notice", noticeRouter);
 app.get("/", (req, res) => {

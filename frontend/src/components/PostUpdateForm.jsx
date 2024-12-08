@@ -1,22 +1,23 @@
-import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { StoreContext } from '../context/StoreContext';
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
+import { toast } from "react-toastify";
+import Loader from "./loader/Loader";
 
 const PostNoticeForm = () => {
-
-  const { url, loggedInCollegeCode } = useContext(StoreContext);
-
-    const navigate = useNavigate();
-    const collegeShortName = 'bce-bhagalpur';
+  const { url, loggedInCollegeCode, loading, setLoading } = useContext(StoreContext);
+  const navigate = useNavigate();
+  const collegeShortName = "bce-bhagalpur";
+  const [fileData, setFileData] = useState(null);
   const [noticeData, setNoticeData] = useState({
-    headline: '',
-    description: '',
-    date: '',
-    category: '',
-    targetAudience: '',
+    headline: "",
+    description: "",
+    date: "",
+    category: "",
+    targetAudience: "",
     attachments: null,
-    postedBy: '',
+    postedBy: "",
   });
 
   const handleChange = (e) => {
@@ -28,41 +29,75 @@ const PostNoticeForm = () => {
   };
 
   const handleFileChange = (e) => {
-    setNoticeData((prevData) => ({
-      ...prevData,
-      attachments: e.target.files[0],
-    }));
+    const file = e.target.files[0];
+    setFileData(file);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
+    setLoading(true);
+
+    // Add the collegeCode to the data before sending
     noticeData.collegeCode = loggedInCollegeCode;
+
     try {
-      // Prepare data for the request
-      console.log("lllll", noticeData)
+      if (fileData) {
+        const formData = new FormData();
+        formData.append("image", fileData);
+
+        // Upload the file and get the image URL
+        const imageUploadResponse = await axios.post(
+          `${url}/college/upload-image`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type to multipart
+            },
+          }
+        );
+
+        //not working bro
+        // setNoticeData((prevData) => ({
+        //   ...prevData,
+        //   attachments: imageUploadResponse.data.imageURL, // Assuming the URL is returned in `imageURL`
+        // }));
+
+        noticeData.attachments = imageUploadResponse.data.imageURL;
+
+        console.log("hi", noticeData.attachments)
+        console.log("hi2", imageUploadResponse.data.imageURL)
+        // console.log("api wala notice data", noticeData.attachments);
+        // console.log('fileda', fileData)
+      }
+
+      // After file URL (if any) is added to `noticeData`, send the final data to add the notice
       const response = await axios.post(`${url}/notice/addNotice`, noticeData, {
         headers: {
-          "Content-Type": "application/json",  // Ensure JSON content-type
+          "Content-Type": "application/json", // JSON content type for the second request
         },
       });
-    
+      setLoading(false);
+
+      // Handle success and failure for adding the notice
       if (response.status === 201) {
-        alert("Notice added successfully!");
-        console.log("API Response:", response.data);
+        toast.success("Notice Posted Successfully !!");
         navigate(`/${collegeShortName}/admin`); // Navigate to the admin page
       } else {
-        alert(`Error: ${response.data.message}`);
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to add notice.");
+      toast.error("Failed to add notice");
     }
   };
-  
 
   return (
-    <div className="max-w-2xl mx-auto p-6 pt-4  bg-slate-800 shadow-md rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-white text-center">Post a Notice</h2>
+    
+    loading ? <Loader />: (
+      <div className="max-w-2xl mx-auto p-6 pt-4  bg-slate-800 shadow-md rounded-lg mt-10">
+      <h2 className="text-2xl font-bold mb-6 text-white text-center">
+        Post a Notice
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-white font-medium mb-2">headline:</label>
@@ -77,7 +112,9 @@ const PostNoticeForm = () => {
         </div>
 
         <div>
-          <label className="block font-medium mb-2 text-white">Description:</label>
+          <label className="block font-medium mb-2 text-white">
+            Description:
+          </label>
           <textarea
             name="description"
             value={noticeData.description}
@@ -119,7 +156,9 @@ const PostNoticeForm = () => {
         </div>
 
         <div>
-          <label className="block text-white font-medium mb-2">Target Audience:</label>
+          <label className="block text-white font-medium mb-2">
+            Target Audience:
+          </label>
           <select
             name="targetAudience"
             value={noticeData.targetAudience}
@@ -136,7 +175,9 @@ const PostNoticeForm = () => {
         </div>
 
         <div>
-          <label className="block text-white font-medium mb-2">Attachments (Optional):</label>
+          <label className="block text-white font-medium mb-2">
+            Attachments (Optional):
+          </label>
           <input
             type="file"
             name="attachments"
@@ -153,6 +194,7 @@ const PostNoticeForm = () => {
         </button>
       </form>
     </div>
+    )
   );
 };
 
