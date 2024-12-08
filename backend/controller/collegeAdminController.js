@@ -2,6 +2,7 @@ import collegeAdminModel from "../models/collegeAdminModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import collegeModel from "../models/collegeModel.js";
 
 const createToken = (id) => {
   return jwt.sign({ id }, "amir");
@@ -46,6 +47,13 @@ const registerCollege = async (req, res) => {
       password: hashedPassword,
     });
     const collegeAdmin = await newCollegeAdmin.save();
+
+    const newCollege = new collegeModel({
+      name: collegename,
+      collegeCode: collegecode,
+    })
+
+    const createdCollege = await newCollege.save();
     // const token = createToken(collegeAdmin._id);
     res.json({
       success: true,

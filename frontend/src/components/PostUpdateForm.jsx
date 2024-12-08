@@ -86,6 +86,7 @@ const PostNoticeForm = () => {
         toast.error(response.data.message);
       }
     } catch (error) {
+      setLoading(false);
       console.error("Error:", error);
       toast.error("Failed to add notice");
     }
