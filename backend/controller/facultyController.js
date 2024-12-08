@@ -1,7 +1,6 @@
 import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
 import facultyModel from "../models/facultyModel.js";
-
 export const addFaculty = async (req, res) => {
   const {
     name,
@@ -16,18 +15,20 @@ export const addFaculty = async (req, res) => {
     courses,
     collegeCode,
   } = req.body;
+  const { image } = req.files;
   try {
     const college = await collegeModel.findOne({ collegeCode });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
+    const imageURL = uploadI;
     const newFaculty = await facultyModel.create({
       name,
       department,
       designation,
       experience,
       rating,
-      email,
+      profileImage: email,
       phone,
       office,
       specialization,
