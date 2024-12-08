@@ -3,24 +3,42 @@ import collegeModel from "../models/collegeModel.js";
 import facultyModel from "../models/facultyModel.js";
 
 export const addFaculty = async (req, res) => {
-  const { name, branch, year, grade, cgpa, collegeCode } = req.body;
+  const {
+    name,
+    department,
+    designation,
+    experience,
+    rating,
+    email,
+    phone,
+    office,
+    specialization,
+    courses,
+    collegeCode,
+  } = req.body;
   try {
     const college = await collegeModel.findOne({ collegeCode });
     if (!college) {
-      return res.status(404).json({ message: "You are not registered by BEU" });
+      return res.status(404).json({ message: "College Code incorrect" });
     }
-    const newStudent = await studentModel.create({
+    const newFaculty = await facultyModel.create({
       name,
-      branch,
-      year,
-      grade,
-      cgpa,
+      department,
+      designation,
+      experience,
+      rating,
+      email,
+      phone,
+      office,
+      specialization,
+      courses,
+      collegeCode,
       // profileImage: image_filename,
     });
-    college.students.push(newStudent._id);
+    college.faculties.push(newFaculty._id);
     await college.save();
 
-    res.status(200).json({ message: "Student added", college });
+    res.status(200).json({ message: "Faculty added", college });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -28,26 +46,48 @@ export const addFaculty = async (req, res) => {
 };
 
 // this controller for college admin
-export const updateStudent = async (req, res) => {
-  const { studentId } = req.params; // Extract studentId from route parameters
-  const { name, branch, year, grade, cgpa } = req.body; // Extract updated fields from request body
+export const updateFaculty = async (req, res) => {
+  const { facultyId } = req.params; // Extract studentId from route parameters
+  const {
+    name,
+    department,
+    designation,
+    experience,
+    rating,
+    email,
+    phone,
+    office,
+    specialization,
+    courses,
+  } = req.body; // Extract updated fields from request body
 
   try {
     // Update the student by ID
-    const updatedStudent = await studentModel.findByIdAndUpdate(
-      studentId,
-      { name, branch, year, grade, cgpa }, // Fields to update
+    const updatedFaculty = await facultyModel.findByIdAndUpdate(
+      facultyId,
+      {
+        name,
+        department,
+        designation,
+        experience,
+        rating,
+        email,
+        phone,
+        office,
+        specialization,
+        courses,
+      }, // Fields to update
       { new: true } // Options: Return the updated document and validate the data
     );
 
     // If student not found
-    if (!updatedStudent) {
+    if (!updatedFaculty) {
       return res.status(404).json({ message: "Student not found" });
     }
 
     res
       .status(200)
-      .json({ message: "Student updated successfully", updatedStudent });
+      .json({ message: "Faculty updated successfully", updatedFaculty });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -55,32 +95,32 @@ export const updateStudent = async (req, res) => {
 };
 
 // Controller to delete a student , a college will delete the student
-export const deleteStudent = async (req, res) => {
-  const { studentId } = req.params;
+export const deleteFaculty = async (req, res) => {
+  const { facultyId } = req.params;
 
   try {
     // Find the student by ID
-    const student = await studentModel.findById(studentId);
-    if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+    const faculty = await facultyModel.findById(facultyId);
+    if (!faculty) {
+      return res.status(404).json({ message: "Faculty not found" });
     }
 
     // Find the associated college
-    const college = await collegeModel.findOne({ students: studentId });
+    const college = await collegeModel.findOne({ faculties: facultyId });
     if (!college) {
       return res.status(404).json({ message: "Associated college not found" });
     }
 
     // Remove the student from the college's student list
-    college.students = college.students.filter(
-      (id) => id.toString() !== studentId
+    college.faculties = college.faculties.filter(
+      (id) => id.toString() !== facultyId
     );
     await college.save();
 
     // Delete the student
-    await studentModel.findByIdAndDelete(studentId);
+    await facultyModel.findByIdAndDelete(facultyId);
 
-    res.status(200).json({ message: "Student deleted successfully" });
+    res.status(200).json({ message: "Faculty deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
