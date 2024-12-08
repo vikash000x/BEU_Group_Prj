@@ -50,6 +50,8 @@ const JobSection = () => {
 
         fetchAllAdminJobs();
     }, []); // Run only once when the component mounts
+    console.log(job.slice().reverse());
+
   return (
     <div  className = 'w-[1200px] my-3 mx-auto' >
 
@@ -80,7 +82,9 @@ const JobSection = () => {
                 <TableBody className="space-y-4" >
                 {job.length > 0 ? (
     
-    job.slice().reverse().map((item, index) => ( // Use slice() to avoid mutating the original array
+    job.slice().reverse().map((item, index) => ( 
+        
+        // Use slice() to avoid mutating the original array
         <tr
             key={index} // Add a unique key here
             className="hover:border-red-400 py-4 bg-slate-800 text-white border-b border-white rounded-lg"
@@ -96,7 +100,7 @@ const JobSection = () => {
                     <PopoverContent className="w-32 bg-slate-400 hover:bg-violet-200">
                         <div
                             className="flex items-center gap-2 w-fit cursor-pointer"
-                            onClick={() => navigate('/job-section/job-creation')}
+                            onClick={() => navigate(`/job-section/update-job/${item._id}`)}
                         >
                             <Edit2 className="w-4" />
                             <span>Edit</span>

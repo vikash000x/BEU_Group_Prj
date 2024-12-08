@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Badge } from '../components/BadgeCard'
 
 import { useParams } from 'react-router-dom';
-import { allJobs } from '../lib/utils';
+
+import axios from 'axios';
 
 
 
@@ -14,12 +15,32 @@ const JobDescription = () => {
     const params = useParams();
     const jobId= params.id;
     console.log(jobId)
-    useEffect(()=>{
-        const selectedjob = allJobs.find((job)=>job.id===jobId);
-        setSinglejob(selectedjob);
-    },[jobId, allJobs]);
-
-    console.log(singleJob)
+   // const [singleJob, setData] = useState(); // All jobs
+    
+   // const [loading, setLoading] = useState(false); // Loading state
+  
+    
+  
+//      // Fetch jobs from the API
+     useEffect(() => {
+      const fetchSingleJob = async () => {
+        try {
+          const res = await axios.get(`http://localhost:4000/api/job/job-get/${jobId}`, { withCredentials: true });
+         console.log(res);
+          if (res.status === 200) {
+            setSinglejob(res.data.data); // Update the state with jobs
+          } else {
+            console.error("Failed to fetch jobs:", res.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching jobs:", error);
+        }
+      };
+  
+      fetchSingleJob();
+    }, []);
+  
+   
 
        
 

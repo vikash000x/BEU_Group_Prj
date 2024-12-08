@@ -25,6 +25,7 @@ import SingleStudent from "./pages/SingleStudent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BeuAdmin from "./pages/BeuAdmin";
+import UpdateJob from "./pages/UpdateJob";
 function App() {
   return (
     <>
@@ -42,7 +43,7 @@ function App() {
             <Route path="/job-section/applied-list" element={<AppliedList />} />
             <Route path="/alljob" element={<AllJob />} />
             <Route path="/description/:id" element={<JobDescription />} />
-
+            <Route path="/job-section/update-job/:id" element={<UpdateJob />} />
             <Route path="/:collegeName/admin" element={<CollegeAdmin />} />
             <Route
               path=":collegeShortName/addFaculty"

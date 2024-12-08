@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
 import {Label} from '../components/label'
 import { Input } from '../components/input'
@@ -6,60 +6,86 @@ import axios from 'axios'
 import { useContext } from 'react';
 import { StoreContext } from '../context/StoreContext';
 // import { JOB_API_END_POINT } from '@/utils/constant'
- 
+
 // import { useNavigate } from 'react-router-dom'
 import Loader from '../components/loader/Loader';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 
-const PostJob = () => {
+
+const PostJob11 = () => {
+
+
+  
+   
+    
+    const params = useParams();
+    const jobId= params.id;
+    console.log(jobId)
+   // const [singleJob, setData] = useState(); // All jobs
+    
+   // const [loading, setLoading] = useState(false); // Loading state
+  
+   const [input, setInput] = useState({   
+});
+  
+//      // Fetch jobs from the API
+     useEffect(() => {
+      const fetchSingleJob = async () => {
+        try {
+          const res = await axios.get(`http://localhost:4000/api/job/job-get/${jobId}`, { withCredentials: true });
+         console.log(res);
+          if (res.status === 200) {
+            setInput(res.data.data); // Update the state with jobs
+          } else {
+            console.error("Failed to fetch jobs:", res.data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching jobs:", error);
+        }
+      };
+  
+      fetchSingleJob();
+    }, []);
+  
     const {loading,setLoading} = useContext(StoreContext);
 
-    const [input, setInput] = useState({
-        title: "",
-        description: "",
-        requirements: "",
-        salary: "",
-        location: "",
-        jobType: "",
-        experience: "",
-        position: ""
-       
-    });
+
+  //  console.log(input)
    
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
-       
-      
+       // console.log("hey");
+        console.log(input)
     };
-    
-    
+  
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             setLoading(true);
-          console.log(input);
-            const res = await axios.post('http://localhost:4000/api/job/job-post', input,{
+            const res = await axios.put(`http://localhost:4000/api/job/job-update/${jobId}`, input,{
                 headers:{
                     'Content-Type':'application/json'
                 },
 
                 withCredentials:true
             });
-
-            console.log(res);
-            if(res.data.success){
-               setLoading(false);
-                toast.success("job created successfully!");
+            if(res){
+                setLoading(false);
+                console.log("succedd");
+                toast.success("job updated successfully!");
                 navigate("/job-section");
-            }
+            } 
         } catch (error) {
-           setLoading(false);
+          //
             console.log("data is not going to backend");
+            toast.error("Failed to update the job. Try again.");
+            setLoading(false);
         } finally{
-        setLoading(false);
+            setLoading(false);
         }
     }
 
@@ -155,11 +181,12 @@ const PostJob = () => {
                 
                 </div> 
                 
-                    {/* <Button onClick={()=>navigate('/job-section')} text="submit" type="submit" className="w-full my-4"/> */}                
-                <button type="submit" className="w-full my-4 px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out 
- sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm "  > Submit </button> 
+                    {/* <Button onClick={()=>navigate('/job-section')} text="submit" type="submit" className="w-full my-4"/> */}
+                
+                 <button type="submit" className="w-full my-4 px-6 py-2 h-10 text-white bg-[#0B192C] border-[0.01rem] rounded-lg hover:bg-blue-600 active:bg-blue-700 transition duration-200 ease-in-out 
+ sm:px-8px  lg:h-11 lg:rounded-md lg:px-8 sm:h-9 sm:rounded-md sm:px-3   md:px-8 md:py-[-10px] text-sm "> Update </button> 
 
- {/* <button type="submit"  className="w-full my-4"  >Post New Job</button> */}
+ {/* <button type="submit"  className="w-full my-4" ></button> */}
                 
             </form>
         </div>
@@ -168,4 +195,4 @@ const PostJob = () => {
     )
 }
 
-export default PostJob
+export default PostJob11

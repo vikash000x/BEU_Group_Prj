@@ -3,9 +3,9 @@ import { Job } from "../models/jobModel.js"; // Adjust the path based on your fi
 // Controller to create a new job
 export const createJob = async (req, res) => {
     try {
-       // const job = new Job(req.body);
-        const { title, description, requirements, salary, location, jobType, experience, position } = req.body;
-        const userId = req.id;
+      
+        const { title,  description, requirements, salary, location, jobType, experience, position } = req.body;
+        
        if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position) {
         return res.status(400).json({
             message: "some fields have missing data",
@@ -14,7 +14,6 @@ export const createJob = async (req, res) => {
        };
 
        const job = await Job.create({
-        id :  userId,
         title,
         description,
         requirements,
@@ -25,6 +24,7 @@ export const createJob = async (req, res) => {
         position
        
        });
+       
 
         
      return    res.status(201).json({

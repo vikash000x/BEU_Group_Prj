@@ -12,3 +12,6 @@ studentRouter.put("/update-student/:id", updateStudent);
 studentRouter.delete("/delete-student/:studentId", deleteStudent);
 
 export default studentRouter;
+
+
+
