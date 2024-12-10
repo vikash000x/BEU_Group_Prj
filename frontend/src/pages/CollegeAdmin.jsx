@@ -45,22 +45,9 @@ const CollegeAdmin = () => {
     <div>Loading</div>
   ) : (
     <div className="w-[1200px] flex flex-col items-center gap-4 py-4 mx-auto text-white">
-      <div className="">
-        <p className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
-          BEU Recent Instructions
-        </p>
-        <div>
-          {filteredNoticeList.map((notice, index) => {
-            return (
-              <UpdatesCard data={notice} key={notice.id}>
-                hi
-              </UpdatesCard>
-            );
-          })}
-        </div>
-        <button className="text-3xl w-[1200px] bg-slate-700 rounded mx-auto text-center font-semibold mb-4 py-4">
-          Read More Updates
-        </button>
+      
+      <div>
+        
       </div>
 
       <div>

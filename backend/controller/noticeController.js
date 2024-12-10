@@ -10,6 +10,7 @@ export const postNotice = async (req, res) => {
         targetAudience,
         validUntil,
         department,
+        postedBy,
       } = req.body;
   
       let uploadedFiles = [];
@@ -19,6 +20,7 @@ export const postNotice = async (req, res) => {
       
   
       const newNotice = new noticeModel({
+        postedBy,
         collegeCode,
         headline,
         description,

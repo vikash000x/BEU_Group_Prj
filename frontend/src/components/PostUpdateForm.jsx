@@ -6,9 +6,8 @@ import { toast } from "react-toastify";
 import Loader from "./loader/Loader";
 
 const PostNoticeForm = () => {
-  const { url, loggedInCollegeCode, loading, setLoading } = useContext(StoreContext);
+  const { url, loggedInCollegeData, loading, setLoading } = useContext(StoreContext);
   const navigate = useNavigate();
-  const collegeShortName = "bce-bhagalpur";
   const [fileData, setFileData] = useState(null);
   const [noticeData, setNoticeData] = useState({
     headline: "",
@@ -38,7 +37,8 @@ const PostNoticeForm = () => {
     setLoading(true);
 
     // Add the collegeCode to the data before sending
-    noticeData.collegeCode = loggedInCollegeCode;
+    noticeData.collegeCode = loggedInCollegeData.collegeCode;
+    noticeData.postedBy = loggedInCollegeData.name;
 
     try {
       if (fileData) {
@@ -56,21 +56,11 @@ const PostNoticeForm = () => {
           }
         );
 
-        //not working bro
-        // setNoticeData((prevData) => ({
-        //   ...prevData,
-        //   attachments: imageUploadResponse.data.imageURL, // Assuming the URL is returned in `imageURL`
-        // }));
-
         noticeData.attachments = imageUploadResponse.data.imageURL;
-
-        console.log("hi", noticeData.attachments)
-        console.log("hi2", imageUploadResponse.data.imageURL)
-        // console.log("api wala notice data", noticeData.attachments);
-        // console.log('fileda', fileData)
       }
 
       // After file URL (if any) is added to `noticeData`, send the final data to add the notice
+      //console.log("jjjjjjjjjjifdfidbfdfd", noticeData)
       const response = await axios.post(`${url}/notice/addNotice`, noticeData, {
         headers: {
           "Content-Type": "application/json", // JSON content type for the second request
@@ -81,7 +71,7 @@ const PostNoticeForm = () => {
       // Handle success and failure for adding the notice
       if (response.status === 201) {
         toast.success("Notice Posted Successfully !!");
-        navigate(`/${collegeShortName}/admin`); // Navigate to the admin page
+        navigate(`/${loggedInCollegeData.collegeCode}/admin`); // Navigate to the admin page
       } else {
         toast.error(response.data.message);
       }

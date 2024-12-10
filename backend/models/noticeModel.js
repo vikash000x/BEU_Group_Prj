@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 const noticeSchema = new mongoose.Schema({
   postedBy: {
-    type: mongoose.Schema.Types.ObjectId, ref: "college",
-    required: false,
+    type: String,
+    required: true,
   },
   collegeCode: {
-    type: String
+    type: String,
+    required: true,
   },
   headline: {
     type: String,
