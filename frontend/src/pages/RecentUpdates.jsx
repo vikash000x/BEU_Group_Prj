@@ -179,7 +179,7 @@ const RecentUpdates = () => {
                     {selectedNotice.attachments.map((attachment, index) => (
                       <li key={index}>
                         <a
-                          href={attachment.fileUrl}
+                          href={attachment}
                           className="text-blue-500 underline"
                           target="_blank"
                           rel="noopener noreferrer"
