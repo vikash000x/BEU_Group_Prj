@@ -47,11 +47,11 @@ const registerCollege = async (req, res) => {
       password: hashedPassword,
     });
     const collegeAdmin = await newCollegeAdmin.save();
-
+    console.log(collegeAdmin);
     const newCollege = new collegeModel({
       name: collegename,
       collegeCode: collegecode,
-    })
+    });
 
     const createdCollege = await newCollege.save();
     // const token = createToken(collegeAdmin._id);
@@ -59,6 +59,7 @@ const registerCollege = async (req, res) => {
       success: true,
       message: "College Added Successfully",
       collegeAdmin,
+      createdCollege,
     });
   } catch (error) {
     console.log("Error->", error);
