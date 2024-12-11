@@ -16,7 +16,7 @@ const UpdatesPageFilter = ({ TypeSetter, OptionSetter }) => {
   const handleCollegeChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedCollege(selectedValue);
-    TypeSetter("College");
+    TypeSetter("postedBy");
     setSelectedType(""); //To make other filter value empty
     OptionSetter(selectedValue);
   };

@@ -11,6 +11,7 @@ export const postNotice = async (req, res) => {
         validUntil,
         department,
         postedBy,
+        thumbnail,
       } = req.body;
   
       let uploadedFiles = [];
@@ -29,6 +30,7 @@ export const postNotice = async (req, res) => {
         validUntil: validUntil || undefined,
         department: department || undefined,
         attachments: uploadedFiles,
+        thumbnail,
       });
   
       const savedNotice = await newNotice.save();

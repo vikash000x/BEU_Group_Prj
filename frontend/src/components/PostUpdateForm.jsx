@@ -9,6 +9,7 @@ const PostNoticeForm = () => {
   const { url, loggedInCollegeData, loading, setLoading } = useContext(StoreContext);
   const navigate = useNavigate();
   const [fileData, setFileData] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
   const [noticeData, setNoticeData] = useState({
     headline: "",
     description: "",
@@ -32,6 +33,13 @@ const PostNoticeForm = () => {
     setFileData(file);
   };
 
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    setThumbnail(file);
+  };
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -41,6 +49,22 @@ const PostNoticeForm = () => {
     noticeData.postedBy = loggedInCollegeData.name;
 
     try {
+
+      const formData1 = new FormData();
+        formData1.append("image", thumbnail);
+
+        // Upload the file and get the image URL
+        const thumbnailUploadResponse = await axios.post(
+          `${url}/college/upload-image`,
+          formData1,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type to multipart
+            },
+          }
+        );
+
+        noticeData.thumbnail = thumbnailUploadResponse.data.imageURL;
       if (fileData) {
         const formData = new FormData();
         formData.append("image", fileData);
@@ -163,6 +187,18 @@ const PostNoticeForm = () => {
             <option value="Local">Local</option>
             <option value="Global">Global</option>
           </select>
+        </div>
+
+        <div>
+          <label className="block text-white font-medium mb-2">
+            Thumbnail (Required):
+          </label>
+          <input
+            type="file"
+            name="thumbnail"
+            onChange={handleThumbnailChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <div>
