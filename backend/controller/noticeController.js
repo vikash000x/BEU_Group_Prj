@@ -10,6 +10,8 @@ export const postNotice = async (req, res) => {
         targetAudience,
         validUntil,
         department,
+        postedBy,
+        thumbnail,
       } = req.body;
   
       let uploadedFiles = [];
@@ -19,6 +21,7 @@ export const postNotice = async (req, res) => {
       
   
       const newNotice = new noticeModel({
+        postedBy,
         collegeCode,
         headline,
         description,
@@ -27,6 +30,7 @@ export const postNotice = async (req, res) => {
         validUntil: validUntil || undefined,
         department: department || undefined,
         attachments: uploadedFiles,
+        thumbnail,
       });
   
       const savedNotice = await newNotice.save();

@@ -108,10 +108,29 @@ const loginCollege = async (req, res) => {
       });
     }
 
+    let collegeData = null;
+
+    try {
+      collegeData = await collegeModel.findOne({ collegeCode: collegecode });
+      if (!collegeData) {
+        return res.json({
+          success: false,
+          message: "College data not found ! contact to BEU",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.json({
+        success: false,
+        message: "Error",
+      });
+    }
+
     const token = createToken(isCollege._id);
     res.json({
       success: true,
       token,
+      collegeData,
     });
   } catch (error) {
     console.log(error);
