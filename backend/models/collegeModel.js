@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const collegeSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  shortName: { type: String },
   collegeCode: { type: String, required: true, unique: true },
   description: { type: String, default: "" },
   extraInfo: {
