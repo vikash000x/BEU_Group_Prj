@@ -5,7 +5,9 @@ import validator from "validator";
 import collegeModel from "../models/collegeModel.js";
 
 const createToken = (id) => {
-  return jwt.sign({ id }, "amir");
+  return jwt.sign({ id }, "amir", {
+    expiresIn: "1d",
+  });
 };
 
 // BEU will register colleges
@@ -127,7 +129,7 @@ const loginCollege = async (req, res) => {
       });
     }
 
-    const token = createToken(isCollege._id);
+    const token = createToken(collegeData._id);
     res.json({
       success: true,
       token,
@@ -141,4 +143,6 @@ const loginCollege = async (req, res) => {
     });
   }
 };
+
+// register startup
 export { registerCollege, removeCollege, loginCollege };
