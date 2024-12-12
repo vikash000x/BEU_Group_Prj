@@ -8,8 +8,8 @@ import {
 
 const noticeRouter = express.Router();
 noticeRouter.post("/addNotice", postNotice)
-noticeRouter.post("/editNotice", editNotice)
-noticeRouter.delete("/deleteNotice", deleteNotice)
+noticeRouter.post("/editNotice/:id", editNotice)
+noticeRouter.delete("/deleteNotice/:id", deleteNotice)
 noticeRouter.get("/getAllNotices", getAllNotices);
 
 export default noticeRouter;
