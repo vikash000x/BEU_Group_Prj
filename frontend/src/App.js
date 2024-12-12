@@ -16,6 +16,7 @@ import CollegeAdmin from "./pages/CollegeAdmin";
 import AddFacultyForm from "./components/AddFacultyForm";
 import AddStudentForm from "./components/AddStudentForm";
 import PostUpdateForm from "./components/PostUpdateForm";
+import AddCollegeDetailForm from "./components/AddCollegeDetailForm";
 
 import AppliedList from "./pages/AppliedList";
 import FacultiesList from "./pages/FacultiesList";
@@ -58,6 +59,10 @@ function App() {
             <Route
               path=":collegeShortName/post-update"
               element={<PostUpdateForm />}
+            />
+            <Route
+              path=":collegeCode/update-college"
+              element={<AddCollegeDetailForm />}
             />
 
             {/* ---- Amir's Routes------- */}

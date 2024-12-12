@@ -48,7 +48,7 @@ export const postNotice = async (req, res) => {
   ////////////////Controller for editing notice////////////
   export const editNotice = async (req, res) => {
     try {
-      const { id } = req.query; // Notice ID to update
+      const { id } = req.params; // Notice ID to update
       const {
         headline,
         description,
@@ -100,8 +100,7 @@ export const postNotice = async (req, res) => {
   export const deleteNotice = async (req, res) => {
     try {
       //const { id } = req.params;// ID of the notice to delete
-      const { id } = req.query;// ID of the notice to delete
-      //console.log("hy", id)
+      const { id } = req.params;// ID of the notice to delete
       // Find and delete the notice by ID
       const deletedNotice = await noticeModel.findByIdAndDelete(id);
   

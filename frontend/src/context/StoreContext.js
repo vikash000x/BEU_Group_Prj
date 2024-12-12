@@ -8,6 +8,7 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState(null);
   const [loggedInCollegeData, setloggedInCollegeData] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [editNoticeData, setEditNoticeData] = useState(null);
   const url = "http://localhost:4000/api";
   const contextValue = {
     loading,
@@ -22,7 +23,9 @@ const StoreContextProvider = (props) => {
     token,
     url,
     loggedInCollegeData,
-    setloggedInCollegeData
+    setloggedInCollegeData,
+    editNoticeData,
+    setEditNoticeData
   };
   return (
     <StoreContext.Provider value={contextValue}>
