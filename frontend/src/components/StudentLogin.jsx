@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
 
 const StudentLogin = () => {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUserType } = useContext(StoreContext)
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setUserType("student");
+  navigate("/student/:id");
     console.log("Email:", email, "Password:", password);
   };
 
@@ -20,10 +27,10 @@ const StudentLogin = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="number"
               className="block text-sm font-medium text-gray-600"
             >
-              Name
+             email
             </label>
             <input
               type="email"
@@ -64,12 +71,12 @@ const StudentLogin = () => {
           </button>
 
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
+            {/* <p className="text-sm text-gray-600">
               Don't have an account?{" "}
               <Link href="#" className="text-[#173B45 ] hover:text-[#20505e]">
                 Sign up
               </Link>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>
