@@ -2,7 +2,7 @@ import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
 
 export const addStudent = async (req, res) => {
-  const { name, branch, year, grade, cgpa, collegeCode } = req.body;
+  const { name, branch, year, cgpa, collegeCode, regNo, gender } = req.body;
   try {
     const college = await collegeModel.findOne({ collegeCode });
     if (!college) {
@@ -12,8 +12,9 @@ export const addStudent = async (req, res) => {
       name,
       branch,
       year,
-      grade,
       cgpa,
+      regNo,
+      gender,
       // profileImage: image_filename,
     });
     college.students.push(newStudent._id);
