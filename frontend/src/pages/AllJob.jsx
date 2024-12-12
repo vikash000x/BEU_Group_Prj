@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterCard from '../components/FilterCard';
 import LatestJobCards from '../components/LatestJobCards';
 import axios from 'axios';
-
+import Loader from '../components/loader/Loader';
 const AllJob = () => {
   const [data, setData] = useState([]); // All jobs
   const [filteredData, setFilteredData] = useState([]); // Filtered jobs
@@ -11,7 +11,7 @@ const AllJob = () => {
 
   const categories = ['all', 'location', 'title', 'salary']; // Define filter options
 
-   // Fetch jobs from the API
+  // Fetch jobs from the API
    useEffect(() => {
     const fetchAllAdminJobs = async () => {
       try {
@@ -76,9 +76,8 @@ const AllJob = () => {
 
         <div className="grid grid-cols-3 gap-4 my-5">
           {loading ? (
-            <div className="flex justify-center items-center h-40">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-purple-600 border-b-4 border-gray-200"></div>
-            </div>
+           
+           <Loader />
           ) : filteredData.length <= 0 ? (
             <span>No Job Available</span>
           ) : (

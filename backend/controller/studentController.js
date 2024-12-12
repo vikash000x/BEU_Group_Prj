@@ -2,9 +2,9 @@ import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
 
 export const addStudent = async (req, res) => {
-  const { name, branch, year, cgpa, collegeCode, regNo, gender } = req.body;
+  const { name, branch, year, cgpa, regNo, gender, collegeId } = req.body;
   try {
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
       return res.status(404).json({ message: "You are not registered by BEU" });
     }
