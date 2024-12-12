@@ -19,7 +19,7 @@ const StudentActivity = () => {
         {
           id: 3,
           thumbnail: "https://cdn.pixabay.com/photo/2023/10/02/08/18/ai-generated-8288689_960_720.png",
-          title: "vikash_sinha - LeetCode Profile",
+          title: "LeetCode",
           description: "LeetCode",
           link: "#",
         },
@@ -77,14 +77,18 @@ const StudentActivity = () => {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className=" text-white rounded-md  bg-slate-800 border border-gray-100 cursor-pointer transform transition-transform duration-200 hover:scale-100 shadow-md overflow-hidden relative"
+                className=" text-white rounded-md  group  bg-slate-800 border border-gray-100 cursor-pointer transform transition-transform duration-200 hover:scale-100 shadow-md overflow-hidden relative"
               >
+                
                 <a href={card.link} target="_blank" rel="noopener noreferrer">
                   <img
                     src={card.thumbnail}
                     alt="Thumbnail"
                     className="w-full h-32 object-cover"
                   />
+                  <div className="absolute text-center inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="text-white text-2xl font-bold">{card.title}</p>
+          </div>
                 </a>
                 <div className="p-4">
                   <h2 className="font-semibold text-lg truncate">{card.title}</h2>
