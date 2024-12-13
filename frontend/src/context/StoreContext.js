@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
@@ -6,7 +6,7 @@ const StoreContextProvider = (props) => {
   const [collegeFacultyData, setCollegeFacultyData] = useState(null);
   const [userType, setUserType] = useState("anonymous");
   const [token, setToken] = useState(null);
-  const [loggedInCollegeData, setloggedInCollegeData] = useState(null);
+  const [loggedInCollegeData, setloggedInCollegeData] = useState();
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
   const url = "http://localhost:4000/api";
@@ -27,6 +27,15 @@ const StoreContextProvider = (props) => {
     editNoticeData,
     setEditNoticeData
   };
+
+  useEffect(() => {
+    if(localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+    if(localStorage.getItem("loggedInCollegeData")) {
+      setloggedInCollegeData(JSON.parse(localStorage.getItem("loggedInCollegeData")));
+    }
+  }, [token]);
   return (
     <StoreContext.Provider value={contextValue}>
       {props.children}
