@@ -10,6 +10,10 @@ const studentRouter = express.Router();
 
 studentRouter.post("/add-student", authMiddleware, addStudent);
 studentRouter.put("/update-student/:id", updateStudent);
-studentRouter.delete("/delete-student/:studentId", deleteStudent);
+studentRouter.delete(
+  "/delete-student/:studentId",
+  authMiddleware,
+  deleteStudent
+);
 
 export default studentRouter;
