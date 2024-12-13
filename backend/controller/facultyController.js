@@ -13,14 +13,15 @@ export const addFaculty = async (req, res) => {
     office,
     specialization,
     courses,
+    collegeId,
     collegeCode,
   } = req.body;
 
   try {
     const { image } = req.files;
-    console.log("collegecode", collegeCode, "name", name);
+    console.log("collegecode", collegeId, "name", name);
 
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
