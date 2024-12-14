@@ -7,6 +7,7 @@ const StoreContextProvider = (props) => {
   const [userType, setUserType] = useState("anonymous");
   const [token, setToken] = useState(null);
   const [loggedInCollegeData, setloggedInCollegeData] = useState();
+  const [loggedInStudentData, setloggedInStudentData] = useState();
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
   const url = "http://localhost:4000/api";
@@ -24,6 +25,8 @@ const StoreContextProvider = (props) => {
     url,
     loggedInCollegeData,
     setloggedInCollegeData,
+    loggedInStudentData,
+    setloggedInStudentData,
     editNoticeData,
     setEditNoticeData
   };
@@ -34,6 +37,9 @@ const StoreContextProvider = (props) => {
     }
     if(localStorage.getItem("loggedInCollegeData")) {
       setloggedInCollegeData(JSON.parse(localStorage.getItem("loggedInCollegeData")));
+    }
+    if(localStorage.getItem("loggedInStudentData")) {
+      setloggedInStudentData(JSON.parse(localStorage.getItem("loggedInStudentData")));
     }
   }, [token]);
   return (

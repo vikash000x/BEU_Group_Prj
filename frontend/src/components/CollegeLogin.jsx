@@ -30,7 +30,6 @@ const CollegeLogin = () => {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("loggedInCollegeData", JSON.stringify(response.data.collegeData));
-      console.log("fuck", response.data.collegeData);
       toast.success("LogedIn as college");
       setUserType("college");
       setLoading(false);

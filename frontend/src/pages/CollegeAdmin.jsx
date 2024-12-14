@@ -152,7 +152,6 @@ const CollegeAdmin = () => {
   };
 
   useEffect(() => {
-    console.log("ghghhgghg", loggedInCollegeData?.name);
     const fetchAllNotices = async () => {
       try {
         setLoading(true);
