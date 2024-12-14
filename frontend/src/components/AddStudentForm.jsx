@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddStudentForm = ({ collegeShortName }) => {
+  const { loggedInCollegeData, url } = useContext(StoreContext);
   const [studentData, setStudentData] = useState({
-    name: '',
-    registrationNo: '',
-    rollNo: '',
-    gender: '',
-    dob: '',
-    year: '',
-    semester: '',
-    branch: ''
+    name: "",
+    regNo: "",
+    rollNo: "",
+    gender: "",
+    dob: "",
+    year: "",
+    semester: "",
+    branch: "",
+    cgpa: "",
+    password: "",
+    collegeId: loggedInCollegeData._id,
   });
 
   const navigate = useNavigate();
@@ -19,19 +26,38 @@ const AddStudentForm = ({ collegeShortName }) => {
     const { name, value } = e.target;
     setStudentData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    //console.log(studentData);
-    navigate(`/${collegeShortName}/admin`);
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token from local storage (or another source)
+    
+      const res = await axios.post(
+        `${url}/student/add-student`, 
+        studentData, 
+        {
+          headers: {
+            token: token, // Pass the token in the headers
+          },
+        }
+      );
+
+      toast.success("Student added successfully!");
+      console.log("Response after adding student:", res.data);
+    } catch (error) {
+      console.log("Error while adding student:", error);
+    }
+    navigate(`/${loggedInCollegeData.collegeId}/admin`);
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-slate-800 shadow-md rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">Student Registration</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-white">
+        Student Registration
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-white font-medium mb-2">Name:</label>
@@ -46,11 +72,13 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-white font-medium mb-2">Registration No:</label>
+          <label className="block text-white font-medium mb-2">
+            Registration No:
+          </label>
           <input
             type="text"
-            name="registrationNo"
-            value={studentData.registrationNo}
+            name="regNo"
+            value={studentData.regNo}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -88,7 +116,9 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
-          <label className="block text-white font-medium mb-2">Date of Birth:</label>
+          <label className="block text-white font-medium mb-2">
+            Date of Birth:
+          </label>
           <input
             type="date"
             name="dob"
@@ -129,15 +159,48 @@ const AddStudentForm = ({ collegeShortName }) => {
 
         <div>
           <label className="block text-white font-medium mb-2">Branch:</label>
-          <input
-            type="text"
+          <select
             name="branch"
             value={studentData.branch}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>
+              Select a branch
+            </option>
+            {loggedInCollegeData.departments.map((dept, index) => (
+              <option key={index} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-white font-medium mb-2">CGPA:</label>
+          <input
+            type="text"
+            name="cgpa"
+            value={studentData.cgpa}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+        <div>
+          <label className="block text-white font-medium mb-2">Password:</label>
+          <input
+            type="text"
+            name="password"
+            value={studentData.password}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        
 
         <button
           type="submit"

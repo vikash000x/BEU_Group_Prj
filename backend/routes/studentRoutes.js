@@ -3,6 +3,7 @@ import express from "express";
 import {
   addStudent,
   deleteStudent,
+  loginStudent,
   updateStudent,
 } from "../controller/studentController.js";
 import authMiddleware from "../middleware/auth.js";
@@ -15,5 +16,6 @@ studentRouter.delete(
   authMiddleware,
   deleteStudent
 );
+studentRouter.post("/login-student", loginStudent)
 
 export default studentRouter;

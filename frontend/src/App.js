@@ -47,7 +47,7 @@ function App() {
             <Route path="/description/:id" element={<JobDescription />} />
             <Route path="/student/:id" element={<Student />} />
             <Route path="/job-section/update-job/:id" element={<UpdateJob />} />
-            <Route path="/:collegeName/admin" element={<CollegeAdmin />} />
+            <Route path="/:collegeCode/admin" element={<CollegeAdmin />} />
             <Route
               path=":collegeShortName/addFaculty"
               element={<AddFacultyForm />}

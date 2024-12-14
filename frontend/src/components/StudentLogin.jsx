@@ -1,21 +1,36 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const StudentLogin = () => {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setUserType } = useContext(StoreContext)
+  const { setUserType, url } = useContext(StoreContext)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserType("student");
-  navigate("/student/:id");
-    console.log("Email:", email, "Password:", password);
+    try {
+      const res = await axios.post(`${url}/student/login-student`, {
+        "regNo": regNo,
+        "password": password,
+      });
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("loggedInStudentData", JSON.stringify(res.data.student));
+      localStorage.setItem("userType", "student");
+      navigate(`/student/${res.data.student._id}`);
+      setUserType("student");
+      toast.success("Login success!");
+    } catch (error) {
+      toast.error( error.response.data.message);
+      console.error("Login failed:", error.response.data.message);
+    }
+    
   };
 
   return (
@@ -27,17 +42,17 @@ const StudentLogin = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="number"
+              htmlFor="regNo"
               className="block text-sm font-medium text-gray-600"
             >
-             email
+             Registration Number
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="regNo"
+              name="regNo"
+              value={regNo}
+              onChange={(e) => setRegNo(e.target.value)}
               required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
               placeholder="Enter your name"

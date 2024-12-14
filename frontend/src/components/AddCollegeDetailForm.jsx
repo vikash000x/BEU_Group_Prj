@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {StoreContext} from "../context/StoreContext";
+import axios from "axios"
+import Loader from "./loader/Loader";
+import { toast } from "react-toastify";
 
 const AddCollegeDetailForm = ({ onSubmit }) => {
+
+  const { url, loggedInCollegeData, loading, setLoading} = useContext(StoreContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    name: "",
-    shortName: "",
-    collegeCode: "",
-    description: "",
-    extraInfo: "",
-    images: [{ name: "", url: "", info: "" }],
-    students: [],
-    faculties: [],
-    departments: [],
-    logo: "",
-    city: "",
-    phone: "",
-    email: "",
-    address: "",
+    name: loggedInCollegeData?.name || "",
+    shortName: loggedInCollegeData?.shortName || "",
+    description: loggedInCollegeData?.description || "",
+    extraInfo: loggedInCollegeData?.extraInfo || "",
+    departments: loggedInCollegeData?.departments || [""],  // Default to empty array
+    logo: loggedInCollegeData?.logo || "",
+    city: loggedInCollegeData?.city || "",
+    phone: loggedInCollegeData?.phone || "",
+    email: loggedInCollegeData?.email || "",
+    address: loggedInCollegeData?.address || "",
   });
 
   const handleChange = (e) => {
@@ -23,41 +28,71 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (index, field, value) => {
-    const updatedImages = [...formData.images];
-    updatedImages[index][field] = value;
-    setFormData((prev) => ({ ...prev, images: updatedImages }));
+  const handleDepartmentChange = (index, value) => {
+    const updatedDepartments = [...formData.departments];
+    updatedDepartments[index] = value;
+    setFormData((prev) => ({ ...prev, departments: updatedDepartments }));
   };
 
-  const addImageField = () => {
+  const addDepartment = () => {
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, { name: "", url: "", info: "" }],
+      departments: [...prev.departments, ""], // Add a new empty department field
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
+  const removeDepartment = (index) => {
+    const updatedDepartments = formData.departments.filter(
+      (_, i) => i !== index
+    );
+    setFormData((prev) => ({ ...prev, departments: updatedDepartments }));
   };
 
-  return (
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const response = await axios.put(`${url}/college/add-details/${loggedInCollegeData.collegeCode}`, formData, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      
+      console.log(response.data.message);
+      toast.success("Info Updated Successfully!")
+    } catch (error) {
+      toast.error("Error while updating info!")
+      console.error("Error updating college details:", error.response.data.error);
+    } finally {
+      navigate(`/${loggedInCollegeData.collegeCode}/admin`)
+      setLoading(false);
+    }
+  };
+
+  return loading ? <Loader /> : (
     <div className="max-w-2xl bg-slate-800 mx-auto p-6 rounded-lg shadow-lg">
-      <h1 className="text-2xl text-center font-bold text-blue-700 mb-4">Update College Details</h1>
+      <h1 className="text-2xl text-center font-bold text-blue-700 mb-4">
+        Update College Details
+      </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">Name</label>
+          <label className="block font-semibold text-white mb-2">
+            Name
+          </label>
           <input
             type="text"
             name="name"
+            disabled
             value={formData.name}
             onChange={handleChange}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
         </div>
         <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">Short Name</label>
+          <label className="block font-semibold text-white mb-2">
+            Short Name
+          </label>
           <input
             type="text"
             name="shortName"
@@ -67,18 +102,9 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">College Code</label>
-          <input
-            type="text"
-            name="collegeCode"
-            value={formData.collegeCode}
-            onChange={handleChange}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">Description</label>
+          <label className="block font-semibold text-white mb-2">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
@@ -87,50 +113,15 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">Extra Info</label>
+          <label className="block font-semibold text-white mb-2">
+            Extra Info
+          </label>
           <textarea
             name="extraInfo"
             value={formData.extraInfo}
             onChange={handleChange}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
-        <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">Images</label>
-          {formData.images.map((image, index) => (
-            <div key={index} className="mb-2">
-              <input
-                type="text"
-                placeholder="Name"
-                value={image.name}
-                onChange={(e) => handleImageChange(index, "name", e.target.value)}
-                className="w-full p-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <input
-                type="text"
-                placeholder="URL"
-                value={image.url}
-                onChange={(e) => handleImageChange(index, "url", e.target.value)}
-                className="w-full p-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Info"
-                value={image.info}
-                onChange={(e) => handleImageChange(index, "info", e.target.value)}
-                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addImageField}
-            className="bg-blue-500 text-white py-1 px-3 mt-2 rounded hover:bg-blue-600"
-          >
-            Add Image
-          </button>
         </div>
         <div className="mb-4">
           <label className="block font-semibold text-white mb-2">City</label>
@@ -171,9 +162,42 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
+        <div className="mb-4">
+          <label className="block font-semibold text-white mb-2">
+            Departments
+          </label>
+          {formData.departments.map((department, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <input
+                type="text"
+                value={department}
+                onChange={(e) =>
+                  handleDepartmentChange(index, e.target.value)
+                }
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
+              />
+              <button
+                type="button"
+                onClick={() => removeDepartment(index)}
+                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addDepartment}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mt-2"
+          >
+            Add Department
+          </button>
+        </div>
+
         <button
           type="submit"
-          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="bg-green-500  text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Submit
         </button>
@@ -183,3 +207,4 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
 };
 
 export default AddCollegeDetailForm;
+
