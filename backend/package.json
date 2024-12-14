@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
+    "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "express-fileupload": "^1.5.1",

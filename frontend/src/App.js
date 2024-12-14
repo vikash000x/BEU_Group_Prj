@@ -27,6 +27,7 @@ import "react-toastify/dist/ReactToastify.css";
 import BeuAdmin from "./pages/BeuAdmin";
 import UpdateJob from "./pages/UpdateJob";
 import Student from "./pages/Student";
+import CollegeGallery from "./pages/CollegeGallery";
 function App() {
   return (
     <>
@@ -82,6 +83,7 @@ function App() {
               path="/college/student/:student_id"
               element={<SingleStudent />}
             />
+            <Route path="/college/gallery" element={<CollegeGallery />} />
           </Routes>
         </div>
         <Footer />
