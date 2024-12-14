@@ -6,6 +6,7 @@ const studentSchema = new mongoose.Schema({
   branch: { type: String, required: true },
   year: { type: String, required: true },
   cgpa: { type: Number, required: true },
+  collegeId: { type: String },
   gender: {
     type: String,
     enum: ["male", "female"],
@@ -14,6 +15,7 @@ const studentSchema = new mongoose.Schema({
   semester: {
     type: String,
   },
+  password: { type: String, required: true },
 });
 
 const studentModel =

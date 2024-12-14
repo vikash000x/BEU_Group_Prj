@@ -1,13 +1,18 @@
 import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
-
+import bcrypt from "bcryptjs";
 export const addStudent = async (req, res) => {
-  const { name, branch, year, cgpa, regNo, gender, collegeId } = req.body;
+  const { name, branch, year, cgpa, regNo, gender, collegeId, password } =
+    req.body;
   try {
     const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
       return res.status(404).json({ message: "You are not registered by BEU" });
     }
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newStudent = await studentModel.create({
       name,
       branch,
@@ -15,6 +20,8 @@ export const addStudent = async (req, res) => {
       cgpa,
       regNo,
       gender,
+      password: hashedPassword,
+      collegeId,
       // profileImage: image_filename,
     });
     college.students.push(newStudent._id);
@@ -56,7 +63,7 @@ export const updateStudent = async (req, res) => {
 // Controller to delete a student , a college will delete the student
 export const deleteStudent = async (req, res) => {
   const { studentId } = req.params;
-  const { collegeId } = req.query;
+  const { collegeId } = req.body;
 
   try {
     // Find the student by ID
@@ -87,50 +94,3 @@ export const deleteStudent = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// Example route to add a student
-// app.post("/add-student", async (req, res) => {
-//   try {
-//     const { college_id, student } = req.body;
-
-//     // Find the college
-//     const college = await College.findOne({ college_id });
-//     if (!college) {
-//       return res.status(404).json({ message: "College not found" });
-//     }
-
-//     // Create the student
-//     const newStudent = await Student.create(student);
-
-//     // Add student ID to the college
-//     college.students.push(newStudent._id);
-//     await college.save();
-
-//     res.status(200).json({ message: "Student added", college });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
-// const addFood = async (req, res) => {
-//   let image_filename = `${req.file.filename}`;
-//   const food = new foodModel({
-//     name: req.body.name,
-//     description: req.body.description,
-//     price: req.body.price,
-//     category: req.body.category,
-//     image: image_filename,
-//   });
-
-//   try {
-//     await food.save();
-//     res.json({
-//       success: true,
-//       message: "Food added",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: "Error" });
-//   }
-// };
