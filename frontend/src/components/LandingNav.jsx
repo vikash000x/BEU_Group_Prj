@@ -13,27 +13,33 @@ const LandingNav = () => {
   const [flag2, setFlag2] = useState(false); //College Admin Dashboard
   const [flag3, setFlag3] = useState(false); //Rest all
 
-  const location = useLocation()
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(location.pathname === "/") {
+    if (location.pathname === "/") {
       setFlag1(false);
       setFlag2(false);
       setFlag3(true);
-    }
-    else if((location.pathname.includes("colleges")) && (location.pathname.includes("beu"))) {
+    } else if (
+      location.pathname.includes("colleges") &&
+      location.pathname.includes("beu")
+    ) {
       setFlag1(true);
       setFlag2(false);
       setFlag3(false);
-    }
-    else if(userType === "college" && (location.pathname.includes("admin") || location.pathname.includes("addFaculty") || location.pathname.includes("addStudent") 
-          || location.pathname.includes("post-update"))) {
+    } else if (
+      userType === "college" &&
+      (location.pathname.includes("admin") ||
+        location.pathname.includes("addFaculty") ||
+        location.pathname.includes("addStudent") ||
+        location.pathname.includes("post-update"))
+    ) {
       setFlag1(false);
       setFlag2(true);
       setFlag3(false);
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   return (
     <div className="bg-[#0B192C] shadow-lg border-b-[0.01rem] font-popins [&>*]:font-light border-b-white border-opacity-50  w-full h-[65px] flex items-center justify-center">
@@ -45,12 +51,14 @@ const LandingNav = () => {
           alt=""
         />
         <ul className="flex items-center justify-between flex-1 text-2xl">
-          { flag1 && 
-            <li className="cursor-pointer relative group py-2 ">
-              <span>Gallery</span>
-            </li>
-          }
-          { flag3 &&
+          {flag1 && (
+            <Link to="/college/gallery">
+              <li className="cursor-pointer relative group py-2 ">
+                <span>Gallery</span>
+              </li>
+            </Link>
+          )}
+          {flag3 && (
             <li className="cursor-pointer relative group py-2 ">
               <span>Colleges</span>
               <ul
@@ -70,22 +78,16 @@ const LandingNav = () => {
                 ))}
               </ul>
             </li>
-          }
+          )}
 
-          {flag2 && 
+          {flag2 && (
             <Link to={`/${"collegeShortName"}/addFaculty`}>
               <li className="bg-red-500 px-3 py-2">Add Faculty</li>
             </Link>
-            
-          }
+          )}
 
-          {flag1 && 
-            <Link to="/colleges/faculties">
-              Faculties
-            </Link>
-           
-           }
-          { flag3 &&
+          {flag1 && <Link to="/colleges/faculties">Faculties</Link>}
+          {flag3 && (
             <Link to="recent-update">
               <li
                 className={`cursor-pointer px-3 py-2 hover:bg-white hover:text-slate-800 ${
@@ -96,20 +98,16 @@ const LandingNav = () => {
                 Recent Updates
               </li>
             </Link>
-          }
+          )}
 
-          {flag2 && 
+          {flag2 && (
             <Link to={`/${"collegeShortName"}/addStudent`}>
-              <li >Add Student</li>
+              <li>Add Student</li>
             </Link>
-          }
-            
-          
-          {flag1 &&
-            <li className="cursor-pointer">Updates</li>
-          }
-          {
-            flag3 &&
+          )}
+
+          {flag1 && <li className="cursor-pointer">Updates</li>}
+          {flag3 && (
             <li
               onClick={() => {
                 navigate("/alljob");
@@ -121,20 +119,16 @@ const LandingNav = () => {
             >
               Jobs
             </li>
-          }
-            
-          
-          {flag1 &&
-            <Link to="/college/students">
-              Students
-            </Link>
-          }
-          {
-            flag3 && userType==="anonymous" &&
-            <li className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
+          )}
+
+          {flag1 && <Link to="/college/students">Students</Link>}
+          {flag3 && userType === "anonymous" && (
+            <li
+              className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
                 active === "login" ? "bg-white text-slate-800" : ""
               }`}
-              onClick={() => setActive("login")}>
+              onClick={() => setActive("login")}
+            >
               <span>Login</span>
               <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
                 <li
@@ -157,25 +151,24 @@ const LandingNav = () => {
                 </li>
               </ul>
             </li>
-          }
+          )}
 
-          {flag2 && 
+          {flag2 && (
             <Link to={`/${"collegeShortName"}/post-update`}>
               <li>Post an Update</li>
-          </Link>  
-          }
+            </Link>
+          )}
 
-          {(userType === "college" ) &&
+          {userType === "college" && (
             <Link to={`collegename/admin`}>
               <p>View Dashboard</p>
             </Link>
-          }
-          {(userType === "startup" ) && 
+          )}
+          {userType === "startup" && (
             <Link to={`job-section`}>
               <p>View Dashboard</p>
             </Link>
-          }
-
+          )}
         </ul>
       </nav>
     </div>
