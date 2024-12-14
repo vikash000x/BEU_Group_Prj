@@ -16,6 +16,7 @@ const CollegeAdmin = () => {
   const [inputName, setInputName] = useState("");
   const [info, setInfo] = useState("");
   const [selectedNotice, setSelectedNotice] = useState(null);
+  const [logoutModal, setLogoutModal] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -23,8 +24,10 @@ const CollegeAdmin = () => {
     loading,
     setLoading,
     loggedInCollegeData,
+    setloggedInCollegeData,
     url,
-    setEditNoticeData
+    setEditNoticeData,
+    setUserType,
   } = useContext(StoreContext);
 
   const collegeShortName = "bce-bhagalpur";
@@ -83,14 +86,34 @@ const CollegeAdmin = () => {
           toast.error("Error while uploading Gallery image !");
         }
       } else if (uploadingImage === 3) {
-        //Front4
-        console.log("Calling API for type 3");
+        //Gallery
+        imageData.append("name", inputName);
+        imageData.append("info", info);
+        try {
+          const response = await axios.post(
+            `${url}/college/upload-head-image`,
+            imageData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data", // Set content type to multipart
+              },
+            }
+          );
+          console.log("Front4 upload success", response);
+          toast.success("Front4 image uploaded successfully !");
+        } catch (error) {
+          console.log("error while posting Front4 image", error);
+          toast.error("error while posting Front4 image !");
+        }
       } else {
         console.error("Invalid type passed to handleImageUpload");
       }
     }
+    setInputName("");
+    setInfo("");
+    setFileData(null);
     setLoading(false);
-    setUploadingImage(0);
+    setUploadingImage(null);
   };
 
   const handleChange = (e) => {
@@ -110,21 +133,23 @@ const CollegeAdmin = () => {
   };
 
   const handleEditNotice = (notice) => {
-    console.log("setting notice data", notice)
+    console.log("setting notice data", notice);
     setEditNoticeData(notice);
-    navigate(`/collegeShortName/post-update/?edit=true`)
-  }
+    navigate(`/collegeShortName/post-update/?edit=true`);
+  };
 
-  const handleDeleteNotice = async(id) => {
+  const handleDeleteNotice = async (id) => {
     try {
       const response = await axios.delete(`${url}/notice/deleteNotice/${id}`);
       toast.success("Notice deleted successfully !");
-      setNoticeList((prevList) => prevList.filter((notice) => notice._id !== id));
-    } catch(error) {
+      setNoticeList((prevList) =>
+        prevList.filter((notice) => notice._id !== id)
+      );
+    } catch (error) {
       console.log("error while deleting notice", error);
-      toast.error("error while deleting notice!")
+      toast.error("error while deleting notice!");
     }
-  }
+  };
 
   useEffect(() => {
     const fetchAllNotices = async () => {
@@ -155,6 +180,16 @@ const CollegeAdmin = () => {
   if (filteredNoticeList?.length > 3) {
     filteredNoticeList = filteredNoticeList.slice(0, 3);
   }
+
+  //Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setloggedInCollegeData(null);
+    setLogoutModal(false);
+    setUserType("anonymous");
+    toast.success("Logged Out Successfully");
+    navigate(`/`);
+  };
 
   return loading ? (
     <Loader />
@@ -198,6 +233,14 @@ const CollegeAdmin = () => {
         >
           Update College Info
         </button>
+        <button
+          className={`p-2 text-left ${
+            activeSection === "logout" && "bg-blue-500"
+          }`}
+          onClick={() => setLogoutModal(true)}
+        >
+          LogOut
+        </button>
       </div>
 
       {/* Main Content */}
@@ -210,11 +253,11 @@ const CollegeAdmin = () => {
             <div className="bg-slate-700 text-white">
               {filteredNoticeList?.map((notice, index) => (
                 <div className="flex justify-between border border-gray-400 p-3">
-                  <div 
-                    className="cursor-pointer" 
-                    key={notice._id} 
+                  <div
+                    className="cursor-pointer"
+                    key={notice._id}
                     onClick={() => setSelectedNotice(notice)}
-                    >
+                  >
                     {`${index + 1}. ${notice.headline}`}
                   </div>
                   <div className="flex gap-3">
@@ -329,79 +372,112 @@ const CollegeAdmin = () => {
           <div>
             <h2 className="text-xl font-bold">Update College Info</h2>
             <Link to={`/${loggedInCollegeData?.collegeCode}/update-college`}>
-              Go to Update College Info Page
+              <button className="rounded-md bg-white text-black font-medium text-xl mt-4 px-6 py-4">
+                Click here to Update College Details
+              </button>
             </Link>
+          </div>
+        )}
+
+        {logoutModal && (
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+            <div className="bg-slate-200 rounded-lg shadow-md p-6 w-80">
+              <div className="text-lg text-black font-semibold text-center mb-4">
+                Confirm LogOut?
+              </div>
+              <div className="flex justify-around">
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800"
+                >
+                  YES
+                </button>
+                <button
+                  onClick={() => setLogoutModal(false)}
+                  className="px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-900"
+                >
+                  CANCEL
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Modal open for notice detail */}
         {selectedNotice && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-          <div className="bg-white w-[800px] h-auto overflow-y-auto rounded-lg shadow-lg border border-gray-200 p-8 relative">
-            {/* Close Button */}
-            <button
-              className="absolute top-3 right-3 text-gray-600 bg-gray-200 p-2 rounded-full hover:bg-gray-300"
-              onClick={() => setSelectedNotice(null)}
-            >
-              &times;
-            </button>
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+            <div className="bg-white w-[800px] h-auto overflow-y-auto rounded-lg shadow-lg border border-gray-200 p-8 relative">
+              {/* Close Button */}
+              <button
+                className="absolute top-3 right-3 text-gray-600 bg-gray-200 p-2 rounded-full hover:bg-gray-300"
+                onClick={() => setSelectedNotice(null)}
+              >
+                &times;
+              </button>
 
-            {/* Title */}
-            <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-3">
-              {selectedNotice.headline}
-            </h2>
+              {/* Title */}
+              <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-3">
+                {selectedNotice.headline}
+              </h2>
 
-            {/* College Information */}
-            <div className="mb-4">
-              <p className="text-xl font-semibold text-gray-900 italic">
-                {`Posted by : ${selectedNotice.postedBy}`}
-              </p>
+              {/* College Information */}
+              <div className="mb-4">
+                <p className="text-xl font-semibold text-gray-900 italic">
+                  {`Posted by : ${selectedNotice.postedBy}`}
+                </p>
+              </div>
+
+              {/* Details */}
+              <div className="grid grid-cols-2 gap-4 text-gray-600">
+                <p className="text-sm">
+                  <strong className="bg-slate-300 py-1 px-2 rounded-xl">
+                    Date: {formatDate(selectedNotice.postedAt)}
+                  </strong>
+                </p>
+                <p className="text-sm">
+                  <strong className="bg-slate-300 py-1 px-2 rounded-xl">
+                    Category: {selectedNotice.category}
+                  </strong>
+                </p>
+              </div>
+
+              {/* Description */}
+              <div className="mt-4">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2 italic">
+                  Description:
+                </h3>
+                <p className="text-gray-800 bg-slate-300 p-3 rounded-lg">
+                  {selectedNotice.description}
+                </p>
+              </div>
+
+              {/* Attachments */}
+              {selectedNotice.attachments &&
+                selectedNotice.attachments.length > 0 && (
+                  <div className="mt-6">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2 italic">
+                      Attachments:
+                    </h3>
+                    <ul className="list-disc list-inside">
+                      {selectedNotice.attachments.map((attachment, index) => (
+                        <li key={index}>
+                          <a
+                            href={attachment}
+                            className="text-blue-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {attachment}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
             </div>
-
-            {/* Details */}
-            <div className="grid grid-cols-2 gap-4 text-gray-600">
-              <p className="text-sm">
-                <strong className="bg-slate-300 py-1 px-2 rounded-xl">Date: {formatDate(selectedNotice.postedAt)}</strong>
-              </p>
-              <p className="text-sm">
-                <strong className="bg-slate-300 py-1 px-2 rounded-xl">Category: {selectedNotice.category}</strong>
-              </p>
-            </div>
-
-            {/* Description */}
-            <div className="mt-4">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 italic">
-                Description:
-              </h3>
-              <p className="text-gray-800 bg-slate-300 p-3 rounded-lg">{selectedNotice.description}</p>
-            </div>
-
-            {/* Attachments */}
-            {selectedNotice.attachments &&
-              selectedNotice.attachments.length > 0 && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 italic">
-                    Attachments:
-                  </h3>
-                  <ul className="list-disc list-inside">
-                    {selectedNotice.attachments.map((attachment, index) => (
-                      <li key={index}>
-                        <a
-                          href={attachment}
-                          className="text-blue-500 underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {attachment}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
           </div>
-        </div>
-      )}
+        )}
+
       </div>
     </div>
   );

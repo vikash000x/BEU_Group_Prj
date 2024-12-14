@@ -5,24 +5,39 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const addCollegeDetails = async (req, res) => {
   try {
-    const { collegeCode, description, extraInfo, phone, address, email } =
-      req.body;
+    const { collegeCode } = req.params;
+    const { name, shortName, description, extraInfo, departments, logo, city, phone, email, address } = req.body;
 
     const college = await collegeModel.findOneAndUpdate(
       { collegeCode },
-      { description, extraInfo, phone, address, email },
-      { new: true }
+      {
+        name,
+        shortName,
+        description,
+        extraInfo,
+        departments,
+        logo,
+        city,
+        phone,
+        email,
+        address
+      },
+      { new: true } 
     );
+
     if (!college) {
-      return res.status(404).json({ message: "college not found" });
+      return res.status(404).json({ message: "College not found" });
     }
-    res.status(201).json({
+
+    res.status(200).json({
       message: "College details updated successfully",
+      updatedCollege: college
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const getSingleCollege = async (req, res) => {
   const { collegeCode } = req.body;
   try {

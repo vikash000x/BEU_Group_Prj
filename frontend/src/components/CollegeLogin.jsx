@@ -29,10 +29,11 @@ const CollegeLogin = () => {
       setloggedInCollegeData(response.data.collegeData);
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("loggedInCollegeData", JSON.stringify(response.data.collegeData));
       toast.success("LogedIn as college");
       setUserType("college");
       setLoading(false);
-      navigate("/collegename/admin");
+      navigate(`/${response.data.collegeData.collegeCode}/admin`);
     } else {
       toast.error(response.data.message);
       setLoading(false);
