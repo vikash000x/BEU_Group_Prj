@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/Screenshot 2024-11-23 023731.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { colleges } from "../lib/utils";
+// import { colleges } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { userType } = useContext(StoreContext);
+  const { userType, registeredCollege } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
@@ -15,14 +15,13 @@ const LandingNav = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (location.pathname === "/") {
       setFlag1(false);
       setFlag2(false);
       setFlag3(true);
     } else if (
-      location.pathname.includes("colleges") &&
+      location.pathname.includes("college") &&
       location.pathname.includes("beu")
     ) {
       setFlag1(true);
@@ -65,14 +64,14 @@ const LandingNav = () => {
                 style={{ scrollbarWidth: "none" }}
                 className="absolute left-0 mt-2 w-60 h-[600px] overflow-y-scroll  bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10"
               >
-                {colleges.map((college, index) => (
-                  <Link to={`beu/colleges/${college.shortName}`}>
+                {registeredCollege?.map((college, index) => (
+                  <Link to={`beu/college/${college.collegecode}`}>
                     <li
                       // onClick={() => navigate(beu/colleges/${college.shortName})}
                       key={index}
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"
                     >
-                      {college.name}
+                      {college.collegename}
                     </li>
                   </Link>
                 ))}
@@ -82,7 +81,7 @@ const LandingNav = () => {
 
           {flag2 && (
             <Link to={`/${"collegeShortName"}/addFaculty`}>
-              <li className="bg-red-500 px-3 py-2">Add Faculty</li>
+              <li className=" px-3 py-2">Add Faculty</li>
             </Link>
           )}
 
