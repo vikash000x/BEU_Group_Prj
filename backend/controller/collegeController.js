@@ -6,7 +6,18 @@ import { v2 as cloudinary } from "cloudinary";
 export const addCollegeDetails = async (req, res) => {
   try {
     const { collegeCode } = req.params;
-    const { name, shortName, description, extraInfo, departments, logo, city, phone, email, address } = req.body;
+    const {
+      name,
+      shortName,
+      description,
+      extraInfo,
+      departments,
+      logo,
+      city,
+      phone,
+      email,
+      address,
+    } = req.body;
 
     const college = await collegeModel.findOneAndUpdate(
       { collegeCode },
@@ -20,9 +31,9 @@ export const addCollegeDetails = async (req, res) => {
         city,
         phone,
         email,
-        address
+        address,
       },
-      { new: true } 
+      { new: true }
     );
 
     if (!college) {
@@ -31,7 +42,7 @@ export const addCollegeDetails = async (req, res) => {
 
     res.status(200).json({
       message: "College details updated successfully",
-      updatedCollege: college
+      updatedCollege: college,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -39,21 +50,27 @@ export const addCollegeDetails = async (req, res) => {
 };
 
 export const getSingleCollege = async (req, res) => {
-  const { collegeCode } = req.body;
+  const { collegecode } = req.params;
   try {
     const college = await collegeModel
-      .findOne({ collegeCode })
+      .findOne({ collegeCode: collegecode })
       .populate("students")
       .populate("faculties")
       .populate("images")
       .populate("headImage");
+    if (!college) {
+      res.json({
+        message: "college not found",
+      });
+    }
     res.json({
+      success: true,
       college,
     });
   } catch (error) {
     console.log(error);
     res.json({
-      error: "while getting single college",
+      message: " error while getting single college",
     });
   }
 };
