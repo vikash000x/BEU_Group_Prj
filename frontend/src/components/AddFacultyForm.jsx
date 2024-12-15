@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { colleges } from "../lib/utils";
+import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddFacultyForm = () => {
-  const collegeShortName = "bce-bhagalpur";
+  const { loggedInCollegeData, url } = useContext(StoreContext);
   const navigate = useNavigate();
   const [facultyData, setFacultyData] = useState({
     name: "",
     gender: "",
     department: "",
-    position: "",
-    imageURL: "",
-    college: "",
-    subject: [],
+    designation: "",
+    courses: [],
     email: "",
     phone: "",
     experience: "",
     qualification: "",
-    researchInterests: [],
-    publications: 0,
-    officeHours: "",
   });
+
+  const [image, setImage] = useState();
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(file);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,26 +36,39 @@ const AddFacultyForm = () => {
     });
   };
 
-  const handleSubjectChange = (e) => {
+  const handleCoursesChange = (e) => {
     const { value } = e.target;
     setFacultyData({
       ...facultyData,
-      subject: value.split(","),
+      courses: value.split(","),
     });
   };
 
-  const handleResearchInterestsChange = (e) => {
-    const { value } = e.target;
-    setFacultyData({
-      ...facultyData,
-      researchInterests: value.split(","),
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(facultyData);
-    navigate(`/${collegeShortName}/admin`);
+    console.log(facultyData);
+    const token = localStorage.getItem("token");
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      facultyData.collegeId = loggedInCollegeData._id;
+      formData.append("facultyData", JSON.stringify(facultyData)); 
+      console.log("f", formData)
+      const res = await axios.post(
+        `${url}/faculty/add-faculty`,
+        formData,
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      toast.success("Faculty added successfully!")
+      navigate(`/${loggedInCollegeData.collegeCode}/admin`);
+    } catch (error) {
+      toast.error("Failed to add faculty!");
+      console.log(error);
+    }
   };
 
   return (
@@ -103,7 +122,7 @@ const AddFacultyForm = () => {
               </select>
             </div>
 
-            {/* Department */}
+            {/* Department Dropdown */}
             <div className="mb-4">
               <label
                 htmlFor="department"
@@ -111,104 +130,62 @@ const AddFacultyForm = () => {
               >
                 Department
               </label>
-              <input
-                type="text"
+              <select
                 id="department"
                 name="department"
                 value={facultyData.department}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter department"
-              />
-            </div>
-
-            {/* Position */}
-            <div className="mb-4">
-              <label
-                htmlFor="position"
-                className="block text-sm font-medium text-white"
-              >
-                Position
-              </label>
-              <input
-                type="text"
-                id="position"
-                name="position"
-                value={facultyData.position}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter position"
-              />
-            </div>
-
-            {/* Image URL */}
-            <div className="mb-4">
-              <label
-                htmlFor="imageURL"
-                className="block text-sm font-medium text-white"
-              >
-                Image URL
-              </label>
-              <input
-                type="url"
-                id="imageURL"
-                name="imageURL"
-                value={facultyData.imageURL}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter image URL"
-              />
-            </div>
-
-            {/* College */}
-            <div className="mb-4">
-              <label
-                htmlFor="college"
-                className="block text-sm font-medium text-white"
-              >
-                College
-              </label>
-              <select
-                type="text"
-                id="college"
-                name="college"
-                value={facultyData.college}
-                onChange={handleChange}
-                required
                 className="mt-1 block w-full text-gray-400 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter college name"
               >
-                <option selected>Choose a college</option>
-                {colleges.map((college, index) => {
-                  return (
-                    <option key={college.college_id} value={college.name}>
-                      {college.name}
-                    </option>
-                  );
-                })}
+                <option value="" disabled>
+                  Select a department
+                </option>
+                {loggedInCollegeData.departments.map((dept, index) => (
+                  <option key={index} value={dept}>
+                    {dept}
+                  </option>
+                ))}
               </select>
             </div>
 
-            {/* Subject(s) */}
+            {/* designation */}
             <div className="mb-4">
               <label
-                htmlFor="subject"
+                htmlFor="designation"
                 className="block text-sm font-medium text-white"
               >
-                Subject(s)
+                designation
               </label>
               <input
                 type="text"
-                id="subject"
-                name="subject"
-                value={facultyData.subject.join(",")}
-                onChange={handleSubjectChange}
+                id="designation"
+                name="designation"
+                value={facultyData.designation}
+                onChange={handleChange}
                 required
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter subjects, separated by commas"
+                placeholder="Enter designation"
+              />
+            </div>
+
+            {/* courses(s) */}
+            <div className="mb-4">
+              <label
+                htmlFor="courses"
+                className="block text-sm font-medium text-white"
+              >
+                courses(s)
+              </label>
+              <input
+                type="text"
+                id="courses"
+                name="courses"
+                value={facultyData.courses.join(",")}
+                onChange={handleCoursesChange}
+                required
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
+                placeholder="Enter coursess, separated by commas"
               />
             </div>
 
@@ -291,63 +268,25 @@ const AddFacultyForm = () => {
                 placeholder="Enter qualification"
               />
             </div>
+          </div>
 
-            {/* Research Interests */}
-            <div className="mb-4">
-              <label
-                htmlFor="researchInterests"
-                className="block text-sm font-medium text-white"
-              >
-                Research Interests
-              </label>
-              <input
-                type="text"
-                id="researchInterests"
-                name="researchInterests"
-                value={facultyData.researchInterests.join(",")}
-                onChange={handleResearchInterestsChange}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter research interests, separated by commas"
-              />
-            </div>
-
-            {/* Publications */}
-            <div className="mb-4">
-              <label
-                htmlFor="publications"
-                className="block text-sm font-medium text-white"
-              >
-                Publications
-              </label>
-              <input
-                type="number"
-                id="publications"
-                name="publications"
-                value={facultyData.publications}
-                onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter number of publications"
-              />
-            </div>
-
-            {/* Office Hours */}
-            <div className="mb-4">
-              <label
-                htmlFor="officeHours"
-                className="block text-sm font-medium text-white"
-              >
-                Office Hours
-              </label>
-              <input
-                type="text"
-                id="officeHours"
-                name="officeHours"
-                value={facultyData.officeHours}
-                onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#173B45]"
-                placeholder="Enter office hours"
-              />
-            </div>
+          {/* Profile Picture */}
+          <div className="mb-4">
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-white"
+            >
+              Upload Profile Picture
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              required
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#173B45] file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-medium file:bg-[#173B45] file:text-white hover:file:bg-[#0F2A32]"
+            />
           </div>
 
           <button

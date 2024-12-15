@@ -4,24 +4,20 @@ import { uploadImageToCloudinary } from "../config/cloudinary.js";
 export const addFaculty = async (req, res) => {
   const {
     name,
+    gender,
     department,
     designation,
     experience,
-    rating,
     email,
     phone,
-    office,
-    specialization,
     courses,
     collegeId,
-    collegeCode,
-  } = req.body;
+    qualification,
+  } = JSON.parse(req.body.facultyData);
 
   try {
     const { image } = req.files;
-    console.log("collegecode", collegeId, "name", name);
-
-    const college = await collegeModel.findOne({ collegeId });
+    const college = await collegeModel.findOne({ _id : collegeId });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
@@ -29,21 +25,19 @@ export const addFaculty = async (req, res) => {
     const imagePaths = thumbnailImage.secure_url;
     const newFaculty = await facultyModel.create({
       name,
+      gender,
       department,
       designation,
       experience,
-      rating,
       profileImage: imagePaths,
       email,
       phone,
-      office,
-      specialization,
       courses,
-      collegeCode,
+      collegeId,
+      qualification,
     });
     college.faculties.push(newFaculty._id);
     await college.save();
-
     res.status(200).json({ message: "Faculty added", college });
   } catch (error) {
     console.error(error);
