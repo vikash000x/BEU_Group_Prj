@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { userType, registeredCollege } = useContext(StoreContext);
+  const { userType, loggedInCollegeData, registeredCollege } =
+    useContext(StoreContext);
   const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
@@ -80,8 +81,8 @@ const LandingNav = () => {
           )}
 
           {flag2 && (
-            <Link to={`/${"collegeShortName"}/addFaculty`}>
-              <li className=" px-3 py-2">Add Faculty</li>
+            <Link to={`/${loggedInCollegeData.collegeCode}/addFaculty`}>
+              <li className="bg-red-500 px-3 py-2">Add Faculty</li>
             </Link>
           )}
 
