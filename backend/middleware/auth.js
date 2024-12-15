@@ -10,9 +10,9 @@ const authMiddleware = async (req, res, next) => {
   }
   try {
     const token_decode = jwt.verify(token, "amir");
-    console.log(token_decode);
+    //console.log(token_decode);
     req.body.collegeId = token_decode.id;
-    console.log(req.body);
+    //console.log(req.body);
     next();
   } catch (error) {
     console.log(error);
