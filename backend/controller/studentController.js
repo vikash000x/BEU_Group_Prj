@@ -1,13 +1,30 @@
 import studentModel from "../models/studentModel.js";
 import collegeModel from "../models/collegeModel.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import studentProfileModel from "../models/studentProfileModel.js";
 
 export const addStudent = async (req, res) => {
-  const { name, branch, year, cgpa, regNo, gender, collegeId } = req.body;
+  const { name, branch, year, cgpa, regNo, gender, collegeId, password, semester, rollNo, dob } =
+    req.body;
+  
+    if(!name, !branch, !year, !cgpa, !regNo, !gender, !collegeId, !password, !semester) {
+      return res(500).json({message: "Please provide all fields"});
+    }
   try {
     const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
       return res.status(404).json({ message: "You are not registered by BEU" });
     }
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const sameRegNoStudent = await studentModel.findOne({regNo});
+    if(sameRegNoStudent) {
+      return res.status(500).json({ message: "A student is already registeres with same Registration No." });
+    }
+
     const newStudent = await studentModel.create({
       name,
       branch,
@@ -15,10 +32,19 @@ export const addStudent = async (req, res) => {
       cgpa,
       regNo,
       gender,
+      password: hashedPassword,
+      collegeId,
+      semester,
+      rollNo,
+      dob,
       // profileImage: image_filename,
     });
     college.students.push(newStudent._id);
     await college.save();
+
+    const newStudentProfile = await studentProfileModel.create({});
+    newStudent.studentProfileId = newStudentProfile._id;
+    await newStudent.save();
 
     res.status(200).json({ message: "Student added", college });
   } catch (error) {
@@ -56,7 +82,7 @@ export const updateStudent = async (req, res) => {
 // Controller to delete a student , a college will delete the student
 export const deleteStudent = async (req, res) => {
   const { studentId } = req.params;
-  const { collegeId } = req.query;
+  const { collegeId } = req.body;
 
   try {
     // Find the student by ID
@@ -88,49 +114,41 @@ export const deleteStudent = async (req, res) => {
   }
 };
 
-// Example route to add a student
-// app.post("/add-student", async (req, res) => {
-//   try {
-//     const { college_id, student } = req.body;
+export const loginStudent = async (req, res) => {
+  const { regNo, password } = req.body;
 
-//     // Find the college
-//     const college = await College.findOne({ college_id });
-//     if (!college) {
-//       return res.status(404).json({ message: "College not found" });
-//     }
+  if (!regNo || !password) {
+    return res.status(400).json({ message: "Please provide both Registration Number and Password" });
+  }
 
-//     // Create the student
-//     const newStudent = await Student.create(student);
+  try {
+    const student = await studentModel.findOne({ regNo }).populate("studentProfileId");
+    if (!student) {
+      return res.status(404).json({ message: "Student not found. Please check your Registration Number." });
+    }
 
-//     // Add student ID to the college
-//     college.students.push(newStudent._id);
-//     await college.save();
+    const isMatch = await bcrypt.compare(password, student.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
 
-//     res.status(200).json({ message: "Student added", college });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
+    const token = jwt.sign(
+      { studentId: student._id, regNo: student.regNo },
+      // process.env.JWT_SECRET,
+      "amir",
+      { expiresIn: "1d" } 
+    );
 
-// const addFood = async (req, res) => {
-//   let image_filename = `${req.file.filename}`;
-//   const food = new foodModel({
-//     name: req.body.name,
-//     description: req.body.description,
-//     price: req.body.price,
-//     category: req.body.category,
-//     image: image_filename,
-//   });
+    student.password="";
 
-//   try {
-//     await food.save();
-//     res.json({
-//       success: true,
-//       message: "Food added",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: "Error" });
-//   }
-// };
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      student,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
