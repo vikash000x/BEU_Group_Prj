@@ -2,25 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
 const FacultiesList = () => {
+  const { collegeCode } = useParams();
+  console.log("fromfaculty12345", collegeCode);
   const navigate = useNavigate();
-  const { collegeFacultyData, singleCollege } = useContext(StoreContext);
-  // const [department, setDepartment] = useState("");
-  // const [filterDepartment, setFilterDepartment] = useState(collegeFacultyData);
+  const { url } = useContext(StoreContext);
+  const [collegeFacultyData, setCollegeFacultyData] = useState(null);
   const [search, setSearch] = useState("");
-  const [filteredFaculties, setFilteredFaculties] =
-    useState(collegeFacultyData);
-  // const handleCollegeChange = (e) => {
-  //   const inputVal = e.target.value.toLowerCase();
-
-  //   const filter = collegeFacultyData.filter((faculty) =>
-  //     faculty.department.toLowerCase().includes(inputVal)
-  //   );
-  //   setFilterDepartment(filter);
-  // };
-  console.log(filteredFaculties);
+  const [filteredFaculties, setFilteredFaculties] = useState(null);
   const handleSearch = () => {
     const searchData = collegeFacultyData.filter((faculty) =>
       faculty.name.toLowerCase().includes(search.toLowerCase())
@@ -40,7 +33,23 @@ const FacultiesList = () => {
     "Chemical Engineering",
     "Data Science",
   ];
+
+  const fetchFacultyData = async () => {
+    try {
+      const res = await axios.get(
+        `${url}/faculty/get-faculty-data/${collegeCode}`
+      );
+      console.log(res.data.facultyData);
+      if (res.data.success) {
+        setCollegeFacultyData(res?.data?.facultyData);
+        setFilteredFaculties(res?.data?.facultyData);
+      }
+    } catch (error) {}
+  };
+  console.log("hii", filteredFaculties);
+  console.log("facultydata", collegeFacultyData);
   useEffect(() => {
+    fetchFacultyData();
     AOS.init({
       duration: 1000,
     });
@@ -49,7 +58,7 @@ const FacultiesList = () => {
   return (
     <div className="w-[1200px] mx-auto m-12">
       <h1 className="text-2xl font-bold text-center mb-6 text-white">
-        FACULTIES LIST OF {singleCollege.name}
+        FACULTIES LIST OF
       </h1>
       <div className="flex flex-row rounded-md justify-between items-center my-2 bg-slate-700 gap-2 p-3">
         <div className="flex-1 ">
@@ -106,7 +115,7 @@ const FacultiesList = () => {
           {filteredFaculties ? (
             filteredFaculties.map((faculty) => (
               <tr
-                key={faculty.id}
+                key={faculty._id}
                 onClick={() => navigate(`/college/faculty/${faculty.id}`)}
                 className="hover:bg-[#0B192C] cursor-pointer"
                 data-aos="fade-up"

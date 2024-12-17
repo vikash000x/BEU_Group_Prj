@@ -73,7 +73,10 @@ function App() {
               path="beu/college/:collegecode"
               element={<SingleCollege />}
             />
-            <Route path="/colleges/faculties" element={<FacultiesList />} />
+            <Route
+              path="/college/faculties/:collegeCode"
+              element={<FacultiesList />}
+            />
             <Route path="/college/students" element={<StudentList />} />
             <Route
               path="/college/faculty/:faculty_id"
