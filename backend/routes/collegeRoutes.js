@@ -5,6 +5,7 @@ import {
   deleteGalleryImage,
   deleteHeadImage,
   getAllCollege,
+  getGalleryImage,
   getSingleCollege,
   uplaoadGalleryImage,
   uploadCarousel,
@@ -29,5 +30,6 @@ collegeRouter.delete(
   authMiddleware,
   deleteGalleryImage
 );
+collegeRouter.get("/get-gallery-image/:_id", getGalleryImage);
 
 export default collegeRouter;

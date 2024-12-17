@@ -288,7 +288,7 @@ export const uplaoadGalleryImage = async (req, res) => {
       return res.status(400).json({ message: "Please upload an image" });
     }
 
-    const college = await collegeModel.findOne({ collegeId });
+    const college = await collegeModel.findOne({ collegeCode });
     if (!college) {
       return res.json({ message: "colllege not found" });
     }
@@ -376,3 +376,23 @@ export const deleteGalleryImage = async (req, res) => {
     });
   }
 };
+
+export const getGalleryImage = async (req, res) => {
+  const {_id} = req.params;
+   try {
+    const college = await collegeModel.findOne({_id}).populate("images");
+    return res.json({
+      success: true,
+      message: "Gallery image fetched successfully!",
+      galleryImages: college.images,
+    })
+  
+   } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching gallery images",
+      error: error.message,
+    });
+  }
+}

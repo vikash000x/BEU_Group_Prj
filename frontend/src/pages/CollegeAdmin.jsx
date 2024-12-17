@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/loader/Loader";
 import { StoreContext } from "../context/StoreContext";
-import { colleges } from "../lib/utils";
 import { toast } from "react-toastify";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
@@ -20,7 +19,6 @@ const CollegeAdmin = () => {
   const navigate = useNavigate();
 
   const {
-    setCollegeFacultyData,
     loading,
     setLoading,
     loggedInCollegeData,
@@ -29,8 +27,6 @@ const CollegeAdmin = () => {
     setEditNoticeData,
     setUserType,
   } = useContext(StoreContext);
-
-  const collegeShortName = "bce-bhagalpur";
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -46,7 +42,7 @@ const CollegeAdmin = () => {
       setLoading(true);
       const imageData = new FormData();
       imageData.append("image", fileData);
-      imageData.append("collegeCode", loggedInCollegeData.collegeCode);
+      imageData.append("collegeCode", loggedInCollegeData?.collegeCode);
       if (uploadingImage === 1) {
         //Gallery
         imageData.append("name", inputName);
@@ -175,11 +171,8 @@ const CollegeAdmin = () => {
   }, []);
 
   let filteredNoticeList = noticeList?.filter(
-    (notice) => notice.collegeCode === loggedInCollegeData?.collegeCode
+    (notice) => notice?.collegeCode === loggedInCollegeData?.collegeCode
   );
-  if (filteredNoticeList?.length > 3) {
-    filteredNoticeList = filteredNoticeList.slice(0, 3);
-  }
 
   //Logout
   const handleLogout = () => {
@@ -196,7 +189,7 @@ const CollegeAdmin = () => {
   ) : (
     <div className="flex w-[1200px] py-4 mx-auto text-white">
       {/* Sidebar */}
-      <div className="w-1/4 min-h-screen bg-gray-800 p-4 flex flex-col gap-4">
+      <div className="w-1/4 min-h-screen bg-slate-800 p-4 flex flex-col gap-4">
         <div className="text-xl font-bold text-blue-500 gap-2 my-1">
           <p className="text-yellow-300">{`${loggedInCollegeData?.name}`}</p>
           <p>Admin DashBoard</p>{" "}
@@ -290,26 +283,61 @@ const CollegeAdmin = () => {
 
         {activeSection === "uploadImages" && (
           <div>
-            <h2 className="text-xl font-bold pb-4">Upload Images</h2>
-            <div className="flex gap-4">
-              <button
-                onClick={() => setUploadingImage(1)}
-                className="bg-white text-black font-medium rounded-md p-4 border hover:bg-yellow-400 hover:text-black"
-              >
-                Upload To Gallery
-              </button>
-              <button
-                onClick={() => setUploadingImage(2)}
-                className="bg-white text-black font-medium rounded-md p-4 border hover:bg-yellow-400 hover:text-black"
-              >
-                Upload To Crousel
-              </button>
-              <button
-                onClick={() => setUploadingImage(3)}
-                className="bg-white text-black font-medium rounded-md p-4 border hover:bg-yellow-400 hover:text-black"
-              >
-                Upload To Front4
-              </button>
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-2 bg-slate-800 rounded-lg p-2">
+                <p className="text-center text-2xl font-semibold">
+                  Gallery Section
+                </p>
+                <button
+                  onClick={() => setUploadingImage(1)}
+                  className="bg-white text-black font-medium rounded-md p-4 m-2 mx-32 border hover:bg-yellow-400 hover:text-black"
+                >
+                  Upload To Gallery
+                </button>
+                <Link to="/">
+                  <p className="w-full text-center underline opacity-80">
+                    Click here to view Gallery images {'>>'}
+                  </p>
+                </Link>
+              </div>
+
+              <div className="border-1 border-gray-500 rounded-full border-b-2"></div>
+
+              <div className="flex flex-col gap-2 bg-slate-800 rounded-lg p-2">
+                <p className="text-center text-2xl font-semibold">
+                  Crousel Section
+                </p>
+                <button
+                  onClick={() => setUploadingImage(2)}
+                  className="bg-white text-black font-medium rounded-md p-4 m-2 mx-32 border hover:bg-yellow-400 hover:text-black"
+                >
+                  Upload To Crousel
+                </button>
+                <Link to="/">
+                  <p className="w-full text-center underline opacity-80">
+                    Click here to view Crousel images {'>>'}
+                  </p>
+                </Link>
+              </div>
+
+              <div className="border-1 border-gray-500  rounded-full border-b-2"></div>
+              
+              <div className="flex flex-col gap-2 bg-slate-800 rounded-lg p-2">
+                <p className="text-center text-2xl font-semibold">
+                  Front4 Section
+                </p>
+                <button
+                  onClick={() => setUploadingImage(3)}
+                  className="bg-white text-black font-medium rounded-md p-4 m-2 mx-32 border hover:bg-yellow-400 hover:text-black"
+                >
+                  Upload To Front4
+                </button>
+                <Link to="/">
+                  <p className="w-full text-center underline opacity-80">
+                    Click here to view Front4 images {'>>'}
+                  </p>
+                </Link>
+              </div>
             </div>
 
             {uploadingImage && (
@@ -477,7 +505,6 @@ const CollegeAdmin = () => {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
