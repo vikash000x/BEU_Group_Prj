@@ -17,18 +17,22 @@ const studentProfileSchema = new mongoose.Schema(
     },
     externalLinks: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        url: {
-          type: String,
-          required: true,
-        },
         thumbnail: {
           type: String,
           required: true,
         },
+        title: {
+          type: String,
+          required: true,
+        },
+         description: {
+          type: String,
+          required: true,
+        },
+        link: {
+          type: String,
+          required: true,
+        }
       },
     ],
   },
