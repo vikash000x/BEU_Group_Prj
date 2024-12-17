@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { colleges } from "../lib/utils";
+import React, { useEffect, useState } from "react";
+// import { colleges } from "../lib/utils";
 import { useParams } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useContext } from "react";
@@ -9,23 +9,27 @@ import TopFiveStudent from "./TopFiveStudent";
 import TopFiveFaculties from "./TopFiveFaculties";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
 const SingleCollege = () => {
-  const { singleCollege, setSingleCollege, setCollegeFacultyData } =
-    useContext(StoreContext);
-  // const [singleCollege, setSingleCollege] = useState(null);
-  const { college_id } = useParams();
-  const fetchSingleCollege = () => {
-    const singleCollegInfo = colleges.find(
-      (colleg) => colleg.shortName === college_id
-    );
-
-    setSingleCollege(singleCollegInfo);
-    setCollegeFacultyData(singleCollegInfo?.faculties);
+  const { url } = useContext(StoreContext);
+  const [singleCollege, setSingleCollege] = useState(null);
+  const { collegecode } = useParams();
+  console.log(singleCollege);
+  const fetchSingleCollege = async () => {
+    try {
+      const res = await axios.get(
+        `${url}/college/get-single-college/${collegecode}`
+      );
+      if (res.data.success) {
+        setSingleCollege(res.data.college);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   useEffect(() => {
     fetchSingleCollege();
-  }, [college_id, setSingleCollege]);
+  }, []);
 
   useEffect(() => {
     AOS.init({

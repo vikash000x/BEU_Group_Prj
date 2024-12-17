@@ -16,7 +16,7 @@ import authMiddleware from "../middleware/auth.js";
 const collegeRouter = express.Router();
 
 collegeRouter.put("/add-details/:collegeCode", addCollegeDetails);
-collegeRouter.get("/get-single-college", getSingleCollege);
+collegeRouter.get("/get-single-college/:collegecode", getSingleCollege);
 collegeRouter.get("/get-all-college", getAllCollege);
 collegeRouter.post("/upload-image", uploadImage);
 collegeRouter.post("/upload-crousel", authMiddleware, uploadCarousel);

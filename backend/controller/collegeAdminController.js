@@ -72,6 +72,28 @@ const registerCollege = async (req, res) => {
   }
 };
 
+// get all reistered college
+const getAllRegisteredCollege = async (req, res) => {
+  try {
+    const registeredColleges = await collegeAdminModel.find();
+    if (!registeredColleges) {
+      return res.json({
+        message: "No registered college found",
+      });
+    }
+    res.json({
+      success: "true",
+      message: "fetched all colleges",
+      registeredColleges,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "something went wrong",
+    });
+  }
+};
 // BEU will remove colleges
 const removeCollege = async (req, res) => {
   try {
@@ -145,4 +167,9 @@ const loginCollege = async (req, res) => {
 };
 
 // register startup
-export { registerCollege, removeCollege, loginCollege };
+export {
+  registerCollege,
+  removeCollege,
+  loginCollege,
+  getAllRegisteredCollege,
+};

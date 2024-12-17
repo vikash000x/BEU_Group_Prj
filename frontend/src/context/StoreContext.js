@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
@@ -10,8 +11,19 @@ const StoreContextProvider = (props) => {
   const [loggedInStudentData, setloggedInStudentData] = useState();
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
+  const [registeredCollege, setRegisteredCollege] = useState(null);
+
   const url = "http://localhost:4000/api";
+
+  const fetchRegisteredColleges = async () => {
+    const res = await axios.get(`${url}/collegeadmin/all-registered-college`);
+    if (res.data.success) {
+      setRegisteredCollege(res.data.registeredColleges);
+    }
+  };
+
   const contextValue = {
+    registeredCollege,
     loading,
     setLoading,
     singleCollege,
@@ -28,18 +40,24 @@ const StoreContextProvider = (props) => {
     loggedInStudentData,
     setloggedInStudentData,
     editNoticeData,
-    setEditNoticeData
+    setEditNoticeData,
   };
-
   useEffect(() => {
-    if(localStorage.getItem("token")) {
+    fetchRegisteredColleges();
+  }, []);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
-    if(localStorage.getItem("loggedInCollegeData")) {
-      setloggedInCollegeData(JSON.parse(localStorage.getItem("loggedInCollegeData")));
+    if (localStorage.getItem("loggedInCollegeData")) {
+      setloggedInCollegeData(
+        JSON.parse(localStorage.getItem("loggedInCollegeData"))
+      );
     }
-    if(localStorage.getItem("loggedInStudentData")) {
-      setloggedInStudentData(JSON.parse(localStorage.getItem("loggedInStudentData")));
+    if (localStorage.getItem("loggedInStudentData")) {
+      setloggedInStudentData(
+        JSON.parse(localStorage.getItem("loggedInStudentData"))
+      );
     }
   }, [token]);
   return (

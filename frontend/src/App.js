@@ -70,10 +70,13 @@ function App() {
             <Route path="/login/startup" element={<StartupLogin />} />
             <Route path="/login/student" element={<StudentLogin />} />
             <Route
-              path="beu/colleges/:college_id"
+              path="beu/college/:collegecode"
               element={<SingleCollege />}
             />
-            <Route path="/colleges/faculties" element={<FacultiesList />} />
+            <Route
+              path="/college/faculties/:collegeCode"
+              element={<FacultiesList />}
+            />
             <Route path="/college/students" element={<StudentList />} />
             <Route
               path="/college/faculty/:faculty_id"
