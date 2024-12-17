@@ -29,7 +29,7 @@ const SingleCollege = () => {
   };
   useEffect(() => {
     fetchSingleCollege();
-  }, [collegecode]);
+  }, []);
 
   useEffect(() => {
     AOS.init({

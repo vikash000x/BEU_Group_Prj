@@ -17,7 +17,7 @@ export const addFaculty = async (req, res) => {
 
   try {
     const { image } = req.files;
-    const college = await collegeModel.findOne({ _id : collegeId });
+    const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
@@ -124,5 +124,37 @@ export const deleteFaculty = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getSingleCollegeFacultyData = async (req, res) => {
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("faculties");
+    if (!college) {
+      return res.json({
+        message: "college is not found",
+      });
+    }
+    console.log(college);
+    const facultyData = college.faculties;
+    console.log(facultyData);
+    if (!facultyData) {
+      return res.json({
+        message: "faculty data is not availble",
+      });
+    }
+
+    res.json({
+      success: true,
+      facultyData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "error while getting faculty data",
+    });
   }
 };
