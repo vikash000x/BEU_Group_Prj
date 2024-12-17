@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const studentProfileSchema = new mongoose.Schema(
   {
@@ -17,24 +17,28 @@ const studentProfileSchema = new mongoose.Schema(
     },
     externalLinks: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        url: {
-          type: String,
-          required: true,
-        },
         thumbnail: {
           type: String,
           required: true,
         },
+        title: {
+          type: String,
+          required: true,
+        },
+         description: {
+          type: String,
+          required: true,
+        },
+        link: {
+          type: String,
+          required: true,
+        }
       },
     ],
   },
   { timestamps: true }
 );
 
-const StudentProfile = mongoose.model("StudentProfile", studentProfileSchema);
+const studentProfileModel = mongoose.models.StudentProfile || mongoose.model("StudentProfile", studentProfileSchema);
 
-module.exports = StudentProfile;
+export default studentProfileModel;

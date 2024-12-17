@@ -17,7 +17,6 @@ import AddFacultyForm from "./components/AddFacultyForm";
 import AddStudentForm from "./components/AddStudentForm";
 import PostUpdateForm from "./components/PostUpdateForm";
 import AddCollegeDetailForm from "./components/AddCollegeDetailForm";
-
 import AppliedList from "./pages/AppliedList";
 import FacultiesList from "./pages/FacultiesList";
 import SingleFaculty from "./pages/SingleFaculty";
@@ -28,6 +27,7 @@ import "react-toastify/dist/ReactToastify.css";
 import BeuAdmin from "./pages/BeuAdmin";
 import UpdateJob from "./pages/UpdateJob";
 import Student from "./pages/Student";
+import CollegeGallery from "./pages/CollegeGallery";
 function App() {
   return (
     <>
@@ -47,7 +47,7 @@ function App() {
             <Route path="/description/:id" element={<JobDescription />} />
             <Route path="/student/:id" element={<Student />} />
             <Route path="/job-section/update-job/:id" element={<UpdateJob />} />
-            <Route path="/:collegeName/admin" element={<CollegeAdmin />} />
+            <Route path="/:collegeCode/admin" element={<CollegeAdmin />} />
             <Route
               path=":collegeShortName/addFaculty"
               element={<AddFacultyForm />}
@@ -83,6 +83,7 @@ function App() {
               path="/college/student/:student_id"
               element={<SingleStudent />}
             />
+            <Route path="/college/gallery" element={<CollegeGallery />} />
           </Routes>
         </div>
         <Footer />

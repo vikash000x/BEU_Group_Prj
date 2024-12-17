@@ -11,18 +11,23 @@ import {
   uploadHeadImage,
 } from "../controller/collegeController.js";
 import { uploadImage } from "../config/uploadImage.js";
+import authMiddleware from "../middleware/auth.js";
 
 const collegeRouter = express.Router();
 
-collegeRouter.put("/add-details", addCollegeDetails);
+collegeRouter.put("/add-details/:collegeCode", addCollegeDetails);
 collegeRouter.get("/get-single-college", getSingleCollege);
 collegeRouter.get("/get-all-college", getAllCollege);
 collegeRouter.post("/upload-image", uploadImage);
-collegeRouter.post("/upload-crousel", uploadCarousel);
+collegeRouter.post("/upload-crousel", authMiddleware, uploadCarousel);
 collegeRouter.post("/upload-gallery", uplaoadGalleryImage);
-collegeRouter.post("/upload-head-image", uploadHeadImage);
-collegeRouter.delete("/delete-crousel", deleteCarouselImage);
-collegeRouter.delete("/delete-head-image", deleteHeadImage);
-collegeRouter.delete("/delete-gallery-image", deleteGalleryImage);
+collegeRouter.post("/upload-head-image", authMiddleware, uploadHeadImage);
+collegeRouter.delete("/delete-crousel", authMiddleware, deleteCarouselImage);
+collegeRouter.delete("/delete-head-image", authMiddleware, deleteHeadImage);
+collegeRouter.delete(
+  "/delete-gallery-image",
+  authMiddleware,
+  deleteGalleryImage
+);
 
 export default collegeRouter;

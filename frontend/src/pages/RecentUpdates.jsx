@@ -68,9 +68,9 @@ const RecentUpdates = () => {
   const handleSearch = () => {
     const filtered = noticeList?.filter(
       (item) =>
-        item.postedBy.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.title.toLowerCase().includes(searchValue.toLowerCase())
+        item.postedBy?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.category?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.title?.toLowerCase().includes(searchValue.toLowerCase())
     );
     setSearchValue("");
     setCurrentNotices(filtered);
@@ -94,7 +94,7 @@ const RecentUpdates = () => {
             placeholder="Search"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="p-1 border border-gray-300 rounded-md text-sm w-40 text-white bg-slate-200 h-10 focus:outline-none focus:ring-1"
+            className="p-1 pr- border border-gray-300 rounded-md text-sm w-40 text-black bg-slate-200 h-10 focus:outline-none focus:ring-1"
           />
           <button
             onClick={handleSearch}

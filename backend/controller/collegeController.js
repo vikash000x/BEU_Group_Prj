@@ -5,24 +5,39 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const addCollegeDetails = async (req, res) => {
   try {
-    const { collegeCode, description, extraInfo, phone, address, email } =
-      req.body;
+    const { collegeCode } = req.params;
+    const { name, shortName, description, extraInfo, departments, logo, city, phone, email, address } = req.body;
 
     const college = await collegeModel.findOneAndUpdate(
       { collegeCode },
-      { description, extraInfo, phone, address, email },
-      { new: true }
+      {
+        name,
+        shortName,
+        description,
+        extraInfo,
+        departments,
+        logo,
+        city,
+        phone,
+        email,
+        address
+      },
+      { new: true } 
     );
+
     if (!college) {
-      return res.status(404).json({ message: "college not found" });
+      return res.status(404).json({ message: "College not found" });
     }
-    res.status(201).json({
+
+    res.status(200).json({
       message: "College details updated successfully",
+      updatedCollege: college
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const getSingleCollege = async (req, res) => {
   const { collegeCode } = req.body;
   try {
@@ -63,7 +78,7 @@ export const getAllCollege = async (req, res) => {
 };
 export const uploadCarousel = async (req, res) => {
   try {
-    const { collegeCode } = req.body;
+    const { collegeId } = req.body;
 
     if (!req.files || !req.files.image) {
       return res.status(400).json({ message: "Please upload an image" });
@@ -71,7 +86,7 @@ export const uploadCarousel = async (req, res) => {
 
     const { image } = req.files;
 
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
@@ -96,7 +111,8 @@ export const uploadCarousel = async (req, res) => {
 
 export const deleteCarouselImage = async (req, res) => {
   try {
-    const { collegeCode, imageUrl } = req.body;
+    // send only image url
+    const { collegeId, imageUrl } = req.body;
 
     if (!collegeCode || !imageUrl) {
       return res.status(400).json({
@@ -105,7 +121,7 @@ export const deleteCarouselImage = async (req, res) => {
       });
     }
 
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.status(404).json({
         success: false,
@@ -146,16 +162,16 @@ export const deleteCarouselImage = async (req, res) => {
 
 export const uploadHeadImage = async (req, res) => {
   try {
-    const { name, collegeCode, info } = req.body;
+    const { name, collegeCode, collegeId, info } = req.body;
 
-    if (!name || !collegeCode || !info) {
+    if (!name || !info) {
       return res.status(400).json({ message: "All fields are required" });
     }
     if (!req.files || !req.files.image) {
       return res.status(400).json({ message: "Please upload an image" });
     }
 
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.json({ message: "colllege not found" });
     }
@@ -189,7 +205,7 @@ export const uploadHeadImage = async (req, res) => {
 
 export const deleteHeadImage = async (req, res) => {
   try {
-    const { galleryId } = req.body;
+    const { galleryId, collegeId } = req.body;
 
     const galleryEntry = await galleryModel.findById(galleryId);
     if (!galleryEntry) {
@@ -199,8 +215,8 @@ export const deleteHeadImage = async (req, res) => {
       });
     }
 
-    const collegeCode = galleryEntry.collegeCode;
-    const college = await collegeModel.findOne({ collegeCode });
+    // const collegeCode = galleryEntry.collegeCode;
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.status(404).json({
         success: false,
@@ -246,7 +262,7 @@ export const deleteHeadImage = async (req, res) => {
 
 export const uplaoadGalleryImage = async (req, res) => {
   try {
-    const { name, collegeCode, info } = req.body;
+    const { name, collegeCode, collegeId, info } = req.body;
 
     if (!name || !collegeCode || !info) {
       return res.status(400).json({ message: "All fields are required" });
@@ -255,7 +271,7 @@ export const uplaoadGalleryImage = async (req, res) => {
       return res.status(400).json({ message: "Please upload an image" });
     }
 
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ collegeId });
     if (!college) {
       return res.json({ message: "colllege not found" });
     }

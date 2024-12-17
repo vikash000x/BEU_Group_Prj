@@ -7,7 +7,15 @@ import Loader from "./loader/Loader";
 const CollegeLogin = () => {
   const [collegecode, setCollegeCode] = useState("");
   const [password, setPassword] = useState("");
-  const { userType, setUserType, setToken, url, loading, setLoading, setloggedInCollegeData } = useContext(StoreContext);
+  const {
+    userType,
+    setUserType,
+    setToken,
+    url,
+    loading,
+    setLoading,
+    setloggedInCollegeData,
+  } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -21,12 +29,14 @@ const CollegeLogin = () => {
       setloggedInCollegeData(response.data.collegeData);
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("loggedInCollegeData", JSON.stringify(response.data.collegeData));
       toast.success("LogedIn as college");
       setUserType("college");
       setLoading(false);
-      navigate("/collegename/admin");
+      navigate(`/${response.data.collegeData.collegeCode}/admin`);
     } else {
       toast.error(response.data.message);
+      setLoading(false);
     }
   };
 
