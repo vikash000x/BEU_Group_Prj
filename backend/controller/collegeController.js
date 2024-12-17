@@ -74,6 +74,7 @@ export const getSingleCollege = async (req, res) => {
     });
   }
 };
+
 export const getAllCollege = async (req, res) => {
   try {
     const colleges = await collegeModel

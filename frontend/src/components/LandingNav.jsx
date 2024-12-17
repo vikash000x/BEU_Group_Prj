@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/Screenshot 2024-11-23 023731.png";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { colleges } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
@@ -13,7 +12,6 @@ const LandingNav = () => {
   const [flag1, setFlag1] = useState(false); //Single College Page
   const [flag2, setFlag2] = useState(false); //College Admin Dashboard
   const [flag3, setFlag3] = useState(false); //Rest all
-
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -39,7 +37,12 @@ const LandingNav = () => {
       setFlag2(true);
       setFlag3(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, userType]);
+
+  const handleClick = (collegeCode) => {
+    localStorage.setItem("collegeCode", collegeCode);
+    navigate(`beu/college/${collegeCode}`);
+  };
 
   return (
     <div className="bg-[#0B192C] shadow-lg border-b-[0.01rem] font-popins [&>*]:font-light border-b-white border-opacity-50  w-full h-[65px] flex items-center justify-center">
@@ -66,7 +69,10 @@ const LandingNav = () => {
                 className="absolute left-0 mt-2 w-60 h-[600px] overflow-y-scroll  bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10"
               >
                 {registeredCollege?.map((college, index) => (
-                  <Link to={`beu/college/${college.collegecode}`}>
+                  <div
+                    // to={`beu/college/${college.collegecode}`}
+                    onClick={() => handleClick(college.collegecode)}
+                  >
                     <li
                       // onClick={() => navigate(beu/colleges/${college.shortName})}
                       key={index}
@@ -74,7 +80,7 @@ const LandingNav = () => {
                     >
                       {college.collegename}
                     </li>
-                  </Link>
+                  </div>
                 ))}
               </ul>
             </li>
@@ -86,7 +92,13 @@ const LandingNav = () => {
             </Link>
           )}
 
-          {flag1 && <Link to="/colleges/faculties">Faculties</Link>}
+          {flag1 && (
+            <Link
+              to={`/college/faculties/${localStorage.getItem("collegeCode")}`}
+            >
+              Faculties
+            </Link>
+          )}
           {flag3 && (
             <Link to="recent-update">
               <li
