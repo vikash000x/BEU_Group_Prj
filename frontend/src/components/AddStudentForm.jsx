@@ -114,6 +114,7 @@ const AddStudentForm = ({ collegeShortName }) => {
             <option value="other">Other</option>
           </select>
         </div>
+        
 
         <div>
           <label className="block text-white font-medium mb-2">

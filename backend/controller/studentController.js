@@ -79,6 +79,49 @@ export const updateStudent = async (req, res) => {
   }
 };
 
+
+// this controller for student to update profile
+export const updateStudentProfile = async (req, res) => {
+  console.log("Request parameters:", req.params);
+  const { profileId } = req.params; // Profile ID from the route
+  const { profile_image, skills, resume, about } = req.body; // Data from the frontend
+
+  try {
+   
+    const updateFields = {};
+    if (profile_image) updateFields.profile_image = profile_image;
+    if (skills) {
+      // Split the string by commas, trim whitespace, and filter out empty strings
+      updateFields.skills = skills.split(",").map(skill => skill.trim()).filter(skill => skill);
+    }
+    if (resume) updateFields.resume = resume;
+    if (about) updateFields.about = about;
+
+ 
+
+    // Update the profile with only the specified fields
+    const updatedProfile = await studentProfileModel.findByIdAndUpdate(
+      profileId,
+      { $set: updateFields }, // Use $set to update specific fields only
+      { new: true } // Return the updated document
+    );
+
+    // If no profile is found, return a 404 error
+    if (!updatedProfile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      updatedProfile,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 // Controller to delete a student , a college will delete the student
 export const deleteStudent = async (req, res) => {
   const { studentId } = req.params;
@@ -152,3 +195,120 @@ export const loginStudent = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+export const updateExternalLinks = async (req, res) => {
+  try {
+    const { studentId } = req.params; // Extracting studentId from request parameters
+    const {  thumbnail, title, description, link } = req.body; // Extracting new link data from the request body
+  //console.log(studentId)
+    // Validate required fields
+    if ( !thumbnail || !title || !description || !link) {
+      return res.status(400).json({ message: "Name, URL, and Thumbnail are required" });
+    }
+
+    // Find the student profile by ID
+    const student = await studentProfileModel.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Push the new external link into the externalLinks array
+    student.externalLinks.push({ thumbnail, title, description, link });
+
+    // Save the updated student profile
+    await student.save();
+
+    return res.status(200).json({ message: "External link added successfully", externalLinks: student.externalLinks });
+  } catch (error) {
+    console.error("Error updating external links:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteExternalLink = async (req, res) => {
+  try {
+    const { studentId, linkId } = req.params; // Extracting studentId and linkId from request parameters
+
+    // Find the student profile by ID
+    const student = await studentProfileModel.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Filter out the link with the given linkId
+    const linkIndex = student.externalLinks.findIndex(
+      (link) => link._id.toString() === linkId
+    );
+
+    if (linkIndex === -1) {
+      return res.status(404).json({ message: "Link not found" });
+    }
+
+    // Remove the link from the externalLinks array
+    student.externalLinks.splice(linkIndex, 1);
+
+    // Save the updated student profile
+    await student.save();
+
+    return res.status(200).json({
+      message: "External link deleted successfully",
+      externalLinks: student.externalLinks,
+    });
+  } catch (error) {
+    console.error("Error deleting external link:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+// export const updateProfile = async (req, res) => {
+//     try {
+//         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+//         if (!updatedProfile) {
+//             return res.status(404).json({
+//                 message: "Job not found",
+//             });
+//         }
+//         res.status(200).json({
+//             message: "Job updated successfully",
+//             data: updatedJob,
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "Failed to update job",
+//             error: error.message,
+//         });
+//     }
+// };
+
+// export const updateProfle = async (req, res) => {
+//   try {
+//     const { studentId } = req.params; // Extracting studentId from request parameters
+//     const {profilepic, skills, resume, about } = req.body; // Extracting new link data from the request body
+//   //console.log(studentId)
+//     // Validate required fields
+    
+
+//     // Find the student profile by ID
+//     const student = await studentProfileModel.findById(studentId);
+
+//     if (!student) {
+//       return res.status(404).json({ message: "Student not found" });
+//     }
+
+//     // Push the new external link into the externalLinks array
+//     student.push({ profilepic, skills, resume, about  });
+
+//     // Save the updated student profile
+//     await student.save();
+
+//     return res.status(200).json({ message: "External link added successfully", externalLinks: student.externalLinks });
+//   } catch (error) {
+//     console.error("Error updating external links:", error);
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+// };
