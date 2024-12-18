@@ -8,7 +8,6 @@ import "aos/dist/aos.css";
 import axios from "axios";
 const FacultiesList = () => {
   const { collegeCode } = useParams();
-  console.log("fromfaculty12345", collegeCode);
   const navigate = useNavigate();
   const { url } = useContext(StoreContext);
   const [collegeFacultyData, setCollegeFacultyData] = useState(null);
@@ -39,15 +38,12 @@ const FacultiesList = () => {
       const res = await axios.get(
         `${url}/faculty/get-faculty-data/${collegeCode}`
       );
-      console.log(res.data.facultyData);
       if (res.data.success) {
         setCollegeFacultyData(res?.data?.facultyData);
         setFilteredFaculties(res?.data?.facultyData);
       }
     } catch (error) {}
   };
-  console.log("hii", filteredFaculties);
-  console.log("facultydata", collegeFacultyData);
   useEffect(() => {
     fetchFacultyData();
     AOS.init({
@@ -115,26 +111,26 @@ const FacultiesList = () => {
           {filteredFaculties ? (
             filteredFaculties.map((faculty) => (
               <tr
-                key={faculty._id}
-                onClick={() => navigate(`/college/faculty/${faculty.id}`)}
+                key={faculty?._id}
+                onClick={() => navigate(`/college/faculty/${faculty?._id}`)}
                 className="hover:bg-[#0B192C] cursor-pointer"
                 data-aos="fade-up"
               >
                 <td className="border border-gray-300 px-4 py-2">
                   <img
                     src="https://tse3.mm.bing.net/th?id=OIP.hAaNvre1Tukr7fGuT_7_YgHaHa&pid=Api&P=0&h=180"
-                    alt={faculty.name}
+                    alt={faculty?.name}
                     className="w-16 h-16 rounded-full object-cover"
                   />
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {faculty.name}
+                  {faculty?.name}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {faculty.department}
+                  {faculty?.department}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {faculty.designation}
+                  {faculty?.designation}
                 </td>
               </tr>
             ))

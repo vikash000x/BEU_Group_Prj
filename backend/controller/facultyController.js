@@ -158,3 +158,24 @@ export const getSingleCollegeFacultyData = async (req, res) => {
     });
   }
 };
+
+export const getSingleFaculty = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const faculty = await facultyModel.findById(id);
+    if (!faculty) {
+      return res.json({
+        success: false,
+        message: "faculty not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      faculty,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

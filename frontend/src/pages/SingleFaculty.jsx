@@ -2,22 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
 const SingleFaculty = () => {
-  const { collegeFacultyData } = useContext(StoreContext);
-  console.log("collegeFacultydata", collegeFacultyData);
+  const { url } = useContext(StoreContext);
   const [singleFacultyData, setSingleFacultyData] = useState(null);
   const { faculty_id } = useParams();
-  const fetchSingleFaculty = () => {
-    const filteredFaculty = collegeFacultyData?.find(
-      (faculty) => faculty.id === Number(faculty_id)
-    );
-    setSingleFacultyData(filteredFaculty);
+  const fetchSingleFaculty = async () => {
+    try {
+      const res = await axios.get(
+        `${url}/faculty/get-single-faculty/${faculty_id}`
+      );
+      if (res?.data?.success) {
+        setSingleFacultyData(res?.data?.faculty);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     fetchSingleFaculty();
   }, [faculty_id]);
-  console.log(singleFacultyData);
   return (
     <div className="w-[1200px] mx-auto mt-10 p-4">
       <div className="flex bg-white shadow-lg rounded-lg overflow-hidden mt-16">
@@ -43,10 +48,6 @@ const SingleFaculty = () => {
           <p className="text-gray-800">
             <span className="font-semibold">Rating:</span>{" "}
             {singleFacultyData?.rating}/10
-          </p>
-          <p className="text-gray-800">
-            <span className="font-semibold">Specialization:</span>{" "}
-            {singleFacultyData?.specialization}
           </p>
           <p className="text-gray-800">
             <span className="font-semibold">Courses:</span>{" "}

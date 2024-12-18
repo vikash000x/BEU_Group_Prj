@@ -4,6 +4,7 @@ import {
   addFaculty,
   deleteFaculty,
   getSingleCollegeFacultyData,
+  getSingleFaculty,
   updateFaculty,
 } from "../controller/facultyController.js";
 import authMiddleware from "../middleware/auth.js";
@@ -16,5 +17,6 @@ facultyRouter.get(
   "/get-faculty-data/:collegeCode",
   getSingleCollegeFacultyData
 );
+facultyRouter.get("/get-single-faculty/:id", getSingleFaculty);
 
 export default facultyRouter;
