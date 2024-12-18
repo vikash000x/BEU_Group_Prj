@@ -7,7 +7,7 @@ const StoreContextProvider = (props) => {
   const [collegeFacultyData, setCollegeFacultyData] = useState(null);
   const [userType, setUserType] = useState("anonymous");
   const [token, setToken] = useState(null);
-  const [loggedInCollegeData, setloggedInCollegeData] = useState();
+  const [loggedInCollegeData, setloggedInCollegeData] = useState(null);
   const [loggedInStudentData, setloggedInStudentData] = useState();
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
@@ -46,12 +46,19 @@ const StoreContextProvider = (props) => {
     fetchRegisteredColleges();
   }, []);
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
     if (localStorage.getItem("loggedInCollegeData")) {
       setloggedInCollegeData(
         JSON.parse(localStorage.getItem("loggedInCollegeData"))
+      );
+    }
+    if (localStorage.getItem("token")) {
+      setToken(
+        localStorage.getItem("token")
+      );
+    }
+    if (localStorage.getItem("userType")) {
+      setUserType(
+        localStorage.getItem("userType")
       );
     }
     if (localStorage.getItem("loggedInStudentData")) {

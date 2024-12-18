@@ -6,6 +6,10 @@ import { useParams } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
+import UpdateFacultyForm from "../components/UpdateFacultyForm";
 const FacultiesList = () => {
   const { collegeCode } = useParams();
   const navigate = useNavigate();
@@ -13,6 +17,7 @@ const FacultiesList = () => {
   const [collegeFacultyData, setCollegeFacultyData] = useState(null);
   const [search, setSearch] = useState("");
   const [filteredFaculties, setFilteredFaculties] = useState(null);
+  const [actionModal, setActionModal] = useState(null);
   const handleSearch = () => {
     const searchData = collegeFacultyData.filter((faculty) =>
       faculty.name.toLowerCase().includes(search.toLowerCase())
@@ -50,6 +55,15 @@ const FacultiesList = () => {
       duration: 1000,
     });
   }, []);
+
+  const handleEditFaculty = async (faculty) => {
+    setActionModal(faculty);
+    toast.success("edited");
+  };
+  const handleDeleteFaculty = async (faculty) => {
+    //setActionModal(faculty);
+    toast.success("Deleted");
+  };
 
   return (
     <div className="w-[1200px] mx-auto m-12">
@@ -105,32 +119,54 @@ const FacultiesList = () => {
             <th className="border border-gray-300 px-4 py-2">Name</th>
             <th className="border border-gray-300 px-4 py-2">Department</th>
             <th className="border border-gray-300 px-4 py-2">Designation</th>
+            {localStorage.getItem("userType") === "collegeAdmin" &&
+            localStorage.getItem("token") ? (
+              <></>
+            ) : (
+              <th className="border border-gray-300 px-4 py-2">Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
           {filteredFaculties ? (
             filteredFaculties.map((faculty) => (
               <tr
-                key={faculty?._id}
-                onClick={() => navigate(`/college/faculty/${faculty?._id}`)}
+                key={faculty._id}
+                //onClick={() => navigate(`/college/faculty/${faculty?._id}`)}
                 className="hover:bg-[#0B192C] cursor-pointer"
                 data-aos="fade-up"
               >
-                <td className="border border-gray-300 px-4 py-2">
+                <td
+                  className="border border-gray-300 px-4 py-2"
+                  onClick={() => navigate(`/college/faculty/${faculty._id}`)}
+                >
                   <img
-                    src="https://tse3.mm.bing.net/th?id=OIP.hAaNvre1Tukr7fGuT_7_YgHaHa&pid=Api&P=0&h=180"
+                    src={faculty?.profileImage}
                     alt={faculty?.name}
                     className="w-16 h-16 rounded-full object-cover"
                   />
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {faculty?.name}
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
+                  {faculty.name}
+                </td>
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
+                  {faculty.department}
+                </td>
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
+                  {faculty.designation}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {faculty?.department}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {faculty?.designation}
+                  <div className="flex gap-3">
+                    <button onClick={() => handleEditFaculty(faculty)}>
+                      <FaEdit />
+                    </button>
+                    <button onClick={() => handleDeleteFaculty(faculty)}>
+                      <RiDeleteBinLine />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))
@@ -139,6 +175,17 @@ const FacultiesList = () => {
           )}
         </tbody>
       </table>
+
+      {actionModal && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="relative max-h-[80vh] w-full max-w-3xl mx-auto overflow-auto bg-slate-800rounded-lg shadow-lg">
+            <UpdateFacultyForm
+              facultyDataToUpdate={actionModal}
+              setActionModal={setActionModal}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
