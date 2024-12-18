@@ -136,7 +136,7 @@ const loginCollege = async (req, res) => {
     let collegeData = null;
 
     try {
-      collegeData = await collegeModel.findOne({ collegeCode: collegecode });
+      collegeData = await collegeModel.findOne({ collegeCode: collegecode }).populate("images").populate("headImage");
       if (!collegeData) {
         return res.json({
           success: false,

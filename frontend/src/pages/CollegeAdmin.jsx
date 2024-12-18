@@ -26,6 +26,7 @@ const CollegeAdmin = () => {
     url,
     setEditNoticeData,
     setUserType,
+    token,
   } = useContext(StoreContext);
 
   const formatDate = (dateString) => {
@@ -43,6 +44,7 @@ const CollegeAdmin = () => {
       const imageData = new FormData();
       imageData.append("image", fileData);
       imageData.append("collegeCode", loggedInCollegeData?.collegeCode);
+      imageData.append("collegeId", loggedInCollegeData?._id);
       if (uploadingImage === 1) {
         //Gallery
         imageData.append("name", inputName);
@@ -54,6 +56,7 @@ const CollegeAdmin = () => {
             {
               headers: {
                 "Content-Type": "multipart/form-data", // Set content type to multipart
+                token,
               },
             }
           );
@@ -72,6 +75,7 @@ const CollegeAdmin = () => {
             {
               headers: {
                 "Content-Type": "multipart/form-data", // Set content type to multipart
+                token,
               },
             }
           );
@@ -79,7 +83,7 @@ const CollegeAdmin = () => {
           toast.success("Cousel image uploaded successfully !");
         } catch (error) {
           console.log("error while posting crousel image", error);
-          toast.error("Error while uploading Gallery image !");
+          toast.error("Error while uploading Crousel image !");
         }
       } else if (uploadingImage === 3) {
         //Gallery
@@ -92,6 +96,7 @@ const CollegeAdmin = () => {
             {
               headers: {
                 "Content-Type": "multipart/form-data", // Set content type to multipart
+                token, 
               },
             }
           );
@@ -120,7 +125,6 @@ const CollegeAdmin = () => {
     if (name === "info") {
       setInfo(value);
     }
-    console.log(inputName, info);
   };
 
   const handleFileChange = (e) => {
@@ -129,7 +133,6 @@ const CollegeAdmin = () => {
   };
 
   const handleEditNotice = (notice) => {
-    console.log("setting notice data", notice);
     setEditNoticeData(notice);
     navigate(`/collegeShortName/post-update/?edit=true`);
   };
@@ -145,6 +148,12 @@ const CollegeAdmin = () => {
       console.log("error while deleting notice", error);
       toast.error("error while deleting notice!");
     }
+  };
+
+  const handleViewImage = async () => {
+    setLoading(true);
+    setActiveSection("viewImages");
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -177,11 +186,17 @@ const CollegeAdmin = () => {
   //Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setloggedInCollegeData(null);
+    localStorage.removeItem("loggedInCollegeData");
+    localStorage.removeItem("userType");
     setLogoutModal(false);
     setUserType("anonymous");
     toast.success("Logged Out Successfully");
     navigate(`/`);
+  };
+
+  const handleImageDelete = async (type) => {
+    console.log(type);
+    toast.success("Image deleted");
   };
 
   return loading ? (
@@ -217,6 +232,14 @@ const CollegeAdmin = () => {
           onClick={() => setActiveSection("uploadImages")}
         >
           Upload Images
+        </button>
+        <button
+          className={`p-2 text-left ${
+            activeSection === "viewImages" && "bg-blue-500"
+          }`}
+          onClick={() => handleViewImage()}
+        >
+          View Images
         </button>
         <button
           className={`p-2 text-left ${
@@ -296,7 +319,7 @@ const CollegeAdmin = () => {
                 </button>
                 <Link to="/">
                   <p className="w-full text-center underline opacity-80">
-                    Click here to view Gallery images {'>>'}
+                    Click here to view Gallery images {">>"}
                   </p>
                 </Link>
               </div>
@@ -315,13 +338,13 @@ const CollegeAdmin = () => {
                 </button>
                 <Link to="/">
                   <p className="w-full text-center underline opacity-80">
-                    Click here to view Crousel images {'>>'}
+                    Click here to view Crousel images {">>"}
                   </p>
                 </Link>
               </div>
 
               <div className="border-1 border-gray-500  rounded-full border-b-2"></div>
-              
+
               <div className="flex flex-col gap-2 bg-slate-800 rounded-lg p-2">
                 <p className="text-center text-2xl font-semibold">
                   Front4 Section
@@ -334,7 +357,7 @@ const CollegeAdmin = () => {
                 </button>
                 <Link to="/">
                   <p className="w-full text-center underline opacity-80">
-                    Click here to view Front4 images {'>>'}
+                    Click here to view Front4 images {">>"}
                   </p>
                 </Link>
               </div>
@@ -502,6 +525,93 @@ const CollegeAdmin = () => {
                     </ul>
                   </div>
                 )}
+            </div>
+          </div>
+        )}
+
+        {/* view Images */}
+        {activeSection === "viewImages" && (
+          <div className="flex flex-col">
+            <div>
+              <h2 className="text-center font-semibold text-4xl text-yellow-300">
+                Gallery Images
+              </h2>
+              <div className="overflow-x-auto flex space-x-4 p-4">
+                {loggedInCollegeData.images
+                  .slice()
+                  .reverse()
+                  .map((img) => (
+                    <div key={img.url} className="flex-shrink-0 group relative">
+                      <img
+                        alt={img.name}
+                        src={img.url}
+                        className="rounded-lg shadow-lg object-cover w-[200px] h-[200px]"
+                      />
+                      <button
+                        onClick={() => handleImageDelete(img.url)}
+                        className="absolute top-2 right-2 p-1 bg-white rounded-full opacity-70 hover:opacity-100 transition-opacity z-20"
+                      >
+                        <RiDeleteBinLine className="text-red-600" size={24} />
+                      </button>
+                      <p className="absolute inset-0 flex items-center justify-center text-center text-white opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300 z-10">
+                        {img.name}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="text-center font-semibold text-4xl text-yellow-300">
+                Crousal Images
+              </h2>
+              <div className="overflow-x-auto flex space-x-4 p-4">
+                {loggedInCollegeData.crouselImage
+                  .slice()
+                  .reverse()
+                  .map((img) => (
+                    <div key={img} className="flex-shrink-0 group relative">
+                      <img
+                        alt={img}
+                        src={img}
+                        className="rounded-lg shadow-lg object-cover w-[200px] h-[200px]"
+                      />
+                      <button
+                        onClick={() => handleImageDelete(img)}
+                        className="absolute top-2 right-2 p-1 bg-white rounded-full opacity-70 hover:opacity-100 transition-opacity z-20"
+                      >
+                        <RiDeleteBinLine className="text-red-600" size={24} />
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="text-center font-semibold text-4xl text-yellow-300">
+                Front4 Images
+              </h2>
+              <div className="overflow-x-auto flex space-x-4 p-4">
+                {loggedInCollegeData.headImage
+                  .slice()
+                  .reverse()
+                  .map((img) => (
+                    <div key={img.url} className="flex-shrink-0 group relative">
+                      <img
+                        alt={img.name}
+                        src={img.url}
+                        className="rounded-lg shadow-lg object-cover w-[200px] h-[200px]"
+                      />
+                      <button
+                        onClick={() => handleImageDelete(img.url)}
+                        className="absolute top-2 right-2 p-1 bg-white rounded-full opacity-70 hover:opacity-100 transition-opacity z-20"
+                      >
+                        <RiDeleteBinLine className="text-red-600" size={24} />
+                      </button>
+                      <p className="absolute inset-0 flex items-center justify-center text-center text-white opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300 z-10">
+                        {img.name}
+                      </p>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         )}

@@ -88,7 +88,7 @@ const LandingNav = () => {
           )}
 
           {flag2 && (
-            <Link to={`/${loggedInCollegeData.collegeCode}/addFaculty`}>
+            <Link to={`/${loggedInCollegeData?.collegeCode}/addFaculty`}>
               <li className="bg-red-500 px-3 py-2">Add Faculty</li>
             </Link>
           )}
