@@ -132,7 +132,7 @@ const FacultiesList = () => {
             filteredFaculties.map((faculty) => (
               <tr
                 key={faculty._id}
-                // onClick={() => navigate(`/college/faculty/${faculty._id}`)}
+                //onClick={() => navigate(`/college/faculty/${faculty?._id}`)}
                 className="hover:bg-[#0B192C] cursor-pointer"
                 data-aos="fade-up"
               >
@@ -142,26 +142,20 @@ const FacultiesList = () => {
                 >
                   <img
                     src={faculty?.profileImage}
-                    alt={faculty.name}
+                    alt={faculty?.name}
                     className="w-16 h-16 rounded-full object-cover"
                   />
                 </td>
-                <td
-                  className="border border-gray-300 px-4 py-2"
-                  onClick={() => navigate(`/college/faculty/${faculty._id}`)}
-                >
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
                   {faculty.name}
                 </td>
-                <td
-                  className="border border-gray-300 px-4 py-2"
-                  onClick={() => navigate(`/college/faculty/${faculty._id}`)}
-                >
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
                   {faculty.department}
                 </td>
-                <td
-                  className="border border-gray-300 px-4 py-2"
-                  onClick={() => navigate(`/college/faculty/${faculty._id}`)}
-                >
+                <td className="border border-gray-300 px-4 py-2"
+                onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
                   {faculty.designation}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">

@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 import collegeModel from "../models/collegeModel.js";
+import startupRegistrationModel from "../models/startupRegistrationModel.js";
+import startupModel from "../models/startupModel.js";
 
 const createToken = (id) => {
   return jwt.sign({ id }, "amir", {
@@ -68,6 +70,62 @@ const registerCollege = async (req, res) => {
     res.json({
       success: false,
       message: "Error",
+    });
+  }
+};
+
+const registerStartup = async (req, res) => {
+  const { startupName, email, password } = req.body;
+  try {
+    const exists = await startupRegistrationModel.findOne({ email });
+    if (exists) {
+      return res.json({
+        success: false,
+        message: "Startup  already added",
+      });
+    }
+
+    // validating email format and strong password
+    if (!validator.isEmail(email)) {
+      return res.json({
+        success: false,
+        message: "Please enter valid email",
+      });
+    }
+
+    // password length
+    if (password.length < 8) {
+      return res.json({
+        success: false,
+        message: "please enter a strong password",
+      });
+    }
+
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newStartupRegistered = await new startupRegistrationModel({
+      startupName: startupName,
+      email: email,
+      password: hashedPassword,
+    }).save();
+    const newStartup = await new startupModel({
+      startupName: startupName,
+      email: email,
+    }).save();
+
+    res.json({
+      success: true,
+      message: "Startup registered Successfully",
+      newStartupRegistered,
+      newStartup,
+    });
+  } catch (error) {
+    console.log("Error->", error);
+    res.json({
+      success: false,
+      message: "Error while registering startup",
     });
   }
 };
@@ -165,6 +223,45 @@ const loginCollege = async (req, res) => {
     });
   }
 };
+const loginStartup = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const isRegister = await startupRegistrationModel.findOne({ email });
+    if (!isRegister) {
+      return res.json({
+        success: false,
+        message: "Startup is not registered ! contact to BEU",
+      });
+    }
+    const isMatch = await bcrypt.compare(password, isRegister.password);
+    if (!isMatch) {
+      return res.json({
+        success: false,
+        message: "Inavalid credentials",
+      });
+    }
+
+    const isStartup = await startupModel.findOne({ email });
+    if (!isStartup) {
+      return res.json({
+        success: false,
+        message: "startup not fount",
+      });
+    }
+
+    const token = createToken(isStartup._id);
+    res.json({
+      success: true,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
 
 // register startup
 export {
@@ -172,4 +269,6 @@ export {
   removeCollege,
   loginCollege,
   getAllRegisteredCollege,
+  registerStartup,
+  loginStartup,
 };
