@@ -14,7 +14,6 @@ const SingleCollege = () => {
   const { url } = useContext(StoreContext);
   const [singleCollege, setSingleCollege] = useState(null);
   const { collegecode } = useParams();
-  console.log(singleCollege);
   const fetchSingleCollege = async () => {
     try {
       const res = await axios.get(
