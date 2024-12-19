@@ -138,9 +138,7 @@ export const getSingleCollegeFacultyData = async (req, res) => {
         message: "college is not found",
       });
     }
-    console.log(college);
     const facultyData = college.faculties;
-    console.log(facultyData);
     if (!facultyData) {
       return res.json({
         message: "faculty data is not availble",
