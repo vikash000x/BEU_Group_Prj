@@ -121,10 +121,28 @@ export const postNotice = async (req, res) => {
 
 export const getAllNotices = async (req, res) => {
   try {
-    const notices = await noticeModel.find();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
+    const skip = (page - 1) * limit;
+
+    const totalNotices = await noticeModel.countDocuments();
+    const totalPages = Math.ceil(totalNotices / limit);
+
+    const notices = await noticeModel
+      .find()
+      .sort({ postedAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
     res.status(200).json({
       message: "Notices fetched successfully",
       notices,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalItems: totalNotices,
+        itemsPerPage: limit
+      }
     });
   } catch (error) {
     console.error("Error while fetching notices:", error);

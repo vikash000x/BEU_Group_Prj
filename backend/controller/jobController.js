@@ -32,7 +32,7 @@ export const createJob = async (req, res) => {
       });
     }
     if (!startupId) {
-      return res.josn({
+      return res.json({
         success: false,
         message: "You are not authorized to create a job",
       });
@@ -69,15 +69,32 @@ export const createJob = async (req, res) => {
 // Controller to get all jobs
 export const getAllJobs = async (req, res) => {
   try {
-    const jobs = await Job.find();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const totalJobs = await Job.countDocuments();
+    const totalPages = Math.ceil(totalJobs / limit);
+
+    const jobs = await Job.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
     res.status(200).json({
-      message: "Jobs fetched successfully",
+      success: true,
       data: jobs,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalItems: totalJobs,
+        itemsPerPage: limit
+      }
     });
   } catch (error) {
     res.status(500).json({
-      message: "Failed to fetch jobs",
-      error: error.message,
+      success: false,
+      message: error.message
     });
   }
 };

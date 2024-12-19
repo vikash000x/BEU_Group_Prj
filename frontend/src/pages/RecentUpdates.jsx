@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import UpdatesCard from "../components/UpdatesCard";
-import UpdatesPagination from "../components/UpdatesPagination";
 import UpdatesPageFilter from "../components/UpdatesPageFilter";
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 import Loader from "../components/loader/Loader";
-
-//import { noticeList } from "../lib/utils";
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const RecentUpdates = () => {
-  const [noticeList, setNoticeList] = useState();
+  const [noticeList, setNoticeList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [noticePerPage, setNoticePerPage] = useState(9);
-  const [currentNotices, setCurrentNotices] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [filterType, setFilterType] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -28,169 +26,219 @@ const RecentUpdates = () => {
 
   const { loading, setLoading } = useContext(StoreContext);
 
-  useEffect(() => {
-    const fetchAllNotices = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "http://localhost:4000/api/notice/getAllNotices",
-          { withCredentials: true }
-        );
-        const result = response.data.notices;
-        setNoticeList(result);
-      } catch (error) {
-        console.error("Error fetching notice:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAllNotices = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:4000/api/notice/getAllNotices?page=${currentPage}&limit=9`,
+        { withCredentials: true }
+      );
+      const { notices, pagination } = response.data;
+      setNoticeList(notices);
+      setTotalPages(pagination.totalPages);
+      setTotalItems(pagination.totalItems);
+    } catch (error) {
+      console.error("Error fetching notices:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAllNotices();
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
-    const newDisplayableNotices = noticeList?.filter(
-      (notice) => notice[filterType] == filterOption
-    );
-    setCurrentNotices(newDisplayableNotices);
-  }, [noticeList, filterOption, filterType]);
-
-  useEffect(() => {
-    const lastNoticeIndex = currentPage * noticePerPage;
-    const firstNoticeIndex = lastNoticeIndex - noticePerPage;
-    const displayableNotices = noticeList?.slice(
-      firstNoticeIndex,
-      lastNoticeIndex
-    );
-    setCurrentNotices(displayableNotices);
-  }, [currentPage, noticeList]);
+    if (filterType && filterOption) {
+      const filtered = noticeList.filter(
+        (notice) => notice[filterType] === filterOption
+      );
+      const sortedFiltered = [...filtered].sort((a, b) => 
+        new Date(b.postedAt) - new Date(a.postedAt)
+      );
+      setNoticeList(sortedFiltered);
+    }
+  }, [filterType, filterOption]);
 
   const handleSearch = () => {
+    if (!searchValue.trim()) {
+      fetchAllNotices();
+      return;
+    }
+    
     const filtered = noticeList?.filter(
       (item) =>
         item.postedBy?.toLowerCase().includes(searchValue.toLowerCase()) ||
         item.category?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.title?.toLowerCase().includes(searchValue.toLowerCase())
+        item.headline?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.description?.toLowerCase().includes(searchValue.toLowerCase())
     );
-    setSearchValue("");
-    setCurrentNotices(filtered);
+    const sortedFiltered = [...filtered].sort((a, b) => 
+      new Date(b.postedAt) - new Date(a.postedAt)
+    );
+    setNoticeList(sortedFiltered);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return loading ? (
     <Loader />
   ) : (
-    <div className="w-[1200px] mx-auto mt-6 mb-8 text-white">
-      <p className="text-4xl font-bold text-center text-[#c5e935] my-2 mb-6">
-        Recent Updates
-      </p>
-      <div className="flex gap-4 py-2 justify-between">
-        <UpdatesPageFilter
-          TypeSetter={setFilterType}
-          OptionSetter={setFilterOption}
-        />
-        <div className="flex gap-2 items-center">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="p-1 pr- border border-gray-300 rounded-md text-sm w-40 text-black bg-slate-200 h-10 focus:outline-none focus:ring-1"
-          />
-          <button
-            onClick={handleSearch}
-            className="bg-slate-800 border border-slate-200 p-2 px-4 rounded-md hover:bg-slate-700"
-          >
-            Search
-          </button>
+    <div className="min-h-screen bg-slate-900 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Recent Updates
+          </h1>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Stay informed with the latest updates, announcements, and events from colleges across the platform.
+          </p>
         </div>
-      </div>
 
-      <div className="flex flex-wrap">
-        {currentNotices?.map((notice, index) => (
-          <UpdatesCard
-            key={index}
-            data={notice}
-            setSelectedNotice={setSelectedNotice}
-            formatDate = {formatDate}
+        {/* Filters and Search */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-8">
+          <UpdatesPageFilter
+            TypeSetter={setFilterType}
+            OptionSetter={setFilterOption}
           />
-        ))}
-      </div>
-      <div className="mx-auto">
-        {filterType === "" && (
-          <UpdatesPagination
-            totalItems={noticeList?.length}
-            itemsPerPage={noticePerPage}
-            setterFunction={setCurrentPage}
-            currentItem={currentPage}
-          />
+
+          <div className="relative w-full sm:w-auto">
+            <input
+              type="text"
+              placeholder="Search updates..."
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              className="w-full sm:w-64 px-4 py-2 pl-10 bg-slate-800 text-slate-200 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors"
+            />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          </div>
+        </div>
+
+        {/* Grid of Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {noticeList?.map((notice, index) => (
+            <UpdatesCard
+              key={index}
+              data={notice}
+              setSelectedNotice={setSelectedNotice}
+              formatDate={formatDate}
+            />
+          ))}
+        </div>
+
+        {/* No Results */}
+        {(!noticeList || noticeList.length === 0) && (
+          <div className="text-center py-12">
+            <p className="text-slate-400 text-lg">No updates found.</p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && !filterType && !filterOption && (
+          <div className="flex justify-center items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`p-2 rounded-lg ${
+                currentPage === 1
+                  ? 'text-slate-600 cursor-not-allowed'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              } transition-colors`}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              // Show first page, last page, current page, and one page before and after current page
+              if (
+                pageNumber === 1 ||
+                pageNumber === totalPages ||
+                (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+              ) {
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`px-4 py-2 rounded-lg ${
+                      currentPage === pageNumber
+                        ? 'bg-blue-500 text-white'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    } transition-colors`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              } else if (
+                pageNumber === currentPage - 2 ||
+                pageNumber === currentPage + 2
+              ) {
+                return (
+                  <span key={pageNumber} className="text-slate-600">
+                    ...
+                  </span>
+                );
+              }
+              return null;
+            })}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`p-2 rounded-lg ${
+                currentPage === totalPages
+                  ? 'text-slate-600 cursor-not-allowed'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              } transition-colors`}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Modal for displaying full notice */}
+      {/* Modal */}
       {selectedNotice && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-          <div className="bg-white w-[800px] h-auto overflow-y-auto rounded-lg shadow-lg border border-gray-200 p-8 relative">
-            {/* Close Button */}
-            <button
-              className="absolute top-3 right-3 text-gray-600 bg-gray-200 p-2 rounded-full hover:bg-gray-300"
-              onClick={() => setSelectedNotice(null)}
-            >
-              &times;
-            </button>
-
-            {/* Title */}
-            <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-3">
-              {selectedNotice.headline}
-            </h2>
-
-            {/* College Information */}
-            <div className="mb-4">
-              <p className="text-xl font-semibold text-gray-900 italic">
-                {`Posted by : ${selectedNotice.postedBy}`}
-              </p>
-            </div>
-
-            {/* Details */}
-            <div className="grid grid-cols-2 gap-4 text-gray-600">
-              <p className="text-sm">
-                <strong className="bg-slate-300 py-1 px-2 rounded-xl">Date: {formatDate(selectedNotice.postedAt)}</strong>
-              </p>
-              <p className="text-sm">
-                <strong className="bg-slate-300 py-1 px-2 rounded-xl">Category: {selectedNotice.category}</strong>
-              </p>
-            </div>
-
-            {/* Description */}
-            <div className="mt-4">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 italic">
-                Description:
-              </h3>
-              <p className="text-gray-800 bg-slate-300 p-3 rounded-lg">{selectedNotice.description}</p>
-            </div>
-
-            {/* Attachments */}
-            {selectedNotice.attachments &&
-              selectedNotice.attachments.length > 0 && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 italic">
-                    Attachments:
-                  </h3>
-                  <ul className="list-disc list-inside">
-                    {selectedNotice.attachments.map((attachment, index) => (
-                      <li key={index}>
-                        <a
-                          href={attachment}
-                          className="text-blue-500 underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {attachment}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4"
+          onClick={() => setSelectedNotice(null)}
+        >
+          <div
+            className="bg-slate-900 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl border border-slate-700 transform transition-all duration-300 scale-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">
+                    {selectedNotice.category}
+                  </span>
+                  <span className="text-slate-400 text-sm">
+                    {formatDate(selectedNotice.postedAt)}
+                  </span>
                 </div>
-              )}
+              </div>
+
+              <h2 className="text-2xl font-bold text-white mb-4">
+                {selectedNotice.headline}
+              </h2>
+
+              <p className="text-slate-300 mb-6 whitespace-pre-wrap">
+                {selectedNotice.description}
+              </p>
+
+              <div className="flex items-center gap-2 text-slate-400">
+                <span>Posted by:</span>
+                <span className="font-medium text-white">
+                  {selectedNotice.postedBy}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       )}
