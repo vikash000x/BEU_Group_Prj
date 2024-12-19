@@ -13,7 +13,7 @@ import UpdateFacultyForm from "../components/UpdateFacultyForm";
 const FacultiesList = () => {
   const { collegeCode } = useParams();
   const navigate = useNavigate();
-  const { url } = useContext(StoreContext);
+  const { url, userType, token, loggedInCollegeData } = useContext(StoreContext);
   const [collegeFacultyData, setCollegeFacultyData] = useState(null);
   const [search, setSearch] = useState("");
   const [filteredFaculties, setFilteredFaculties] = useState(null);
@@ -119,11 +119,12 @@ const FacultiesList = () => {
             <th className="border border-gray-300 px-4 py-2">Name</th>
             <th className="border border-gray-300 px-4 py-2">Department</th>
             <th className="border border-gray-300 px-4 py-2">Designation</th>
-            {localStorage.getItem("userType") === "collegeAdmin" &&
-            localStorage.getItem("token") ? (
-              <></>
-            ) : (
+            {(userType === "college" &&
+              loggedInCollegeData.collegeCode === localStorage.getItem("collegeCode") && 
+              token) ? (
               <th className="border border-gray-300 px-4 py-2">Actions</th>
+            ) : (
+              <></>
             )}
           </tr>
         </thead>
@@ -158,7 +159,10 @@ const FacultiesList = () => {
                 onClick={() => navigate(`/college/faculty/${faculty._id}`)}>
                   {faculty.designation}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                {(userType === "college" && 
+                  loggedInCollegeData.collegeCode === localStorage.getItem("collegeCode") &&
+                  token) ?
+                  <td className="border border-gray-300 px-4 py-2">
                   <div className="flex gap-3">
                     <button onClick={() => handleEditFaculty(faculty)}>
                       <FaEdit />
@@ -167,7 +171,7 @@ const FacultiesList = () => {
                       <RiDeleteBinLine />
                     </button>
                   </div>
-                </td>
+                </td> : <></>}
               </tr>
             ))
           ) : (
