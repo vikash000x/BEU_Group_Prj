@@ -28,6 +28,7 @@ import BeuAdmin from "./pages/BeuAdmin";
 import UpdateJob from "./pages/UpdateJob";
 import Student from "./pages/Student";
 import CollegeGallery from "./pages/CollegeGallery";
+import PrivateRoute from "./routes/PrivateRoute";
 function App() {
   return (
     <>
@@ -39,7 +40,14 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/beu/admin" element={<BeuAdmin />} />
-            <Route path="/job-section" element={<JobSection />} />
+            <Route
+              path="/job-section"
+              element={
+                <PrivateRoute>
+                  <JobSection />
+                </PrivateRoute>
+              }
+            />
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
             <Route path="/job-section/applied-list" element={<AppliedList />} />

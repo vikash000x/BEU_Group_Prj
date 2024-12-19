@@ -2,16 +2,37 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
 
 const StartupLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUserType } = useContext(StoreContext)
+  const { setUserType, url, setToken } = useContext(StoreContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserType("startup")
+    try {
+      const res = await axios.post(`${url}/startup/login-startup`, {
+        email,
+        password,
+      });
+      if (res.data.success) {
+        setToken(res.data.token);
+        localStorage.setItem(
+          "startUpLogedInData",
+          JSON.stringify({
+            token: res.data.token,
+            userType: "startupAdmin",
+          })
+        );
+      } else {
+        console.log("something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setUserType("startup");
     navigate("/job-section");
 
     console.log("Email:", email, "Password:", password);
