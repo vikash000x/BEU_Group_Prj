@@ -241,18 +241,19 @@ const loginStartup = async (req, res) => {
       });
     }
 
-    const isStartup = await startupModel.findOne({ email });
-    if (!isStartup) {
+    const isStartUp = await startupModel.findOne({ email });
+    if (!isStartUp) {
       return res.json({
         success: false,
         message: "startup not fount",
       });
     }
 
-    const token = createToken(isStartup._id);
+    const token = createToken(isStartUp._id);
     res.json({
       success: true,
       token,
+      isStartUp,
     });
   } catch (error) {
     console.log(error);
