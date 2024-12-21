@@ -49,6 +49,8 @@ const LandingNav = () => {
       } else {
         setFlag3(true);
       }
+
+      console.log(flag1, flag2, flag3, flag4)
   }, [location.pathname, userType]);
 
   const handleClick = (collegeCode) => {
@@ -232,7 +234,7 @@ const LandingNav = () => {
           )}
 
           {userType === "college" && (
-            <Link to={`collegename/admin`}>
+            <Link to={`${loggedInCollegeData?.collegeCode}/admin`}>
               <p>View Dashboard</p>
             </Link>
           )}

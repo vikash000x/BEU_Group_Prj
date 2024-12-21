@@ -1,7 +1,9 @@
 import React from "react";
 import Slider from "../components/Slider";
 import HomeRecentUpdates from "../components/HomeRecentUpdates";
-
+import UniversityLeadership from "../components/UniversityLeadership";
+import UniversityStats from "../components/UniversityStats";
+import BranchSection from "../components/BranchSection";
 const LandingPage = () => {
   const slides = [
     // {
@@ -9,17 +11,21 @@ const LandingPage = () => {
     //   title: "beach",
     // },
     {
-      url: "https://static.toiimg.com/thumb/msid-96413561,width-1070,height-580,imgsize-2053069,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
+      url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715664/beu/de0s4evmi6huq7nmpzoy.jpg",
       title: "dog",
     },
     {
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEOCrzyKST0XqO0CU--MWIOyza7QuSZqh2MQ&s",
+      url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715695/beu/bec6izalncuyjkcmm8xy.jpg",
       title: "beach",
     },
+    {
+      url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715642/beu/ao74ok69vejzhqxjiijy.jpg",
+      title: "beach",
+    }
   ];
   const containerStyles = {
-    width: "1200px",
-    height: "550px",
+    width: "100%",
+    height: "80vh",
     margin: "5px auto",
   };
   return (
@@ -27,8 +33,12 @@ const LandingPage = () => {
       <div style={containerStyles}>
         <Slider slides={slides} />
       </div>
+      <UniversityLeadership/>
+      <UniversityStats/>
+      <BranchSection/>
       <div className="w-[1200px] my-[5px] mx-auto">
         <HomeRecentUpdates />
+
       </div>
     </div>
   );
