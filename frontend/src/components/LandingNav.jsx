@@ -64,7 +64,9 @@ const LandingNav = () => {
           {flag3 && (
             <li className="cursor-pointer relative group py-2">
               <div className="flex items-center gap-2 hover:text-blue-400 transition-colors">
-                <span className="text-lg font-medium group-hover:text-blue-400">Colleges</span>
+                <span className="text-lg font-medium group-hover:text-blue-400">
+                  Colleges
+                </span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180 group-hover:text-blue-400"
                   fill="none"
@@ -79,11 +81,15 @@ const LandingNav = () => {
                   />
                 </svg>
               </div>
-              <div className="absolute left-0 mt-4 w-80 hidden group-hover:block transform transition-all duration-300 origin-top z-50">
+              <div className="absolute left-0 mt-2 w-80 hidden group-hover:block transform transition-all duration-300 origin-top z-50">
                 <div className="bg-slate-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
                   <div className="p-4 border-b border-slate-700/50 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
-                    <h3 className="text-sm font-semibold text-white">Select College</h3>
-                    <p className="text-xs text-slate-400 mt-1">Choose from our registered colleges</p>
+                    <h3 className="text-sm font-semibold text-white">
+                      Select College
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Choose from our registered colleges
+                    </p>
                   </div>
                   <ul
                     style={{ scrollbarWidth: "none" }}
