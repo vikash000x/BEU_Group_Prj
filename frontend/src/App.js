@@ -41,7 +41,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/beu/admin" element={<BeuAdmin />} />
             <Route
-              path="/job-section"
+              path="startup/:startUpId/dashboard"
               element={
                 <PrivateRoute>
                   <JobSection />

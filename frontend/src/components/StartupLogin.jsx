@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const StartupLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUserType, url, setToken } = useContext(StoreContext);
+  const { setUserType, url, setToken, setLoggedInStartUpData } =
+    useContext(StoreContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,24 +20,23 @@ const StartupLogin = () => {
         password,
       });
       if (res.data.success) {
+        setLoggedInStartUpData(res.data.isStartUp);
+        setUserType("startup");
         setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userType", "startup");
         localStorage.setItem(
-          "startUpLogedInData",
-          JSON.stringify({
-            token: res.data.token,
-            userType: "startupAdmin",
-          })
+          "loggedInStartUpData",
+          JSON.stringify(res.data.isStartUp)
         );
+        navigate(`/startup/${res.data.isStartUp._id}/dashboard`);
+        toast.success("LogedIn as StartUp");
       } else {
         console.log("something went wrong");
       }
     } catch (error) {
       console.log(error);
     }
-    setUserType("startup");
-    navigate("/job-section");
-
-    console.log("Email:", email, "Password:", password);
   };
   return (
     <div className="bg-gray-100 h-[100vh] flex items-center justify-center">

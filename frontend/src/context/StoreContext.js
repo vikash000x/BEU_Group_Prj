@@ -12,6 +12,7 @@ const StoreContextProvider = (props) => {
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
   const [registeredCollege, setRegisteredCollege] = useState(null);
+  const [loggedInStartUpData, setLoggedInStartUpData] = useState(null);
 
   const url = "http://localhost:4000/api";
 
@@ -39,6 +40,8 @@ const StoreContextProvider = (props) => {
     setloggedInCollegeData,
     loggedInStudentData,
     setloggedInStudentData,
+    loggedInStartUpData,
+    setLoggedInStartUpData,
     editNoticeData,
     setEditNoticeData,
   };
@@ -59,6 +62,11 @@ const StoreContextProvider = (props) => {
     if (localStorage.getItem("userType")) {
       setUserType(
         localStorage.getItem("userType")
+      );
+    }
+    if (localStorage.getItem("loggedInStartUpData")) {
+      setLoggedInStartUpData(
+        JSON.parse(localStorage.getItem("loggedInStartUpData"))
       );
     }
     if (localStorage.getItem("loggedInStudentData")) {

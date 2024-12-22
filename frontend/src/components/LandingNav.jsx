@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { userType, loggedInCollegeData, registeredCollege } =
+  const { userType, loggedInCollegeData, registeredCollege, loggedInStartUpData } =
     useContext(StoreContext);
   const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
   const [flag2, setFlag2] = useState(false); //College Admin Dashboard
   const [flag3, setFlag3] = useState(false); //Rest all
+  const [flag4, setFlag4] = useState(false); //StartUp Admin loggedIn Dashboard
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -19,13 +20,15 @@ const LandingNav = () => {
       setFlag1(false);
       setFlag2(false);
       setFlag3(true);
+      setFlag4(false);
     } else if (
-      location.pathname.includes("college") &&
-      location.pathname.includes("beu")
+      location.pathname.includes("college") && (!location.pathname.includes("login") ||
+      location.pathname.includes("beu"))
     ) {
       setFlag1(true);
       setFlag2(false);
       setFlag3(false);
+      setFlag4(false);
     } else if (
       userType === "college" &&
       (location.pathname.includes("admin") ||
@@ -36,7 +39,18 @@ const LandingNav = () => {
       setFlag1(false);
       setFlag2(true);
       setFlag3(false);
-    }
+      setFlag4(false);
+    } else if(userType === "startup" &&
+      location.pathname.includes("dashboard")) {
+        setFlag4(true);
+        setFlag3(true);
+        setFlag2(false);
+        setFlag1(false);
+      } else {
+        setFlag3(true);
+      }
+
+      console.log(flag1, flag2, flag3, flag4)
   }, [location.pathname, userType]);
 
   const handleClick = (collegeCode) => {
@@ -226,12 +240,12 @@ const LandingNav = () => {
           )}
 
           {userType === "college" && (
-            <Link to={`collegename/admin`}>
+            <Link to={`${loggedInCollegeData?.collegeCode}/admin`}>
               <p>View Dashboard</p>
             </Link>
           )}
           {userType === "startup" && (
-            <Link to={`job-section`}>
+            <Link to={`/startup/${loggedInStartUpData?._id}/dashboard`}>
               <p>View Dashboard</p>
             </Link>
           )}
