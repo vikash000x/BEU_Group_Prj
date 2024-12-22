@@ -93,7 +93,7 @@ const LandingNav = () => {
                   />
                 </svg>
               </div>
-              <div className="absolute left-0 mt-4 w-80 hidden group-hover:block transform transition-all duration-300 origin-top z-50">
+              <div className="absolute left-0 mt-2 w-80 hidden group-hover:block transform transition-all duration-300 origin-top z-50">
                 <div className="bg-slate-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
                   <div className="p-4 border-b border-slate-700/50 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
                     <h3 className="text-sm font-semibold text-white">Select College</h3>
@@ -204,7 +204,7 @@ const LandingNav = () => {
               onClick={() => setActive("login")}
             >
               <span>Login</span>
-              <ul className="absolute right-0 mt-2 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-10">
+              <ul className="absolute right-0 mt-1 w-60 bg-white text-black rounded shadow-lg hidden group-hover:flex flex-col z-50">
                 <li
                   onClick={() => navigate("/login/college")}
                   className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"

@@ -10,6 +10,9 @@ import TopFiveFaculties from "./TopFiveFaculties";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import FacilitiesSection from "./FacilitiesSection";
+import CollegeStatsSection from "./CollegeStatsSection";
+import UniversityLeadership from "./UniversityLeadership";
 
 const SingleCollege = () => {
   const { url } = useContext(StoreContext);
@@ -39,33 +42,33 @@ const SingleCollege = () => {
 
   const slides = [
     {
-      url: "https://cdn.pixabay.com/photo/2024/01/30/12/59/women-8541959_640.jpg",
-      title: "beach",
+      url: "https://spechyd.ac.in/wp-content/uploads/2024/08/College-Banner.jpeg",
+      title: singleCollege?.name
     },
     {
-      url: "https://lh3.googleusercontent.com/p/AF1QipNUXehQEfTANt870xauVvDL7GIIeBHFkc7k3fdz=s1360-w1360-h1020",
-      title: "dog",
+      url: "https://www.agarum.com/photos/1/3/76/885/c/l/c3b0bad8058b92f36b2987b5f3c5e448.jpg",
+      title: "Explore Youself in an Innovative way!",
     },
     {
-      url: "https://ncechandi.ac.in/wp-content/uploads/2020/12/3.jpg",
+      url: "https://www.kongu.ac.in/facilities/sports/slider/img/playground.jpg",
       title: "beach",
     },
   ];
   const containerStyles = {
-    width: "1200px",
-    height: "550px",
+    width: "100%",
+    height: "90vh",
     margin: "5px auto",
   };
 
   return (
-    <div className=" w-[1200px] mx-auto my-2">
-      <div className="bg-slate-800  rounded-md">
+    <div className=" mx-auto my-2">
+      {/* <div className="bg-slate-800  rounded-md">
         <Marquee speed={100} gradient={false}>
           <h1 className="text-[2rem] font-bold my-4 text-center  text-white">
             {singleCollege?.name}
           </h1>
         </Marquee>
-      </div>
+      </div> */}
       <div style={containerStyles}>
         <Slider slides={slides} />
       </div>
@@ -77,7 +80,7 @@ const SingleCollege = () => {
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
 
-        <div className="relative">
+        <div className="w-[1200px] mx-auto relative">
           {/* Header Section */}
           <div className="flex flex-col items-start space-y-4 mb-8" data-aos="fade-right">
             <div className="flex items-center space-x-3">
@@ -90,7 +93,7 @@ const SingleCollege = () => {
           </div>
 
           {/* Description Section */}
-          <div className="relative" data-aos="fade-up" data-aos-delay="100">
+          <div className="w-[1200px] mx-auto relative" data-aos="fade-up" data-aos-delay="100">
             <div className="prose prose-lg prose-invert max-w-none">
               <p className="text-lg text-slate-300 leading-relaxed tracking-wide">
                 {singleCollege?.description}
@@ -103,6 +106,22 @@ const SingleCollege = () => {
           </div>
         </div>
       </div>
+
+      <UniversityLeadership />
+
+      {/* Facilities Section */}
+      <FacilitiesSection />
+
+      {/* College Stats Section */}
+      <CollegeStatsSection collegeData={{
+        totalStudents: singleCollege?.totalStudents || 5000,
+        facultyMembers: singleCollege?.facultyMembers || 250,
+        departments: singleCollege?.departments || 8,
+        researchProjects: singleCollege?.researchProjects || 45,
+        internationalCollaborations: singleCollege?.internationalCollaborations || 12,
+        placementRate: singleCollege?.placementRate || 92
+      }} />
+
       <div>
         <TopFiveFaculties faculties={singleCollege?.faculties} />
       </div>

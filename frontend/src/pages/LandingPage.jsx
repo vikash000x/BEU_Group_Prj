@@ -4,30 +4,32 @@ import HomeRecentUpdates from "../components/HomeRecentUpdates";
 import UniversityLeadership from "../components/UniversityLeadership";
 import UniversityStats from "../components/UniversityStats";
 import BranchSection from "../components/BranchSection";
+
 const LandingPage = () => {
   const slides = [
-    // {
-    //   url: "https://i.ytimg.com/vi/3mADt-wLj7k/maxresdefault.jpg",
-    //   title: "beach",
-    // },
     {
       url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715664/beu/de0s4evmi6huq7nmpzoy.jpg",
-      title: "dog",
+      title: "Empowering Futures, Inspiring Minds",
+      description: "Where Innovation Meets Education"
     },
     {
       url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715695/beu/bec6izalncuyjkcmm8xy.jpg",
-      title: "beach",
+      title: "Discover, Learn, Transform",
+      description: "Your Journey to Excellence Starts Here"
     },
     {
       url: "https://res.cloudinary.com/dmzgb9hm5/image/upload/v1734715642/beu/ao74ok69vejzhqxjiijy.jpg",
-      title: "beach",
+      title: "Knowledge, Growth, Leadership",
+      description: "Shaping Tomorrow's Visionaries"
     }
   ];
+
   const containerStyles = {
     width: "100%",
-    height: "80vh",
+    height: "90vh",
     margin: "5px auto",
   };
+
   return (
     <div className=" w-full">
       <div style={containerStyles}>
