@@ -1,10 +1,211 @@
 import React, { useContext, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import UpdatesCard from "../components/UpdatesCard";
 import UpdatesPageFilter from "../components/UpdatesPageFilter";
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 import Loader from "../components/loader/Loader";
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { 
+  Search, 
+  ChevronLeft, 
+  ChevronRight, 
+  X, 
+  Calendar, 
+  User, 
+  Tag, 
+  FileText 
+} from 'lucide-react';
+
+const NoticeDetailsModal = ({ notice, onClose, formatDate }) => {
+  if (!notice) return null;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="
+          w-full 
+          max-w-3xl 
+          bg-slate-800 
+          rounded-2xl 
+          overflow-hidden 
+          shadow-2xl 
+          border 
+          border-slate-700
+        "
+      >
+        {/* Modal Header */}
+        <div className="
+          flex 
+          items-center 
+          justify-between 
+          p-6 
+          bg-slate-900/50 
+          border-b 
+          border-slate-700
+        ">
+          <h2 className="
+            text-2xl 
+            font-bold 
+            text-transparent 
+            bg-clip-text 
+            bg-gradient-to-r 
+            from-blue-400 
+            to-purple-600
+          ">
+            {notice.headline}
+          </h2>
+          <motion.button
+            whileHover={{ rotate: 90, scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={onClose}
+            className="
+              text-white 
+              hover:text-red-400 
+              transition-colors 
+              duration-300
+            "
+          >
+            <X className="w-6 h-6" />
+          </motion.button>
+        </div>
+
+        {/* Modal Content */}
+        <div className="p-6 space-y-6">
+          {/* Notice Image */}
+          {notice.thumbnail && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="w-full mb-6"
+            >
+              <img 
+                src={notice.thumbnail} 
+                alt={notice.headline} 
+                className="
+                  w-full 
+                  h-64 
+                  object-cover 
+                  rounded-2xl 
+                  shadow-lg 
+                  hover:scale-105 
+                  transition-transform 
+                  duration-300
+                "
+              />
+            </motion.div>
+          )}
+
+          {/* Event Details Grid */}
+          <motion.div 
+            className="grid grid-cols-2 gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="flex items-center gap-3 bg-slate-700 p-4 rounded-xl">
+              <Calendar className="w-6 h-6 text-blue-400" />
+              <div>
+                <p className="text-xs text-slate-400">Posted On</p>
+                <p className="text-white font-semibold">
+                  {formatDate(notice.postedAt)}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 bg-slate-700 p-4 rounded-xl">
+              <User className="w-6 h-6 text-green-400" />
+              <div>
+                <p className="text-xs text-slate-400">Posted By</p>
+                <p className="text-white font-semibold">
+                  {notice.postedBy || 'Administration'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 bg-slate-700 p-4 rounded-xl">
+              <Tag className="w-6 h-6 text-purple-400" />
+              <div>
+                <p className="text-xs text-slate-400">Category</p>
+                <p className="text-white font-semibold">
+                  {notice.category || 'General'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 bg-slate-700 p-4 rounded-xl">
+              <FileText className="w-6 h-6 text-yellow-400" />
+              <div>
+                <p className="text-xs text-slate-400">Type</p>
+                <p className="text-white font-semibold">
+                  {notice.type || 'Announcement'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <FileText className="w-6 h-6 text-red-400" />
+              <h3 className="text-lg font-semibold text-white">Notice Details</h3>
+            </div>
+            <p className="text-slate-300 leading-relaxed">
+              {notice.description}
+            </p>
+          </motion.div>
+
+          {/* Attachments */}
+          {notice.attachments && notice.attachments.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <FileText className="w-6 h-6 text-blue-400" />
+                <h3 className="text-lg font-semibold text-white">Attachments</h3>
+              </div>
+              <div className="space-y-2">
+                {notice.attachments.map((attachment, index) => (
+                  <a
+                    key={index}
+                    href={attachment}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+                      block 
+                      bg-slate-700 
+                      p-3 
+                      rounded-xl 
+                      text-white 
+                      hover:bg-slate-600 
+                      transition-colors
+                    "
+                  >
+                    Attachment {index + 1}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const RecentUpdates = () => {
   const [noticeList, setNoticeList] = useState([]);
@@ -202,46 +403,16 @@ const RecentUpdates = () => {
         )}
       </div>
 
-      {/* Modal */}
-      {selectedNotice && (
-        <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4"
-          onClick={() => setSelectedNotice(null)}
-        >
-          <div
-            className="bg-slate-900 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl border border-slate-700 transform transition-all duration-300 scale-100"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">
-                    {selectedNotice.category}
-                  </span>
-                  <span className="text-slate-400 text-sm">
-                    {formatDate(selectedNotice.postedAt)}
-                  </span>
-                </div>
-              </div>
-
-              <h2 className="text-2xl font-bold text-white mb-4">
-                {selectedNotice.headline}
-              </h2>
-
-              <p className="text-slate-300 mb-6 whitespace-pre-wrap">
-                {selectedNotice.description}
-              </p>
-
-              <div className="flex items-center gap-2 text-slate-400">
-                <span>Posted by:</span>
-                <span className="font-medium text-white">
-                  {selectedNotice.postedBy}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Notice Details Modal */}
+      <AnimatePresence>
+        {selectedNotice && (
+          <NoticeDetailsModal 
+            notice={selectedNotice} 
+            onClose={() => setSelectedNotice(null)} 
+            formatDate={formatDate}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
