@@ -10,7 +10,9 @@ import { cloudinaryConnect } from "./config/cloudinary.js";
 import jobRouter from "./routes/jobRoutes.js";
 import facultyRouter from "./routes/facultyRoutes.js";
 import startupRouter from "./routes/startupRoutes.js";
+import dotenv from "dotenv";
 const app = express();
+dotenv.config();
 
 const port = 4000;
 

@@ -177,9 +177,8 @@ export const loginStudent = async (req, res) => {
 
     const token = jwt.sign(
       { studentId: student._id, regNo: student.regNo },
-      // process.env.JWT_SECRET,
-      "amir",
-      { expiresIn: "1d" } 
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRE }
     );
 
     student.password="";
