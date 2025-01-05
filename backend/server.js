@@ -28,8 +28,7 @@ app.use(
 cloudinaryConnect();
 
 const corsOptions = {
-  origin: "https://beu-campus-connect.vercel.app/",
-  credentials: true,
+  origin: "*",
 };
 app.use(cors(corsOptions));
 connectDB();
