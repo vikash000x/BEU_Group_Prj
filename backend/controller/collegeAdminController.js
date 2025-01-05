@@ -7,8 +7,8 @@ import startupRegistrationModel from "../models/startupRegistrationModel.js";
 import startupModel from "../models/startupModel.js";
 
 const createToken = (id) => {
-  return jwt.sign({ id }, "amir", {
-    expiresIn: "1d",
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
   });
 };
 

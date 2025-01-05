@@ -9,7 +9,7 @@ const startupAuthMiddleware = async (req, res, next) => {
     });
   }
   try {
-    const token_decode = jwt.verify(token, "amir");
+    const token_decode = jwt.verify(token, process.env.JWT_SECRET);
     //console.log(token_decode);
     req.body.startupId = token_decode.id;
     console.log(req.body);
