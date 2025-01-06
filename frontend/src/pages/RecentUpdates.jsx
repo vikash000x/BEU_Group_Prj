@@ -226,8 +226,8 @@ const RecentUpdates = () => {
     return `${day}-${month}-${year}`;
   };
 
-  const { loading, setLoading } = useContext(StoreContext);
-  const {url} = useContext(StoreContext);
+  const { loading, setLoading, url } = useContext(StoreContext);
+
   const fetchAllNotices = async () => {
     try {
       setLoading(true);

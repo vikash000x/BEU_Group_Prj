@@ -29,7 +29,10 @@ cloudinaryConnect();
 
 const corsOptions = {
   origin: "*",
+<<<<<<< HEAD
   credentials: true,
+=======
+>>>>>>> 589666465d82cc357c60680c8fb92ca08165f649
 };
 app.use(cors(corsOptions));
 connectDB();
