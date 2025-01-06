@@ -232,8 +232,7 @@ const RecentUpdates = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${url}/notice/getAllNotices?page=${currentPage}&limit=9`,
-        { withCredentials: true }
+        `${url}/notice/getAllNotices?page=${currentPage}&limit=9`
       );
       const { notices, pagination } = response.data;
       setNoticeList(notices);
