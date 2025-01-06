@@ -18,6 +18,7 @@ import {
 
 const NoticeDetailsModal = ({ notice, onClose, formatDate }) => {
   if (!notice) return null;
+ 
 
   return (
     <motion.div 
@@ -226,12 +227,12 @@ const RecentUpdates = () => {
   };
 
   const { loading, setLoading } = useContext(StoreContext);
-
+  const {url} = useContext(StoreContext);
   const fetchAllNotices = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/api/notice/getAllNotices?page=${currentPage}&limit=9`,
+        `${url}/notice/getAllNotices?page=${currentPage}&limit=9`,
         { withCredentials: true }
       );
       const { notices, pagination } = response.data;

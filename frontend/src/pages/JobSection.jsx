@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,8 +12,10 @@ import { Edit2, Eye, MoreHorizontal, Filter, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../components/input";
 import axios from "axios";
+import { StoreContext } from "../context/StoreContext";
 
 const JobSection = () => {
+  const {url} = useContext(StoreContext);
   const [job, setJob] = useState([]); 
   const [filteredJobs, setFilteredJobs] = useState([]); 
   const [searchQuery, setSearchQuery] = useState(""); 
@@ -26,9 +28,7 @@ const JobSection = () => {
   useEffect(() => {
     const fetchAllAdminJobs = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/job/job-get", {
-          withCredentials: true,
-        });
+        const res = await axios.get(`${url}/job/job-get`);
         if (res.status === 200) {
           const sortedJobs = res.data.data.sort((a, b) => 
             new Date(b.createdAt) - new Date(a.createdAt)

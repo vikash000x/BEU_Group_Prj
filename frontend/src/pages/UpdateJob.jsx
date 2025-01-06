@@ -17,13 +17,14 @@ import {
 } from "lucide-react";
 import Loader from '../components/loader/Loader';
 import { useNavigate, useParams } from 'react-router-dom';
+import { StoreContext } from "../context/StoreContext";
 
 const UpdateJob = () => {
   const params = useParams();
   const jobId = params.id;
   const { loading, setLoading, loggedInStartUpData } = useContext(StoreContext);
   const navigate = useNavigate();
-
+  const {url} = useContext(StoreContext);
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -38,7 +39,7 @@ const UpdateJob = () => {
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/job/job-get/${jobId}`, { 
+        const res = await axios.get(`${url}/job/job-get/${jobId}`, { 
           withCredentials: true 
         });
         if (res.status === 200) {
@@ -62,9 +63,8 @@ const UpdateJob = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.put(`http://localhost:4000/api/job/job-update/${jobId}`, input, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      const res = await axios.put(`${url}/job/job-update/${jobId}`, input, {
+        headers: { 'Content-Type': 'application/json' }
       });
       
       if (res.data) {
