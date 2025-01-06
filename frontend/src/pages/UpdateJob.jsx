@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Loader from '../components/loader/Loader';
 import { useNavigate, useParams } from 'react-router-dom';
-import { StoreContext } from "../context/StoreContext";
+
 
 const UpdateJob = () => {
    
@@ -27,7 +27,7 @@ const UpdateJob = () => {
   const navigate = useNavigate();
   const {url} = useContext(StoreContext);
   const [input, setInput] = useState({
-    
+
     title: "",
     description: "",
     requirements: "",
