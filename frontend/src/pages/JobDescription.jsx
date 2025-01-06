@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Badge } from '../components/BadgeCard'
 
 import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
+import { StoreContext } from "../context/StoreContext";
 
 
 
@@ -11,7 +12,7 @@ const JobDescription = () => {
 
     const [singleJob, setSinglejob] = useState(null);
     const [buttonText, setButtonText] = useState("Apply");
-    
+    const {url} = useContext(StoreContext);
     const params = useParams();
     const jobId= params.id;
     console.log(jobId)
@@ -25,7 +26,7 @@ const JobDescription = () => {
      useEffect(() => {
       const fetchSingleJob = async () => {
         try {
-          const res = await axios.get(`http://localhost:4000/api/job/job-get/${jobId}`, { withCredentials: true });
+          const res = await axios.get(`${url}/job/job-get/${jobId}`);
          console.log(res);
           if (res.status === 200) {
             setSinglejob(res.data.data); // Update the state with jobs

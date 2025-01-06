@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const PostJob = () => {
   const { loading, setLoading, token } = useContext(StoreContext);
-
+  const {url} = useContext(StoreContext);
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -41,11 +41,10 @@ const PostJob = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:4000/api/job/job-post",
+        `${url}/job/job-post`,
         input,
         {
-          headers: { token },
-          withCredentials: true,
+          headers: { token }
         }
       );
 

@@ -13,6 +13,7 @@ import Loader from '../components/loader/Loader';
 const Student = () => {
   const { loading, setLoading } = useContext(StoreContext);
 
+  const {url} = useContext(StoreContext);
 
   
   const loggedInStudentData = localStorage.getItem("loggedInStudentData");
@@ -48,7 +49,7 @@ const Student = () => {
      
   
       const res = await axios.put(
-        `http://localhost:4000/api/student/update-studentprofile/${profileId}`,
+        `${url}/student/update-studentprofile/${profileId}`,
         formData,
         {
           headers: {

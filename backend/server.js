@@ -29,6 +29,7 @@ cloudinaryConnect();
 
 const corsOptions = {
   origin: "*",
+
 };
 app.use(cors(corsOptions));
 connectDB();

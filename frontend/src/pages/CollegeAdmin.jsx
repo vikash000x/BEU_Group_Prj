@@ -175,8 +175,8 @@ const CollegeAdmin = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/notice/getAllNotices",
-          { withCredentials: true }
+          `${url}/notice/getAllNotices`
+        
         );
         const result = response.data.notices.reverse();
         //const result = response.data.notices.slice(-5).reverse();
