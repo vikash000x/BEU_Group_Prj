@@ -6,6 +6,19 @@ import { StoreContext } from "../context/StoreContext";
 import { toast } from "react-toastify";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
+import { 
+  FileText, 
+  Grid, 
+  Image as ImageIcon, 
+  Settings, 
+  LogOut, 
+  X, 
+  FileSpreadsheet,
+  Calendar,
+  Tag,
+  Paperclip,
+  Info
+} from "lucide-react";
 
 const CollegeAdmin = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -81,7 +94,6 @@ const CollegeAdmin = () => {
               },
             }
           );
-          console.log("crousel upload success", response);
           toast.success("Cousel image uploaded successfully !");
         } catch (error) {
           console.log("error while posting crousel image", error);
@@ -163,8 +175,8 @@ const CollegeAdmin = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/notice/getAllNotices",
-          { withCredentials: true }
+          `${url}/notice/getAllNotices`
+        
         );
         const result = response.data.notices.reverse();
         //const result = response.data.notices.slice(-5).reverse();
@@ -229,85 +241,187 @@ const CollegeAdmin = () => {
   return loading ? (
     <Loader />
   ) : (
-    <div className="flex w-[1200px] py-4 mx-auto text-white">
+    <div className="flex w-[1200px] py-4 mx-auto text-white bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl rounded-lg">
       {/* Sidebar */}
-      <div className="w-1/4 min-h-screen bg-slate-800 p-4 flex flex-col gap-4">
-        <div className="text-xl font-bold text-blue-500 gap-2 my-1">
-          <p className="text-yellow-300">{`${loggedInCollegeData?.name}`}</p>
-          <p>Admin DashBoard</p>{" "}
+      <div className="w-1/4 min-h-screen bg-slate-800 p-4 flex flex-col gap-4 border-r border-slate-700 shadow-lg">
+        <div className="text-xl font-bold text-blue-500 gap-2 my-1 text-center">
+          <p className="text-2xl  text-orange-500 mb-2">{`${loggedInCollegeData?.name}`}</p>
+          <p className="text-slate-400 text-sm">Admin Dashboard</p>
         </div>
         <button
-          className={`p-2 text-left ${
-            activeSection === "collegeNotices" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "collegeNotices" 
+              ? "bg-blue-600 text-white" 
+              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+          `}
           onClick={() => setActiveSection("collegeNotices")}
         >
+          <FileText className="w-5 h-5" />
           College Notices
         </button>
         <button
-          className={`p-2 text-left ${
-            activeSection === "beuNotices" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "beuNotices" 
+              ? "bg-blue-600 text-white" 
+              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+          `}
           onClick={() => setActiveSection("beuNotices")}
         >
+          <Grid className="w-5 h-5" />
           BEU Notices
         </button>
         <button
-          className={`p-2 text-left ${
-            activeSection === "uploadImages" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "uploadImages" 
+              ? "bg-blue-600 text-white" 
+              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+          `}
           onClick={() => setActiveSection("uploadImages")}
         >
+          <ImageIcon className="w-5 h-5" />
           Upload Images
         </button>
         <button
-          className={`p-2 text-left ${
-            activeSection === "viewImages" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "viewImages" 
+              ? "bg-blue-600 text-white" 
+              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+          `}
           onClick={() => handleViewImage()}
         >
+          <FileSpreadsheet className="w-5 h-5" />
           View Images
         </button>
         <button
-          className={`p-2 text-left ${
-            activeSection === "updateCollege" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "updateCollege" 
+              ? "bg-blue-600 text-white" 
+              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+          `}
           onClick={() => setActiveSection("updateCollege")}
         >
+          <Settings className="w-5 h-5" />
           Update College Info
         </button>
         <button
-          className={`p-2 text-left ${
-            activeSection === "logout" && "bg-blue-500"
-          }`}
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            text-red-400 
+            hover:bg-red-500/10 
+            flex 
+            items-center 
+            gap-3
+            ${activeSection === "logout" && "bg-red-600 text-white"}
+          `}
           onClick={() => setLogoutModal(true)}
         >
+          <LogOut className="w-5 h-5" />
           LogOut
         </button>
       </div>
 
       {/* Main Content */}
-      <div className="w-3/4 p-4">
+      <div className="w-3/4 p-4 bg-slate-900/50">
         {activeSection === "collegeNotices" && (
           <div>
-            <h2 className="text-xl font-bold pb-4">
-              Notices Posted By College :
+            <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
+              Notices Posted By College
             </h2>
-            <div className="bg-slate-700 text-white">
+            <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {filteredNoticeList?.map((notice, index) => (
-                <div className="flex justify-between border border-gray-400 p-3">
+                <div 
+                  key={notice._id} 
+                  className="
+                    flex 
+                    justify-between 
+                    items-center 
+                    p-4 
+                    border-b 
+                    border-slate-700 
+                    hover:bg-slate-700/50 
+                    transition-colors 
+                    duration-300
+                  "
+                >
                   <div
-                    className="cursor-pointer"
-                    key={notice._id}
+                    className="
+                      cursor-pointer 
+                      flex-grow 
+                      text-slate-200 
+                      hover:text-blue-400 
+                      transition-colors
+                    "
                     onClick={() => setSelectedNotice(notice)}
                   >
                     {`${index + 1}. ${notice.headline}`}
                   </div>
                   <div className="flex gap-3">
-                    <button onClick={() => handleEditNotice(notice)}>
+                    <button 
+                      onClick={() => handleEditNotice(notice)}
+                      className="
+                        text-blue-400 
+                        hover:text-blue-300 
+                        transition-colors 
+                        hover:scale-110 
+                        transform
+                      "
+                    >
                       <FaEdit />
                     </button>
-                    <button onClick={() => handleDeleteNotice(notice._id)}>
+                    <button 
+                      onClick={() => handleDeleteNotice(notice._id)}
+                      className="
+                        text-red-400 
+                        hover:text-red-300 
+                        transition-colors 
+                        hover:scale-110 
+                        transform
+                      "
+                    >
                       <RiDeleteBinLine />
                     </button>
                   </div>
@@ -319,13 +433,37 @@ const CollegeAdmin = () => {
 
         {activeSection === "beuNotices" && (
           <div>
-            <h2 className="text-xl font-bold pb-4">BEU Notices</h2>
-            <div className="bg-slate-700 text-white">
+            <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
+              BEU Notices
+            </h2>
+            <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {noticeList?.map((notice, index) => (
-                <div
-                  className="border border-gray-400 p-3"
-                  key={notice._id}
-                >{`${index + 1}. ${notice.headline}`}</div>
+                <div 
+                  key={notice._id} 
+                  className="
+                    flex 
+                    justify-between 
+                    items-center 
+                    p-4 
+                    border-b 
+                    border-slate-700 
+                    hover:bg-slate-700/50 
+                    transition-colors 
+                    duration-300
+                  "
+                >
+                  <div
+                    className="
+                      cursor-pointer 
+                      flex-grow 
+                      text-slate-200 
+                      hover:text-blue-400 
+                      transition-colors
+                    "
+                  >
+                    {`${index + 1}. ${notice.headline}`}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -448,7 +586,9 @@ const CollegeAdmin = () => {
 
         {activeSection === "updateCollege" && (
           <div>
-            <h2 className="text-xl font-bold">Update College Info</h2>
+            <h2 className="text-xl font-bold text-blue-400 border-b border-slate-700 mb-4">
+              Update College Info
+            </h2>
             <Link to={`/${loggedInCollegeData?.collegeCode}/update-college`}>
               <button className="rounded-md bg-white text-black font-medium text-xl mt-4 px-6 py-4">
                 Click here to Update College Details
@@ -482,75 +622,116 @@ const CollegeAdmin = () => {
         )}
 
         {selectedNotice && (
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-            <div className="bg-white w-[800px] h-auto overflow-y-auto rounded-lg shadow-lg border border-gray-200 p-8 relative">
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
+            <div className="
+              bg-slate-800 
+              w-[800px] 
+              max-h-[90vh] 
+              overflow-y-auto 
+              rounded-2xl 
+              shadow-2xl 
+              border 
+              border-slate-700 
+              relative
+              animate-fade-in
+            ">
               {/* Close Button */}
               <button
-                className="absolute top-3 right-3 text-gray-600 bg-gray-200 p-2 rounded-full hover:bg-gray-300"
+                className="
+                  absolute 
+                  top-4 
+                  right-4 
+                  text-slate-400 
+                  hover:text-white 
+                  bg-slate-700 
+                  rounded-full 
+                  p-2 
+                  transition-colors
+                "
                 onClick={() => setSelectedNotice(null)}
               >
-                &times;
+                <X className="w-6 h-6" />
               </button>
 
               {/* Title */}
-              <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-3">
-                {selectedNotice.headline}
-              </h2>
-
-              {/* College Information */}
-              <div className="mb-4">
-                <p className="text-xl font-semibold text-gray-900 italic">
-                  {`Posted by : ${selectedNotice.postedBy}`}
-                </p>
+              <div className="
+                bg-gradient-to-r 
+                from-blue-600 
+                to-purple-600 
+                p-6 
+                rounded-t-2xl
+              ">
+                <h2 className="text-3xl font-bold text-white">
+                  {selectedNotice.headline}
+                </h2>
               </div>
 
-              {/* Details */}
-              <div className="grid grid-cols-2 gap-4 text-gray-600">
-                <p className="text-sm">
-                  <strong className="bg-slate-300 py-1 px-2 rounded-xl">
-                    Date: {formatDate(selectedNotice.postedAt)}
-                  </strong>
-                </p>
-                <p className="text-sm">
-                  <strong className="bg-slate-300 py-1 px-2 rounded-xl">
-                    Category: {selectedNotice.category}
-                  </strong>
-                </p>
-              </div>
+              {/* Notice Details */}
+              <div className="p-6 space-y-4">
+                {/* Metadata */}
+                <div className="grid grid-cols-2 gap-4 text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-blue-400" />
+                    <span>
+                      <strong>Date:</strong> {formatDate(selectedNotice.postedAt)}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-5 h-5 text-purple-400" />
+                    <span>
+                      <strong>Category:</strong> {selectedNotice.category}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Info className="w-5 h-5 text-green-400" />
+                    <span>
+                      <strong>Posted By:</strong> {selectedNotice.postedBy}
+                    </span>
+                  </div>
+                </div>
 
-              {/* Description */}
-              <div className="mt-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 italic">
-                  Description:
-                </h3>
-                <p className="text-gray-800 bg-slate-300 p-3 rounded-lg">
-                  {selectedNotice.description}
-                </p>
-              </div>
+                {/* Description */}
+                <div className="mt-4 bg-slate-700 p-4 rounded-lg">
+                  <h3 className="text-xl font-semibold text-blue-300 mb-2">
+                    Description
+                  </h3>
+                  <p className="text-slate-200 leading-relaxed">
+                    {selectedNotice.description}
+                  </p>
+                </div>
 
-              {/* Attachments */}
-              {selectedNotice.attachments &&
-                selectedNotice.attachments.length > 0 && (
-                  <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2 italic">
-                      Attachments:
+                {/* Attachments */}
+                {selectedNotice.attachments && selectedNotice.attachments.length > 0 && (
+                  <div className="mt-4">
+                    <h3 className="text-xl font-semibold text-blue-300 mb-2 flex items-center gap-2">
+                      <Paperclip className="w-5 h-5" />
+                      Attachments
                     </h3>
-                    <ul className="list-disc list-inside">
+                    <div className="space-y-2">
                       {selectedNotice.attachments.map((attachment, index) => (
-                        <li key={index}>
-                          <a
-                            href={attachment}
-                            className="text-blue-500 underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {attachment}
-                          </a>
-                        </li>
+                        <a
+                          key={index}
+                          href={attachment}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="
+                            block 
+                            bg-slate-700 
+                            p-3 
+                            rounded-lg 
+                            hover:bg-slate-600 
+                            transition-colors 
+                            text-blue-300 
+                            hover:text-blue-200
+                          "
+                        >
+                          Attachment {index + 1}
+                        </a>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
+              </div>
             </div>
           </div>
         )}
@@ -635,7 +816,7 @@ const CollegeAdmin = () => {
                   <h2 className="text-center font-semibold text-4xl text-yellow-300">
                     Crousel Images
                   </h2>
-                  <div className="flex space-x-4 p-4 justify-center">
+                  <div className="flex flex-wrap gap-6 p-4 justify-center">
                     {loggedInCollegeData.crouselImage
                       .slice()
                       .reverse()

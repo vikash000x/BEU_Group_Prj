@@ -40,7 +40,7 @@ const StudentActivity = () => {
     try {
       setLoading(true);
         const response = await axios.post(
-            `http://localhost:4000/api/student/update-external-links/${studentId}`,
+            `${url}/student/update-external-links/${studentId}`,
             formData, // Pass the new card data directly
             { headers: { "Content-Type": "application/json" } }
         );
@@ -80,7 +80,7 @@ const StudentActivity = () => {
     try {
       // Make a DELETE request to the backend
       const response = await axios.delete(
-        `http://localhost:4000/api/student/delete-external-links/${studentId}/${linkId}`
+        `${url}/student/delete-external-links/${studentId}/${linkId}`
       );
   
       // Update the local state with the latest externalLinks

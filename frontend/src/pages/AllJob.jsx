@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import FilterCard from '../components/FilterCard';
 import LatestJobCards from '../components/LatestJobCards';
 import axios from 'axios';
+import { StoreContext } from "../context/StoreContext";
 import Loader from '../components/loader/Loader';
 
 const AllJob = () => {
@@ -15,15 +16,13 @@ const AllJob = () => {
     totalItems: 0,
     itemsPerPage: 12
   });
-
+  const {url} = useContext(StoreContext);
   const categories = ['all', 'location', 'title', 'salary'];
 
   const fetchJobs = async (page = 1) => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:4000/api/job/job-get?page=${page}&limit=12`, { 
-        withCredentials: true 
-      });
+      const res = await axios.get(`${url}/job/job-get?page=${page}&limit=12`);
       
       if (res.data.success) {
         setData(res.data.data);
