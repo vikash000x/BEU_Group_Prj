@@ -30,6 +30,6 @@ collegeRouter.delete(
   authMiddleware,
   deleteGalleryImage
 );
-collegeRouter.get("/get-gallery-image/:_id", getGalleryImage);
+collegeRouter.get("/get-gallery-image/:collegeCode", getGalleryImage);
 
 export default collegeRouter;

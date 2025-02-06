@@ -1,62 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Filter, Grid, List, Search } from "lucide-react";
 import GalleryCard from "../components/GalleryCard";
-
+import { useContext } from "react";
+import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 const CollegeGallery = () => {
   // Dummy data for the gallery
-  const galleryItems = [
-    {
-      image:
-        "https://tse4.mm.bing.net/th?id=OIP.1x1tLdWeXevtmmOKsexFKwHaE8&pid=Api&P=0&h=180",
-      eventName: "Tech Fest 2024",
-      description: "An annual event showcasing innovative technology projects.",
-      date: "15-16 March 2024",
-      location: "Main Campus Auditorium",
-    },
-    {
-      image:
-        "https://tse2.mm.bing.net/th?id=OIP.DUWhCVhWVvbCUa7IHfFsmQHaE3&pid=Api&P=0&h=180",
-      eventName: "Cultural Night",
-      description:
-        "A celebration of our diverse cultural heritage and traditions.",
-      date: "22 April 2024",
-      location: "College Amphitheatre",
-    },
-    {
-      image:
-        "https://tse3.mm.bing.net/th?id=OIP.AaHHFWTFaQyn_yXbrPsPCQHaDt&pid=Api&P=0&h=",
-      eventName: "Sports Meet",
-      description: "A thrilling day of sportsmanship and competition.",
-      date: "10-11 May 2024",
-      location: "Sports Complex",
-    },
-    {
-      image:
-        "https://tse2.mm.bing.net/th?id=OIP.DUWhCVhWVvbCUa7IHfFsmQHaE3&pid=Api&P=0&h=180",
-      eventName: "Annual Day",
-      description: "Celebrating academic achievements and student excellence.",
-      date: "30 June 2024",
-      location: "Main Campus Ground",
-    },
-    {
-      image:
-        "https://tse3.mm.bing.net/th?id=OIP.AaHHFWTFaQyn_yXbrPsPCQHaDt&pid=Api&P=0&h=",
-      eventName: "Robotics Workshop",
-      description: "Hands-on learning and innovation in robotics technology.",
-      date: "15-17 August 2024",
-      location: "Computer Science Lab",
-    },
-  ];
-
+  const [galleryItems, setGalleryItems] = useState(null);
+  const { url } = useContext(StoreContext);
+  const { collegeCode } = useParams();
+  // const galleryItems = [
+  //   {
+  //     image:
+  //       "https://tse4.mm.bing.net/th?id=OIP.1x1tLdWeXevtmmOKsexFKwHaE8&pid=Api&P=0&h=180",
+  //     eventName: "Tech Fest 2024",
+  //     description: "An annual event showcasing innovative technology projects.",
+  //     date: "15-16 March 2024",
+  //     location: "Main Campus Auditorium",
+  //   },
+  //   {
+  //     image:
+  //       "https://tse2.mm.bing.net/th?id=OIP.DUWhCVhWVvbCUa7IHfFsmQHaE3&pid=Api&P=0&h=180",
+  //     eventName: "Cultural Night",
+  //     description:
+  //       "A celebration of our diverse cultural heritage and traditions.",
+  //     date: "22 April 2024",
+  //     location: "College Amphitheatre",
+  //   },
+  //   {
+  //     image:
+  //       "https://tse3.mm.bing.net/th?id=OIP.AaHHFWTFaQyn_yXbrPsPCQHaDt&pid=Api&P=0&h=",
+  //     eventName: "Sports Meet",
+  //     description: "A thrilling day of sportsmanship and competition.",
+  //     date: "10-11 May 2024",
+  //     location: "Sports Complex",
+  //   },
+  //   {
+  //     image:
+  //       "https://tse2.mm.bing.net/th?id=OIP.DUWhCVhWVvbCUa7IHfFsmQHaE3&pid=Api&P=0&h=180",
+  //     eventName: "Annual Day",
+  //     description: "Celebrating academic achievements and student excellence.",
+  //     date: "30 June 2024",
+  //     location: "Main Campus Ground",
+  //   },
+  //   {
+  //     image:
+  //       "https://tse3.mm.bing.net/th?id=OIP.AaHHFWTFaQyn_yXbrPsPCQHaDt&pid=Api&P=0&h=",
+  //     eventName: "Robotics Workshop",
+  //     description: "Hands-on learning and innovation in robotics technology.",
+  //     date: "15-17 August 2024",
+  //     location: "Computer Science Lab",
+  //   },
+  // ];
+  console.log("collegeCode", collegeCode);
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
-
-  const filteredItems = galleryItems.filter(
+  console.log("galley", galleryItems);
+  const filteredItems = galleryItems?.filter(
     (item) =>
-      item.eventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchTerm.toLowerCase())
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.info.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const fetchGalleryData = async () => {
+    try {
+      const res = await axios.get(
+        `${url}/college/get-gallery-image/${collegeCode}`
+      );
+      console.log("res", res?.data);
+      if (res.data.success) {
+        setGalleryItems(res?.data?.galleryImages);
+        // setCollegeFacultyData(res?.data?.facultyData);
+        // setFilteredFaculties(res?.data?.facultyData);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch faculty data");
+    }
+  };
+
+  useEffect(() => {
+    fetchGalleryData();
+  }, []);
 
   return (
     <motion.div
@@ -207,13 +233,13 @@ const CollegeGallery = () => {
         initial="hidden"
         animate="visible"
       >
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item, index) => (
+        {filteredItems?.length > 0 ? (
+          filteredItems?.map((item, index) => (
             <GalleryCard
               key={index}
-              image={item.image}
-              eventName={item.eventName}
-              description={item.description}
+              image={item.url}
+              eventName={item.name}
+              description={item.info}
               date={item.date}
               location={item.location}
             />

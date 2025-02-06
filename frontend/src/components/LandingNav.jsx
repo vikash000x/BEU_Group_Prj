@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { userType, loggedInCollegeData, registeredCollege, loggedInStartUpData } =
-    useContext(StoreContext);
+  const {
+    userType,
+    loggedInCollegeData,
+    registeredCollege,
+    loggedInStartUpData,
+  } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
@@ -22,8 +26,9 @@ const LandingNav = () => {
       setFlag3(true);
       setFlag4(false);
     } else if (
-      location.pathname.includes("college") && (!location.pathname.includes("login") ||
-      location.pathname.includes("beu"))
+      location.pathname.includes("college") &&
+      (!location.pathname.includes("login") ||
+        location.pathname.includes("beu"))
     ) {
       setFlag1(true);
       setFlag2(false);
@@ -40,17 +45,19 @@ const LandingNav = () => {
       setFlag2(true);
       setFlag3(false);
       setFlag4(false);
-    } else if(userType === "startup" &&
-      location.pathname.includes("dashboard")) {
-        setFlag4(true);
-        setFlag3(true);
-        setFlag2(false);
-        setFlag1(false);
-      } else {
-        setFlag3(true);
-      }
+    } else if (
+      userType === "startup" &&
+      location.pathname.includes("dashboard")
+    ) {
+      setFlag4(true);
+      setFlag3(true);
+      setFlag2(false);
+      setFlag1(false);
+    } else {
+      setFlag3(true);
+    }
 
-      console.log(flag1, flag2, flag3, flag4)
+    console.log(flag1, flag2, flag3, flag4);
   }, [location.pathname, userType]);
 
   const handleClick = (collegeCode) => {
@@ -69,7 +76,9 @@ const LandingNav = () => {
         />
         <ul className="flex items-center justify-between flex-1 text-2xl">
           {flag1 && (
-            <Link to="/college/gallery">
+            <Link
+              to={`/college/gallery/${localStorage.getItem("collegeCode")}`}
+            >
               <li className="cursor-pointer relative group py-2 ">
                 <span>Gallery</span>
               </li>
