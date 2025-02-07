@@ -129,30 +129,12 @@ const LandingNav = () => {
                             {college.collegename.charAt(0)}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-200 group-hover/item:text-white truncate">
+                            <p className="text-sm font-medium text-slate-200 group-hover/item:text-white ">
                               {college.collegename}
                             </p>
                             <p className="text-xs text-slate-400 group-hover/item:text-slate-300 mt-0.5">
                               View college details
                             </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="px-2 py-1 text-[10px] font-medium bg-blue-500/10 text-blue-400 rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity">
-                              View
-                            </span>
-                            <svg
-                              className="w-4 h-4 text-slate-400 transform transition-all duration-300 group-hover/item:text-blue-400 group-hover/item:translate-x-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                              />
-                            </svg>
                           </div>
                         </div>
                       </li>
@@ -195,7 +177,13 @@ const LandingNav = () => {
             </Link>
           )}
 
-          {flag1 && <li className="cursor-pointer">Updates</li>}
+          {flag1 && (
+            <Link
+              to={`/college/updates/${localStorage.getItem("collegeCode")}`}
+            >
+              <li className="cursor-pointer">Updates</li>
+            </Link>
+          )}
           {flag3 && (
             <li
               onClick={() => {
