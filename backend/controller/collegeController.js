@@ -280,9 +280,9 @@ export const deleteHeadImage = async (req, res) => {
 
 export const uplaoadGalleryImage = async (req, res) => {
   try {
-    const { name, collegeCode, collegeId, info } = req.body;
+    const { name, collegeCode, info, date, location } = req.body;
 
-    if (!name || !collegeCode || !info) {
+    if (!name || !collegeCode || !info || !date || !location) {
       return res.status(400).json({ message: "All fields are required" });
     }
     if (!req.files || !req.files.image) {
@@ -302,6 +302,8 @@ export const uplaoadGalleryImage = async (req, res) => {
       collegeCode,
       url: imagePaths,
       info,
+      date,
+      location,
     });
     await newGalleryEntry.save();
     college.images.push(newGalleryEntry._id);
@@ -379,16 +381,17 @@ export const deleteGalleryImage = async (req, res) => {
 };
 
 export const getGalleryImage = async (req, res) => {
-  const {_id} = req.params;
-   try {
-    const college = await collegeModel.findOne({_id}).populate("images");
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("images");
     return res.json({
       success: true,
       message: "Gallery image fetched successfully!",
       galleryImages: college.images,
-    })
-  
-   } catch (error) {
+    });
+  } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
       success: false,
@@ -396,4 +399,4 @@ export const getGalleryImage = async (req, res) => {
       error: error.message,
     });
   }
-}
+};

@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 const LandingNav = () => {
-  const { userType, loggedInCollegeData, registeredCollege, loggedInStartUpData } =
-    useContext(StoreContext);
+  const {
+    userType,
+    loggedInCollegeData,
+    registeredCollege,
+    loggedInStartUpData,
+  } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
   const [flag1, setFlag1] = useState(false); //Single College Page
@@ -22,8 +26,9 @@ const LandingNav = () => {
       setFlag3(true);
       setFlag4(false);
     } else if (
-      location.pathname.includes("college") && (!location.pathname.includes("login") ||
-      location.pathname.includes("beu"))
+      location.pathname.includes("college") &&
+      (!location.pathname.includes("login") ||
+        location.pathname.includes("beu"))
     ) {
       setFlag1(true);
       setFlag2(false);
@@ -40,17 +45,19 @@ const LandingNav = () => {
       setFlag2(true);
       setFlag3(false);
       setFlag4(false);
-    } else if(userType === "startup" &&
-      location.pathname.includes("dashboard")) {
-        setFlag4(true);
-        setFlag3(true);
-        setFlag2(false);
-        setFlag1(false);
-      } else {
-        setFlag3(true);
-      }
+    } else if (
+      userType === "startup" &&
+      location.pathname.includes("dashboard")
+    ) {
+      setFlag4(true);
+      setFlag3(true);
+      setFlag2(false);
+      setFlag1(false);
+    } else {
+      setFlag3(true);
+    }
 
-      console.log(flag1, flag2, flag3, flag4)
+    console.log(flag1, flag2, flag3, flag4);
   }, [location.pathname, userType]);
 
   const handleClick = (collegeCode) => {
@@ -69,7 +76,9 @@ const LandingNav = () => {
         />
         <ul className="flex items-center justify-between flex-1 text-2xl">
           {flag1 && (
-            <Link to="/college/gallery">
+            <Link
+              to={`/college/gallery/${localStorage.getItem("collegeCode")}`}
+            >
               <li className="cursor-pointer relative group py-2 ">
                 <span>Gallery</span>
               </li>
@@ -78,7 +87,9 @@ const LandingNav = () => {
           {flag3 && (
             <li className="cursor-pointer relative group py-2">
               <div className="flex items-center gap-2 hover:text-blue-400 transition-colors">
-                <span className="text-lg font-medium group-hover:text-blue-400">Colleges</span>
+                <span className="text-lg font-medium group-hover:text-blue-400">
+                  Colleges
+                </span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180 group-hover:text-blue-400"
                   fill="none"
@@ -96,8 +107,12 @@ const LandingNav = () => {
               <div className="absolute left-0 mt-2 w-80 hidden group-hover:block transform transition-all duration-300 origin-top z-50">
                 <div className="bg-slate-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
                   <div className="p-4 border-b border-slate-700/50 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
-                    <h3 className="text-sm font-semibold text-white">Select College</h3>
-                    <p className="text-xs text-slate-400 mt-1">Choose from our registered colleges</p>
+                    <h3 className="text-sm font-semibold text-white">
+                      Select College
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Choose from our registered colleges
+                    </p>
                   </div>
                   <ul
                     style={{ scrollbarWidth: "none" }}

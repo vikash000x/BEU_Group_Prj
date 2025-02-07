@@ -95,7 +95,10 @@ function App() {
               path="/college/student/:student_id"
               element={<SingleStudent />}
             />
-            <Route path="/college/gallery" element={<CollegeGallery />} />
+            <Route
+              path="/college/gallery/:collegeCode"
+              element={<CollegeGallery />}
+            />
           </Routes>
         </div>
         <Footer />
