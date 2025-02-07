@@ -10,6 +10,7 @@ import { cloudinaryConnect } from "./config/cloudinary.js";
 import jobRouter from "./routes/jobRoutes.js";
 import facultyRouter from "./routes/facultyRoutes.js";
 import startupRouter from "./routes/startupRoutes.js";
+import beuAdminRouter from "./routes/beuAdminRoutes.js";
 import dotenv from "dotenv";
 const app = express();
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/faculty", facultyRouter);
 app.use("/api/job", jobRouter);
 app.use("/api/notice", noticeRouter);
 app.use("/api/startup", startupRouter);
+app.use("/api/beuadmin", beuAdminRouter);
 app.get("/", (req, res) => {
   res.send("API working");
 });

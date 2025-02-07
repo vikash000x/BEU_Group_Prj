@@ -29,6 +29,7 @@ import UpdateJob from "./pages/UpdateJob";
 import Student from "./pages/Student";
 import CollegeGallery from "./pages/CollegeGallery";
 import PrivateRoute from "./routes/PrivateRoute";
+import BEUAdminDash from "./pages/BEUAdminDash";
 function App() {
   return (
     <>
@@ -39,7 +40,7 @@ function App() {
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/beu/admin" element={<BeuAdmin />} />
+            <Route path="/beu/admin" element={<BEUAdminDash />} />
             <Route
               path="startup/:startUpId/dashboard"
               element={
