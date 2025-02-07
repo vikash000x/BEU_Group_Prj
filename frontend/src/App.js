@@ -29,6 +29,7 @@ import UpdateJob from "./pages/UpdateJob";
 import Student from "./pages/Student";
 import CollegeGallery from "./pages/CollegeGallery";
 import PrivateRoute from "./routes/PrivateRoute";
+import CollegeUpdates from "./pages/CollegeUpdates";
 function App() {
   return (
     <>
@@ -97,6 +98,10 @@ function App() {
             <Route
               path="/college/gallery/:collegeCode"
               element={<CollegeGallery />}
+            />
+            <Route
+              path="/college/updates/:collegeCode"
+              element={<CollegeUpdates />}
             />
           </Routes>
         </div>
