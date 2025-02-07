@@ -20,6 +20,7 @@ import {
   Paperclip,
   Info,
 } from "lucide-react";
+import BeuAdmin from "./BeuAdmin";
 
 const BEUAdminDash = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -445,45 +446,13 @@ const BEUAdminDash = () => {
           </div>
         )}
 
-        {activeSection === "notifications" && (
+        {activeSection === "notifications" && <div>hidden</div>}
+
+        {activeSection === "registerCollege" && (
           <div>
-            <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
-              BEU Notices
-            </h2>
-            <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
-              {noticeList?.map((notice, index) => (
-                <div
-                  key={notice._id}
-                  className="
-                    flex 
-                    justify-between 
-                    items-center 
-                    p-4 
-                    border-b 
-                    border-slate-700 
-                    hover:bg-slate-700/50 
-                    transition-colors 
-                    duration-300
-                  "
-                >
-                  <div
-                    className="
-                      cursor-pointer 
-                      flex-grow 
-                      text-slate-200 
-                      hover:text-blue-400 
-                      transition-colors
-                    "
-                  >
-                    {`${index + 1}. ${notice.headline}`}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <BeuAdmin></BeuAdmin>
           </div>
         )}
-
-        {activeSection === "registerCollege" && <div>Register Collegeg</div>}
 
         {activeSection === "postNotice" && (
           <div className="-mt-8">
