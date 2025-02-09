@@ -9,6 +9,8 @@ const LatestJobCards = ({ job }) => {
     const navigate = useNavigate();
     const [isBookmarked, setIsBookmarked] = useState(false);
 
+    
+console.log(job);
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -66,6 +68,7 @@ const LatestJobCards = ({ job }) => {
                     </Badge>
                 </div>
 
+                 
                 {/* Action Buttons */}
                 <div className='flex items-center gap-3'>
                     <motion.button 
@@ -93,6 +96,7 @@ const LatestJobCards = ({ job }) => {
                             text-sm
                             tracking-wider
                             uppercase
+                            z-10
                         "
                     >
                         View Details
@@ -120,6 +124,7 @@ const LatestJobCards = ({ job }) => {
                             items-center 
                             justify-center
                             gap-2
+                            z-10
                         "
                     >
                         Save
