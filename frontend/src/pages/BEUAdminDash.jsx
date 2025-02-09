@@ -21,6 +21,8 @@ import {
   Info,
 } from "lucide-react";
 import BeuAdmin from "./BeuAdmin";
+import BeuNotification from "../components/BeuNotification";
+import BeuChatSection from "../components/BeuChatSection";
 
 const BEUAdminDash = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -446,7 +448,12 @@ const BEUAdminDash = () => {
           </div>
         )}
 
-        {activeSection === "notifications" && <div>hidden</div>}
+        {activeSection === "notifications" && (
+          <div className="flex flex-row">
+            <BeuNotification />
+            <BeuChatSection />
+          </div>
+        )}
 
         {activeSection === "registerCollege" && (
           <div>
