@@ -30,6 +30,7 @@ import CollegeGallery from "./pages/CollegeGallery";
 import PrivateRoute from "./routes/PrivateRoute";
 import BEUAdminDash from "./pages/BEUAdminDash";
 import CollegeUpdates from "./pages/CollegeUpdates";
+import BEUAdminLogin from "./pages/BEUAdminLogin";
 function App() {
   return (
     <>
@@ -41,6 +42,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/beu/admin" element={<BEUAdminDash />} />
+            <Route path="/beu/admin/login" element={<BEUAdminLogin />} />
             <Route
               path="startup/:startUpId/dashboard"
               element={

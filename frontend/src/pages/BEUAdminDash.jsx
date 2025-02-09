@@ -462,7 +462,7 @@ const BEUAdminDash = () => {
         )}
 
         {activeSection === "postNotice" && (
-          <div className="-mt-8">
+          <div className="-mt-8 text-black">
             <PostNoticeForm></PostNoticeForm>
           </div>
         )}
