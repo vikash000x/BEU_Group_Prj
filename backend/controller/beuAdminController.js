@@ -1,6 +1,14 @@
 import notificationModel from "../models/notificationModel.js";
 import BEUAdminModel from "../models/beuAdminModel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+};
 
 export const sendNotification = async (req, res) => {
   try {
@@ -24,49 +32,72 @@ export const sendNotification = async (req, res) => {
 };
 
 export const beuAdminSignUp = async (req, res) => {
+  try {
+    const { name, email, phone, password, collegeCode } = req.body;
 
-    try {
-  const { name, email, phone, password } = req.body;
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
 
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  const hashedPassword = await bcrypt.hash(password, salt);
+    const newBEUAdmin = new BEUAdminModel({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      collegeCode,
+    });
 
-  const newBEUAdmin = new BEUAdminModel({
-    name,
-    email,
-    phone,
-    password: hashedPassword,
-  });
+    newBEUAdmin.save();
 
-  newBEUAdmin.save();
-  
-  res.status(201).json({
-    message: "BEU Admin account created success",
-    notification: newBEUAdmin,
-  });
-} catch (error) {
-  res.status(500).json({ message: "error creating beu admin", error });
-}
+    res.status(201).json({
+      message: "BEU Admin account created success",
+      data: newBEUAdmin,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "error creating beu admin", error });
+  }
 };
 
-export const beuAdminLogin = async(req, res) => {
-
+export const beuAdminLogin = async (req, res) => {
   try {
-    const {adminId, password} = req.body;
+    const { email, password } = req.body;
 
-    const beuAdmin = await BEUAdminModel.find({email: adminId});
+    let beuAdmin = await BEUAdminModel.findOne({ email });
 
-    if(beuAdmin) {
-      console.log("hi", beuAdmin);
+    if (!beuAdmin) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
     }
 
-    return res.status(201).json({
-      message: "login success",
-      success: true
-    })
+    const isMatch = await bcrypt.compare(password, beuAdmin.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Password does not match",
+        success: false,
+      });
+    }
+
+    let adminData = beuAdmin.toObject();
+    delete adminData.password;
+
+    const token = createToken(adminData._id);
+
+    return res.status(200).json({
+      message: "Login success",
+      success: true,
+      data: beuAdmin,
+      token
+    });
   } catch (error) {
-    //
+    return res.status(500).json({ message: "Server error", error });
   }
-}
+};
+
+// export const postUpdate = (req, res) => {
+
+//   const {}
+// }
