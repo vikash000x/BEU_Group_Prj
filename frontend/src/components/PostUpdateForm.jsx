@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Loader from "./loader/Loader";
 
 const PostNoticeForm = () => {
-  const { url, loggedInCollegeData, loading, setLoading, editNoticeData } =
+  const { url, loggedInCollegeData, loading, setLoading, editNoticeData, userType, loggedInBEUAdminData} =
     useContext(StoreContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,8 +55,14 @@ const PostNoticeForm = () => {
     setLoading(true);
 
     // Add the collegeCode to the data before sending
-    noticeData.collegeCode = loggedInCollegeData.collegeCode;
-    noticeData.postedBy = loggedInCollegeData.name;
+    if(userType === "college") {
+      noticeData.collegeCode = loggedInCollegeData.collegeCode;
+      noticeData.postedBy = loggedInCollegeData.name;
+    } else if(userType === "admin") {
+      noticeData.collegeCode = loggedInBEUAdminData.collegeCode;
+      noticeData.postedBy = loggedInBEUAdminData.name;
+    }
+    
 
     if (edit === "true") {
       try {
