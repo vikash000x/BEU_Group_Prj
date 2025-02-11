@@ -8,7 +8,8 @@ const StoreContextProvider = (props) => {
   const [userType, setUserType] = useState("anonymous");
   const [token, setToken] = useState(null);
   const [loggedInCollegeData, setloggedInCollegeData] = useState(null);
-  const [loggedInStudentData, setloggedInStudentData] = useState();
+  const [loggedInStudentData, setloggedInStudentData] = useState(null);
+  const [loggedInBEUAdminData, setloggedInBEUAdminData] = useState(null);
   const [loading, setLoading] = useState(null);
   const [editNoticeData, setEditNoticeData] = useState(null);
   const [registeredCollege, setRegisteredCollege] = useState(null);
@@ -44,6 +45,8 @@ const StoreContextProvider = (props) => {
     setLoggedInStartUpData,
     editNoticeData,
     setEditNoticeData,
+    loggedInBEUAdminData,
+    setloggedInBEUAdminData
   };
   useEffect(() => {
     fetchRegisteredColleges();
@@ -72,6 +75,11 @@ const StoreContextProvider = (props) => {
     if (localStorage.getItem("loggedInStudentData")) {
       setloggedInStudentData(
         JSON.parse(localStorage.getItem("loggedInStudentData"))
+      );
+    }
+    if (localStorage.getItem("loggedInBEUAdminData")) {
+      setloggedInBEUAdminData(
+        JSON.parse(localStorage.getItem("loggedInBEUAdminData"))
       );
     }
   }, [token]);

@@ -43,7 +43,8 @@ const BEUAdminDash = () => {
     loading,
     setLoading,
     loggedInCollegeData,
-    setloggedInCollegeData,
+    setloggedInBEUAdminData,
+    loggedInBEUAdminData,
     url,
     setEditNoticeData,
     setUserType,
@@ -198,15 +199,15 @@ const BEUAdminDash = () => {
   }, []);
 
   let filteredNoticeList = noticeList?.filter(
-    (notice) => notice?.collegeCode === loggedInCollegeData?.collegeCode
+    (notice) => notice?.collegeCode === loggedInBEUAdminData?.collegeCode
   );
 
   //Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("loggedInCollegeData");
+    localStorage.removeItem("loggedInBEUAdminData");
     localStorage.removeItem("userType");
-    setloggedInCollegeData(null);
+    setloggedInBEUAdminData(null);
     setUserType(null);
     setToken(null);
     setLogoutModal(false);
@@ -254,7 +255,7 @@ const BEUAdminDash = () => {
       {/* Sidebar */}
       <div className="w-1/4 min-h-screen bg-slate-800 p-4 flex flex-col gap-4 border-r border-slate-700 shadow-lg">
         <div className="text-xl font-bold text-blue-500 gap-2 my-1 text-center">
-          <p className="text-2xl  text-orange-500 mb-2">{`${loggedInCollegeData?.name}`}</p>
+          <p className="text-2xl  text-orange-500 mb-2">{`${loggedInBEUAdminData?.name}`}</p>
           <p className="text-slate-400 text-sm">Admin Dashboard</p>
         </div>
         <button
@@ -388,7 +389,7 @@ const BEUAdminDash = () => {
         {activeSection === "BEUUpdates" && (
           <div>
             <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
-              Notices Posted By College
+              Notices Posted By BEU
             </h2>
             <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {filteredNoticeList?.map((notice, index) => (

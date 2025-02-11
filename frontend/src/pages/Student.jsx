@@ -94,7 +94,7 @@ const skills = parsedData.studentProfileId.skills;
                         </Avatar>
                         <div>
                             <h1 className='font-medium text-xl'>{parsedData.name}</h1>
-                            <p>{parsedDatac.name}   </p>
+                            <p>{parsedData.name}   </p>
                             <span>{parsedData.branch}" { parsedData.year} year </span>
                         </div>
                     </div>

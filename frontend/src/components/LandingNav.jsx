@@ -10,6 +10,7 @@ const LandingNav = () => {
     loggedInCollegeData,
     registeredCollege,
     loggedInStartUpData,
+    loggedInStudentData
   } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
@@ -246,6 +247,17 @@ const LandingNav = () => {
               <p>View Dashboard</p>
             </Link>
           )}
+          {userType === "admin"  && (
+            <Link to={`/beu/admin`}>
+              <p>View Dashboard</p>
+            </Link>
+          )}
+          {userType === "student" && (
+            <Link to={`/student/${loggedInStudentData?._id}`}>
+              <p>View Dashboard</p>
+            </Link>
+          )}
+
         </ul>
       </nav>
     </div>
