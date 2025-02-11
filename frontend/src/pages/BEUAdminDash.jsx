@@ -25,6 +25,7 @@ import BeuNotification from "../components/BeuNotification";
 import BeuChatSection from "../components/BeuChatSection";
 
 const BEUAdminDash = () => {
+  const [collegeId, setCollegeId] = useState("");
   const [uploadingImage, setUploadingImage] = useState(null);
   const [noticeList, setNoticeList] = useState(null);
   const [activeSection, setActiveSection] = useState("BEUUpdates");
@@ -245,6 +246,7 @@ const BEUAdminDash = () => {
     console.log(registerStartUPFormData);
   };
 
+  console.log("collegeId", collegeId);
   return loading ? (
     <Loader />
   ) : (
@@ -450,8 +452,8 @@ const BEUAdminDash = () => {
 
         {activeSection === "notifications" && (
           <div className="flex flex-row">
-            <BeuNotification />
-            <BeuChatSection />
+            <BeuNotification setCollegeId={setCollegeId} />
+            <BeuChatSection collegeId={collegeId} />
           </div>
         )}
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { VscTriangleRight } from "react-icons/vsc";
-const BeuNotification = () => {
+const BeuNotification = ({ setCollegeId }) => {
   const { registeredCollege } = useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -40,7 +40,10 @@ const BeuNotification = () => {
                 <VscTriangleRight className="size-12 absolute -right-7 top-1/2 -translate-y-1/2" />
               )}
 
-              <h2 className="text-xl font-semibold text-blue-500">
+              <h2
+                onClick={() => setCollegeId(college.collegecode)}
+                className="text-xl font-semibold text-blue-500"
+              >
                 {college.collegename}
               </h2>
             </div>
