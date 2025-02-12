@@ -28,7 +28,7 @@ const BeuNotification = ({ setCollegeId }) => {
                 className="h-20 bg-gray-300 animate-pulse rounded-lg"
               ></div>
             ))
-        : registeredCollege.map((college, index) => (
+        : registeredCollege?.map((college, index) => (
             <div
               key={index}
               className="p-4 bg-white shadow-lg rounded-lg cursor-pointer hover:translate-x-1 relative"
