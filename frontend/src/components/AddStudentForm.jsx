@@ -4,7 +4,7 @@ import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AddStudentForm = ({ collegeShortName }) => {
+const AddStudentForm = () => {
   const { loggedInCollegeData, url } = useContext(StoreContext);
   const [studentData, setStudentData] = useState({
     name: "",
@@ -18,6 +18,7 @@ const AddStudentForm = ({ collegeShortName }) => {
     cgpa: "",
     password: "",
     collegeId: loggedInCollegeData._id,
+    email: "",
   });
 
   const navigate = useNavigate();
@@ -46,9 +47,10 @@ const AddStudentForm = ({ collegeShortName }) => {
       );
 
       toast.success("Student added successfully!");
-      console.log("Response after adding student:", res.data);
+      //console.log("Response after adding student:", res.data);
     } catch (error) {
-      console.log("Error while adding student:", error);
+      toast.error("Error while adding student");
+      //console.log("Error while adding student:", error);
     }
     navigate(`/${loggedInCollegeData.collegeId}/admin`);
   };
@@ -98,6 +100,18 @@ const AddStudentForm = ({ collegeShortName }) => {
         </div>
 
         <div>
+          <label className="block text-white font-medium mb-2">Email:</label>
+          <input
+            type="text"
+            name="email"
+            value={studentData.email}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
           <label className="block text-white font-medium mb-2">Gender:</label>
           <select
             name="gender"
@@ -111,7 +125,6 @@ const AddStudentForm = ({ collegeShortName }) => {
             </option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Other</option>
           </select>
         </div>
         
