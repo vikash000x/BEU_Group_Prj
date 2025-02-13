@@ -4,6 +4,37 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import studentProfileModel from "../models/studentProfileModel.js";
 
+
+
+// Fetch applied and saved jobs for a student
+   export const applysave =  async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Find the student by studentId
+    const student = await studentModel.findById(studentId)
+      .populate('appliedJobs') // Assuming appliedJobs is a reference to the Job model
+      .populate('savedJobs'); // Assuming savedJobs is a reference to the Job model
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Fetch applied and saved jobs
+    const appliedJobs = student.appliedJobs;
+    const savedJobs = student.savedJobs;
+
+    // Return the jobs in the response
+    return res.status(200).json({
+      appliedJobs,
+      savedJobs,
+    });
+  } catch (error) {
+    console.error('Error fetching student jobs:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export const addStudent = async (req, res) => {
   const { name, branch, year, cgpa, regNo, gender, collegeId, password, semester, rollNo, dob } =
     req.body;
@@ -264,7 +295,6 @@ export const deleteExternalLink = async (req, res) => {
 
 
 
-// export const updateProfile = async (req, res) => {
 //     try {
 //         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 //         if (!updatedProfile) {

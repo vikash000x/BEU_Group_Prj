@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   addStudent,
+  applysave,
   deleteExternalLink,
   deleteStudent,
   loginStudent,
@@ -19,6 +20,9 @@ studentRouter.delete(
   authMiddleware,
   deleteStudent
 );
+
+studentRouter.get("/:studentId/apply-save", applysave)
+
 studentRouter.post("/login-student", loginStudent)
 studentRouter.put("/update-studentprofile/:profileId", updateStudentProfile);
 studentRouter.post("/update-external-links/:studentId", updateExternalLinks)

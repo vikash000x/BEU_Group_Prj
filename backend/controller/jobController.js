@@ -1,5 +1,6 @@
 import { Job } from "../models/jobModel.js"; // Adjust the path based on your file structure
 import startupModel from "../models/startupModel.js";
+import studentModel from "../models/studentModel.js";
 
 // Controller to create a new job
 export const createJob = async (req, res) => {
@@ -164,3 +165,67 @@ export const deleteJob = async (req, res) => {
     });
   }
 };
+
+
+export const saveJob = async (req, res) => {
+  try {
+    const { studentId, jobId } = req.body;
+
+    const student = await studentModel.findById(studentId);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    if (student.savedJobs.includes(jobId)) {
+      return res.status(400).json({ message: "Job already saved" });
+    }
+
+    student.savedJobs.push(jobId);
+    await student.save();
+
+    res.status(200).json({ message: "Job saved successfully", student });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
+export const applyJob = async (req, res) => {
+  try {
+    const { studentId, jobId } = req.body;
+
+    const student = await studentModel.findById(studentId);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    const job = await Job.findById(jobId);
+    if (!job) return res.status(404).json({ message: "Job not found" });
+
+    if (student.appliedJobs.includes(jobId)) {
+      return res.status(400).json({ message: "Already applied for this job" });
+    }
+
+    student.appliedJobs.push(jobId);
+    job.applicants.push(studentId);
+
+    await student.save();
+    await job.save();
+
+    res.status(200).json({ message: "Job application successful", student, job });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
+export const stdlist = async(req, res) => {
+  try {
+
+     const {jobId} = res.body;
+      const job = await Job.findById(jobId);
+      const studentIds = job.applicants;
+      const students = await studentModel.find({ _id: { $in: studentIds } });
+      res.status(200).json({ message: "Students fetched successfully", students });
+
+
+  } catch(error){
+    res.status(500).json({ message: "applied student data is not fetched", error });
+  }
+}
