@@ -19,6 +19,7 @@ import {
   Paperclip,
   Info,
 } from "lucide-react";
+import BeuChatSection from "../components/BeuChatSection";
 
 const CollegeAdmin = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -245,6 +246,7 @@ const CollegeAdmin = () => {
     }
     setLoading(false);
   };
+  const collegeId = loggedInCollegeData?.collegeCode;
 
   return loading ? (
     <Loader />
@@ -454,7 +456,10 @@ const CollegeAdmin = () => {
             <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
               BEU Notices
             </h2>
-            <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
+            <div className="flex justify-center items-center">
+              <BeuChatSection collegeId={collegeId} postedBy={"college"} />
+            </div>
+            {/* <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {noticeList?.map((notice, index) => (
                 <div
                   key={notice._id}
@@ -483,7 +488,7 @@ const CollegeAdmin = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         )}
 

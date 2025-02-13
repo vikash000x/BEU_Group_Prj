@@ -454,7 +454,7 @@ const BEUAdminDash = () => {
         {activeSection === "notifications" && (
           <div className="flex flex-row">
             <BeuNotification setCollegeId={setCollegeId} />
-            <BeuChatSection collegeId={collegeId} />
+            <BeuChatSection collegeId={collegeId} postedBy={"beu"} />
           </div>
         )}
 
