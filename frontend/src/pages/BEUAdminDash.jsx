@@ -156,7 +156,7 @@ const BEUAdminDash = () => {
 
   const handleEditNotice = (notice) => {
     setEditNoticeData(notice);
-    navigate(`/collegeShortName/post-update/?edit=true`);
+    navigate(`/collegeCode/post-update/?edit=true`);
   };
 
   const handleDeleteNotice = async (id) => {
