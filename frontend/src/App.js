@@ -41,7 +41,10 @@ function App() {
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/beu/admin" element={<BEUAdminDash />} />
+            <Route path="/beu/admin" element={
+              <PrivateRoute>
+                <BEUAdminDash />
+              </PrivateRoute>} />
             <Route path="/beu/admin/login" element={<BEUAdminLogin />} />
             <Route
               path="startup/:startUpId/dashboard"
@@ -60,15 +63,15 @@ function App() {
             <Route path="/job-section/update-job/:id" element={<UpdateJob />} />
             <Route path="/:collegeCode/admin" element={<CollegeAdmin />} />
             <Route
-              path=":collegeShortName/addFaculty"
+              path=":collegeCode/addFaculty"
               element={<AddFacultyForm />}
             />
             <Route
-              path=":collegeShortName/addStudent"
+              path=":collegeCode/addStudent"
               element={<AddStudentForm />}
             />
             <Route
-              path=":collegeShortName/post-update"
+              path=":collegeCode/post-update"
               element={<PostUpdateForm />}
             />
             <Route

@@ -31,6 +31,9 @@ const CollegeAdmin = () => {
   const [selectedNotice, setSelectedNotice] = useState(null);
   const [logoutModal, setLogoutModal] = useState(false);
   const [imageActiveSection, setImageActiveSection] = useState("gallery");
+  const [uploadGalleryForm, setUploadGalleryForm] = useState(false);
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -65,6 +68,8 @@ const CollegeAdmin = () => {
         //Gallery
         imageData.append("name", inputName);
         imageData.append("info", info);
+        imageData.append("date", date);
+        imageData.append("location", location);
         try {
           const response = await axios.post(
             `${url}/college/upload-gallery`,
@@ -79,9 +84,10 @@ const CollegeAdmin = () => {
           console.log("Gallery upload success", response);
           toast.success("Gallery image uploaded successfully !");
         } catch (error) {
-          console.log("error while postingGalleryl image", error);
-          toast.error("Error while uploading Gallery image !");
+          console.log("error while posting Gallery image", error);
+          toast.error(error.response.data.message);
         }
+        setUploadGalleryForm(false);
       } else if (uploadingImage === 2) {
         //Crousel
         try {
@@ -149,7 +155,7 @@ const CollegeAdmin = () => {
 
   const handleEditNotice = (notice) => {
     setEditNoticeData(notice);
-    navigate(`/collegeShortName/post-update/?edit=true`);
+    navigate(`/${loggedInCollegeData.collegeCode}/post-update/?edit=true`);
   };
 
   const handleDeleteNotice = async (id) => {
@@ -210,15 +216,19 @@ const CollegeAdmin = () => {
 
   const handleImageDelete = async (type, img) => {
     //console.log(type, img._id);
-    const formData = new FormData();
-    formData.append("collegeId", loggedInCollegeData._id);
-    formData.append("galleryId", img._id);
+    const payload = {
+      collegeId: loggedInCollegeData._id,
+      galleryId: img._id,
+    };
+
+    setLoading(true);
+
     if (type === "gallery") {
       try {
         const response = await axios.delete(
           `${url}/college/delete-gallery-image`,
           {
-            data: formData,
+            data: payload,
             headers: {
               token,
             },
@@ -226,14 +236,15 @@ const CollegeAdmin = () => {
         );
         toast.success(response.data.message);
       } catch (e) {
-        console.log("ytyhfgch", e);
+        console.error("Delete Error:", e);
         toast.error("Failed to delete gallery image");
       }
     } else if (type === "crousel") {
-      //
+      // Implement crousel deletion
     } else if (type === "front4") {
-      //
+      // Implement front4 deletion
     }
+    setLoading(false);
   };
   const collegeId = loggedInCollegeData?.collegeCode;
 
@@ -450,8 +461,8 @@ const CollegeAdmin = () => {
             </div>
             {/* <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {noticeList?.map((notice, index) => (
-                <div 
-                  key={notice._id} 
+                <div
+                  key={notice._id}
                   className="
                     flex 
                     justify-between 
@@ -489,7 +500,10 @@ const CollegeAdmin = () => {
                   Gallery Section
                 </p>
                 <button
-                  onClick={() => setUploadingImage(1)}
+                  onClick={() => {
+                    setUploadGalleryForm(true);
+                    setUploadingImage(1);
+                  }}
                   className="bg-white text-black font-medium rounded-md p-4 m-2 mx-32 border hover:bg-yellow-400 hover:text-black"
                 >
                   Upload To Gallery
@@ -545,7 +559,10 @@ const CollegeAdmin = () => {
                 <div className="relative p-4 w-[400px] max-w-full h-auto bg-white rounded-3xl shadow-lg flex flex-col justify-center items-center">
                   {/* Close Button */}
                   <button
-                    onClick={() => setUploadingImage(false)}
+                    onClick={() => {
+                      setUploadingImage(false);
+                      setUploadGalleryForm(false);
+                    }}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 focus:outline-none text-2xl"
                     aria-label="Close"
                   >
@@ -576,11 +593,31 @@ const CollegeAdmin = () => {
                       className="border border-slate-500 rounded-sm text-black pl-1"
                     ></input>
 
+                    {uploadGalleryForm && (
+                      <>
+                        <input
+                          type="date"
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
+                          className="border border-slate-500 rounded-sm text-black pl-1"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Location"
+                          value={location}
+                          name="location"
+                          onChange={(e) => setLocation(e.target.value)}
+                          className="border border-slate-500 rounded-sm text-black pl-1"
+                        />
+                      </>
+                    )}
+
                     <input
                       type="file"
                       className="block mb-4"
                       onChange={handleFileChange}
                     />
+
                     {/* Upload Button */}
                     <button
                       type="button"
@@ -610,7 +647,7 @@ const CollegeAdmin = () => {
         )}
 
         {logoutModal && (
-          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-slate-200 rounded-lg shadow-md p-6 w-80">
               <div className="text-lg text-black font-semibold text-center mb-4">
                 Confirm LogOut?

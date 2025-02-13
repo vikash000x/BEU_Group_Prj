@@ -15,11 +15,15 @@ const BEUAdminLogin = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [stars, setStars] = useState([]);
-  const { setUserType, setToken, url, loading, setLoading, setloggedInBEUAdminData } = useContext(StoreContext);
+  const { setUserType, setToken, url, loading, setLoading, setloggedInBEUAdminData, token, loggedInBEUAdminData } = useContext(StoreContext);
 
   useEffect(() => {
+
+    if(token) {
+      navigate(`/`);
+    }
     const generateStars = () => {
-      const newStars = Array.from({ length: 50 }, (_, index) => ({
+      const newStars = Array.from({ length: 100 }, (_, index) => ({
         id: index,
         left: `${Math.random() * 100}%`,
         animationDuration: `${Math.random() * 20 + 10}s`,
@@ -29,14 +33,13 @@ const BEUAdminLogin = () => {
       setStars(newStars);
     };
     generateStars();
-  }, []);
+  }, [token, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const response = await axios.post(`${url}/beuadmin/login`, { email, password });
-      console.log(response.data.success)
       if (response.data.success) {
         setloggedInBEUAdminData(response.data.data);
         setUserType("admin");
@@ -44,7 +47,6 @@ const BEUAdminLogin = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userType", "admin");
         localStorage.setItem("loggedInBEUAdminData", JSON.stringify(response.data.data));
-        setToken(response.data.token)
         toast.success("Logged In as BEU Admin");
         navigate(`/beu/admin`);
       } else {
@@ -73,8 +75,8 @@ const BEUAdminLogin = () => {
 
         <form onSubmit={handleSubmit} className="px-8 py-6 space-y-6">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white/70">Admin ID</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter Admin ID" />
+            <label className="block text-sm font-medium text-white/70">Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter email" />
           </div>
 
           <div className="space-y-2">
