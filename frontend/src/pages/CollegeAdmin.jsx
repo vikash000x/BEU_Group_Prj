@@ -6,19 +6,20 @@ import { StoreContext } from "../context/StoreContext";
 import { toast } from "react-toastify";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-import { 
-  FileText, 
-  Grid, 
-  Image as ImageIcon, 
-  Settings, 
-  LogOut, 
-  X, 
+import {
+  FileText,
+  Grid,
+  Image as ImageIcon,
+  Settings,
+  LogOut,
+  X,
   FileSpreadsheet,
   Calendar,
   Tag,
   Paperclip,
-  Info
+  Info,
 } from "lucide-react";
+import BeuChatSection from "../components/BeuChatSection";
 
 const CollegeAdmin = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -174,10 +175,7 @@ const CollegeAdmin = () => {
     const fetchAllNotices = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `${url}/notice/getAllNotices`
-        
-        );
+        const response = await axios.get(`${url}/notice/getAllNotices`);
         const result = response.data.notices.reverse();
         //const result = response.data.notices.slice(-5).reverse();
         setNoticeList(result);
@@ -237,6 +235,7 @@ const CollegeAdmin = () => {
       //
     }
   };
+  const collegeId = loggedInCollegeData?.collegeCode;
 
   return loading ? (
     <Loader />
@@ -258,9 +257,11 @@ const CollegeAdmin = () => {
             flex 
             items-center 
             gap-3
-            ${activeSection === "collegeNotices" 
-              ? "bg-blue-600 text-white" 
-              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+            ${
+              activeSection === "collegeNotices"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
           `}
           onClick={() => setActiveSection("collegeNotices")}
         >
@@ -277,9 +278,11 @@ const CollegeAdmin = () => {
             flex 
             items-center 
             gap-3
-            ${activeSection === "beuNotices" 
-              ? "bg-blue-600 text-white" 
-              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+            ${
+              activeSection === "beuNotices"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
           `}
           onClick={() => setActiveSection("beuNotices")}
         >
@@ -296,9 +299,11 @@ const CollegeAdmin = () => {
             flex 
             items-center 
             gap-3
-            ${activeSection === "uploadImages" 
-              ? "bg-blue-600 text-white" 
-              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+            ${
+              activeSection === "uploadImages"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
           `}
           onClick={() => setActiveSection("uploadImages")}
         >
@@ -315,9 +320,11 @@ const CollegeAdmin = () => {
             flex 
             items-center 
             gap-3
-            ${activeSection === "viewImages" 
-              ? "bg-blue-600 text-white" 
-              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+            ${
+              activeSection === "viewImages"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
           `}
           onClick={() => handleViewImage()}
         >
@@ -334,9 +341,11 @@ const CollegeAdmin = () => {
             flex 
             items-center 
             gap-3
-            ${activeSection === "updateCollege" 
-              ? "bg-blue-600 text-white" 
-              : "text-slate-300 hover:bg-slate-700 hover:text-white"}
+            ${
+              activeSection === "updateCollege"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
           `}
           onClick={() => setActiveSection("updateCollege")}
         >
@@ -373,8 +382,8 @@ const CollegeAdmin = () => {
             </h2>
             <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {filteredNoticeList?.map((notice, index) => (
-                <div 
-                  key={notice._id} 
+                <div
+                  key={notice._id}
                   className="
                     flex 
                     justify-between 
@@ -400,7 +409,7 @@ const CollegeAdmin = () => {
                     {`${index + 1}. ${notice.headline}`}
                   </div>
                   <div className="flex gap-3">
-                    <button 
+                    <button
                       onClick={() => handleEditNotice(notice)}
                       className="
                         text-blue-400 
@@ -412,7 +421,7 @@ const CollegeAdmin = () => {
                     >
                       <FaEdit />
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDeleteNotice(notice._id)}
                       className="
                         text-red-400 
@@ -436,7 +445,10 @@ const CollegeAdmin = () => {
             <h2 className="text-xl font-bold pb-4 text-blue-400 border-b border-slate-700 mb-4">
               BEU Notices
             </h2>
-            <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
+            <div className="flex justify-center items-center">
+              <BeuChatSection collegeId={collegeId} postedBy={"college"} />
+            </div>
+            {/* <div className="bg-slate-800 rounded-lg overflow-hidden shadow-md">
               {noticeList?.map((notice, index) => (
                 <div 
                   key={notice._id} 
@@ -465,7 +477,7 @@ const CollegeAdmin = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         )}
 
@@ -623,7 +635,8 @@ const CollegeAdmin = () => {
 
         {selectedNotice && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
-            <div className="
+            <div
+              className="
               bg-slate-800 
               w-[800px] 
               max-h-[90vh] 
@@ -634,7 +647,8 @@ const CollegeAdmin = () => {
               border-slate-700 
               relative
               animate-fade-in
-            ">
+            "
+            >
               {/* Close Button */}
               <button
                 className="
@@ -654,13 +668,15 @@ const CollegeAdmin = () => {
               </button>
 
               {/* Title */}
-              <div className="
+              <div
+                className="
                 bg-gradient-to-r 
                 from-blue-600 
                 to-purple-600 
                 p-6 
                 rounded-t-2xl
-              ">
+              "
+              >
                 <h2 className="text-3xl font-bold text-white">
                   {selectedNotice.headline}
                 </h2>
@@ -673,7 +689,8 @@ const CollegeAdmin = () => {
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-blue-400" />
                     <span>
-                      <strong>Date:</strong> {formatDate(selectedNotice.postedAt)}
+                      <strong>Date:</strong>{" "}
+                      {formatDate(selectedNotice.postedAt)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -701,20 +718,21 @@ const CollegeAdmin = () => {
                 </div>
 
                 {/* Attachments */}
-                {selectedNotice.attachments && selectedNotice.attachments.length > 0 && (
-                  <div className="mt-4">
-                    <h3 className="text-xl font-semibold text-blue-300 mb-2 flex items-center gap-2">
-                      <Paperclip className="w-5 h-5" />
-                      Attachments
-                    </h3>
-                    <div className="space-y-2">
-                      {selectedNotice.attachments.map((attachment, index) => (
-                        <a
-                          key={index}
-                          href={attachment}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="
+                {selectedNotice.attachments &&
+                  selectedNotice.attachments.length > 0 && (
+                    <div className="mt-4">
+                      <h3 className="text-xl font-semibold text-blue-300 mb-2 flex items-center gap-2">
+                        <Paperclip className="w-5 h-5" />
+                        Attachments
+                      </h3>
+                      <div className="space-y-2">
+                        {selectedNotice.attachments.map((attachment, index) => (
+                          <a
+                            key={index}
+                            href={attachment}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="
                             block 
                             bg-slate-700 
                             p-3 
@@ -724,13 +742,13 @@ const CollegeAdmin = () => {
                             text-blue-300 
                             hover:text-blue-200
                           "
-                        >
-                          Attachment {index + 1}
-                        </a>
-                      ))}
+                          >
+                            Attachment {index + 1}
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
           </div>

@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {StoreContext} from "../context/StoreContext";
-import axios from "axios"
+import { StoreContext } from "../context/StoreContext";
+import axios from "axios";
 import Loader from "./loader/Loader";
 import { toast } from "react-toastify";
 
 const AddCollegeDetailForm = ({ onSubmit }) => {
-
-  const { url, loggedInCollegeData, loading, setLoading} = useContext(StoreContext);
+  const { url, loggedInCollegeData, loading, setLoading } =
+    useContext(StoreContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
     shortName: loggedInCollegeData?.shortName || "",
     description: loggedInCollegeData?.description || "",
     extraInfo: loggedInCollegeData?.extraInfo || "",
-    departments: loggedInCollegeData?.departments || [""],  // Default to empty array
+    departments: loggedInCollegeData?.departments || [""], // Default to empty array
     logo: loggedInCollegeData?.logo || "",
     city: loggedInCollegeData?.city || "",
     phone: loggedInCollegeData?.phone || "",
@@ -51,35 +51,42 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      const response = await axios.put(`${url}/college/add-details/${loggedInCollegeData.collegeCode}`, formData, {
-        headers: {
-          "Content-Type": "application/json"
+      const response = await axios.put(
+        `${url}/college/add-details/${loggedInCollegeData.collegeCode}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-      
+      );
+
       console.log(response.data.message);
-      toast.success("Info Updated Successfully!")
+      toast.success("Info Updated Successfully!");
     } catch (error) {
-      toast.error("Error while updating info!")
-      console.error("Error updating college details:", error.response.data.error);
+      toast.error("Error while updating info!");
+      console.error(
+        "Error updating college details:",
+        error.response.data.error
+      );
     } finally {
-      navigate(`/${loggedInCollegeData.collegeCode}/admin`)
+      navigate(`/${loggedInCollegeData.collegeCode}/admin`);
       setLoading(false);
     }
   };
 
-  return loading ? <Loader /> : (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="max-w-2xl bg-slate-800 mx-auto p-6 rounded-lg shadow-lg">
       <h1 className="text-2xl text-center font-bold text-blue-700 mb-4">
         Update College Details
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block font-semibold text-white mb-2">
-            Name
-          </label>
+          <label className="block font-semibold text-white mb-2">Name</label>
           <input
             type="text"
             name="name"
@@ -172,9 +179,7 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
               <input
                 type="text"
                 value={department}
-                onChange={(e) =>
-                  handleDepartmentChange(index, e.target.value)
-                }
+                onChange={(e) => handleDepartmentChange(index, e.target.value)}
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
               />
               <button
@@ -207,4 +212,3 @@ const AddCollegeDetailForm = ({ onSubmit }) => {
 };
 
 export default AddCollegeDetailForm;
-

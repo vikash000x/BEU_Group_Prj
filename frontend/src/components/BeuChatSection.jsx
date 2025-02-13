@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { StoreContext } from "../context/StoreContext";
 import { useContext } from "react";
-const BeuChatSection = ({ collegeId }) => {
+const BeuChatSection = ({ collegeId, postedBy }) => {
   const [chats, setChats] = useState(null);
   const { url } = useContext(StoreContext);
   const [message, setMessage] = useState(null);
@@ -13,7 +13,7 @@ const BeuChatSection = ({ collegeId }) => {
       e.preventDefault();
       const res = await axios.post(`${url}/chat/post-chat`, {
         collegeCode: collegeId,
-        postedBy: "beu",
+        postedBy: postedBy,
         message: message,
       });
       if (res.data.success) {
@@ -44,7 +44,7 @@ const BeuChatSection = ({ collegeId }) => {
 
   console.log("collegeId from chat", collegeId);
   return (
-    <div className="pt-6 pb-1 px-3 border-[3px]    w-1/2 h-[83vh] rounded-lg ml-1 flex flex-col flex-1 ">
+    <div className="pt-6 pb-1 px-3 border-[3px]    w-1/2 h-[83vh] rounded-lg ml-1 flex flex-col">
       <div
         className="bg-[#1E293B] h-full p-1 rounded-md  overflow-y-scroll "
         style={{ scrollbarWidth: "none" }}
