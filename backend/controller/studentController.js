@@ -46,11 +46,9 @@ export const addStudent = async (req, res) => {
 
     const sameRegNoStudent = await studentModel.findOne({ regNo });
     if (sameRegNoStudent) {
-      return res
-        .status(500)
-        .json({
-          message: "A student is already registeres with same Registration No.",
-        });
+      return res.status(500).json({
+        message: "A student is already registeres with same Registration No.",
+      });
     }
 
     const newStudent = await studentModel.create({
@@ -111,6 +109,36 @@ export const updateStudent = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getSingleCollegeStudentData = async (req, res) => {
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("students");
+    if (!college) {
+      return res.json({
+        message: "college is not found",
+      });
+    }
+    const studentData = college.students;
+    if (!studentData) {
+      return res.json({
+        message: "student data is not availble",
+      });
+    }
+
+    res.json({
+      success: true,
+      studentData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "error while getting faculty data",
+    });
   }
 };
 
@@ -194,11 +222,9 @@ export const loginStudent = async (req, res) => {
   const { regNo, password } = req.body;
 
   if (!regNo || !password) {
-    return res
-      .status(400)
-      .json({
-        message: "Please provide both Registration Number and Password",
-      });
+    return res.status(400).json({
+      message: "Please provide both Registration Number and Password",
+    });
   }
 
   try {
@@ -206,11 +232,9 @@ export const loginStudent = async (req, res) => {
       .findOne({ regNo })
       .populate("studentProfileId");
     if (!student) {
-      return res
-        .status(404)
-        .json({
-          message: "Student not found. Please check your Registration Number.",
-        });
+      return res.status(404).json({
+        message: "Student not found. Please check your Registration Number.",
+      });
     }
 
     const isMatch = await bcrypt.compare(password, student.password);
@@ -262,12 +286,10 @@ export const updateExternalLinks = async (req, res) => {
     // Save the updated student profile
     await student.save();
 
-    return res
-      .status(200)
-      .json({
-        message: "External link added successfully",
-        externalLinks: student.externalLinks,
-      });
+    return res.status(200).json({
+      message: "External link added successfully",
+      externalLinks: student.externalLinks,
+    });
   } catch (error) {
     console.error("Error updating external links:", error);
     return res.status(500).json({ message: "Internal server error" });

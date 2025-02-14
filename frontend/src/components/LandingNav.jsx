@@ -10,7 +10,7 @@ const LandingNav = () => {
     loggedInCollegeData,
     registeredCollege,
     loggedInStartUpData,
-    loggedInStudentData
+    loggedInStudentData,
   } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
@@ -199,8 +199,14 @@ const LandingNav = () => {
             </li>
           )}
 
-          {flag1 && <Link to="/college/students">Students</Link>}
-          {flag3 && (userType === "anonymous" || (!userType) ) && (
+          {flag1 && (
+            <Link
+              to={`/college/students/${localStorage.getItem("collegeCode")}`}
+            >
+              Students
+            </Link>
+          )}
+          {flag3 && (userType === "anonymous" || !userType) && (
             <li
               className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
                 active === "login" ? "bg-white text-slate-800" : ""
@@ -247,7 +253,7 @@ const LandingNav = () => {
               <p>View Dashboard</p>
             </Link>
           )}
-          {userType === "admin"  && (
+          {userType === "admin" && (
             <Link to={`/beu/admin`}>
               <p>View Dashboard</p>
             </Link>
@@ -257,7 +263,6 @@ const LandingNav = () => {
               <p>View Dashboard</p>
             </Link>
           )}
-
         </ul>
       </nav>
     </div>

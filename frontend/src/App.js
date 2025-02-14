@@ -41,10 +41,14 @@ function App() {
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/beu/admin" element={
-              <PrivateRoute>
-                <BEUAdminDash />
-              </PrivateRoute>} />
+            <Route
+              path="/beu/admin"
+              element={
+                <PrivateRoute>
+                  <BEUAdminDash />
+                </PrivateRoute>
+              }
+            />
             <Route path="/beu/admin/login" element={<BEUAdminLogin />} />
             <Route
               path="startup/:startUpId/dashboard"
@@ -91,7 +95,10 @@ function App() {
               path="/college/faculties/:collegeCode"
               element={<FacultiesList />}
             />
-            <Route path="/college/students" element={<StudentList />} />
+            <Route
+              path="/college/students/:collegeCode"
+              element={<StudentList />}
+            />
             <Route
               path="/college/faculty/:faculty_id"
               element={<SingleFaculty />}
