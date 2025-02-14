@@ -5,6 +5,7 @@ import {
   applysave,
   deleteExternalLink,
   deleteStudent,
+  getSingleCollegeStudentData,
   loginStudent,
   updateExternalLinks,
   updateStudent,
@@ -20,14 +21,24 @@ studentRouter.delete(
   authMiddleware,
   deleteStudent
 );
+<<<<<<< HEAD
 
 studentRouter.get("/:studentId/apply-save", applysave)
 
 studentRouter.post("/login-student", loginStudent)
+=======
+studentRouter.post("/login-student", loginStudent);
+>>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
 studentRouter.put("/update-studentprofile/:profileId", updateStudentProfile);
-studentRouter.post("/update-external-links/:studentId", updateExternalLinks)
-studentRouter.delete("/delete-external-links/:studentId/:linkId", deleteExternalLink)
+studentRouter.post("/update-external-links/:studentId", updateExternalLinks);
+studentRouter.delete(
+  "/delete-external-links/:studentId/:linkId",
+  deleteExternalLink
+);
 
-
+studentRouter.get(
+  "/get-student-data/:collegeCode",
+  getSingleCollegeStudentData
+);
 
 export default studentRouter;

@@ -3,6 +3,8 @@ import collegeModel from "../models/collegeModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import studentProfileModel from "../models/studentProfileModel.js";
+import mailSender from "../config/mailSender.js";
+import { studentRegistrationEmail } from "../mail/templates/studentRegistrationEmail.js";
 
 
 
@@ -36,12 +38,34 @@ import studentProfileModel from "../models/studentProfileModel.js";
 };
 
 export const addStudent = async (req, res) => {
-  const { name, branch, year, cgpa, regNo, gender, collegeId, password, semester, rollNo, dob } =
-    req.body;
-  
-    if(!name, !branch, !year, !cgpa, !regNo, !gender, !collegeId, !password, !semester) {
-      return res(500).json({message: "Please provide all fields"});
-    }
+  const {
+    name,
+    branch,
+    year,
+    cgpa,
+    regNo,
+    gender,
+    collegeId,
+    password,
+    semester,
+    rollNo,
+    dob,
+    email,
+  } = req.body;
+
+  if (
+    (!name,
+    !branch,
+    !year,
+    !cgpa,
+    !regNo,
+    !gender,
+    !collegeId,
+    !password,
+    !semester)
+  ) {
+    return res(500).json({ message: "Please provide all fields" });
+  }
   try {
     const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
@@ -51,9 +75,11 @@ export const addStudent = async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const sameRegNoStudent = await studentModel.findOne({regNo});
-    if(sameRegNoStudent) {
-      return res.status(500).json({ message: "A student is already registeres with same Registration No." });
+    const sameRegNoStudent = await studentModel.findOne({ regNo });
+    if (sameRegNoStudent) {
+      return res.status(500).json({
+        message: "A student is already registeres with same Registration No.",
+      });
     }
 
     const newStudent = await studentModel.create({
@@ -73,9 +99,16 @@ export const addStudent = async (req, res) => {
     college.students.push(newStudent._id);
     await college.save();
 
-    const newStudentProfile = await studentProfileModel.create({});
+    const newStudentProfile = await studentProfileModel.create({ email });
     newStudent.studentProfileId = newStudentProfile._id;
     await newStudent.save();
+
+    //sending mail to registered student
+    await mailSender(
+      email,
+      `You are registered Successfully`,
+      studentRegistrationEmail(`${name}`)
+    );
 
     res.status(200).json({ message: "Student added", college });
   } catch (error) {
@@ -110,6 +143,35 @@ export const updateStudent = async (req, res) => {
   }
 };
 
+export const getSingleCollegeStudentData = async (req, res) => {
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("students");
+    if (!college) {
+      return res.json({
+        message: "college is not found",
+      });
+    }
+    const studentData = college.students;
+    if (!studentData) {
+      return res.json({
+        message: "student data is not availble",
+      });
+    }
+
+    res.json({
+      success: true,
+      studentData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "error while getting faculty data",
+    });
+  }
+};
 
 // this controller for student to update profile
 export const updateStudentProfile = async (req, res) => {
@@ -118,17 +180,17 @@ export const updateStudentProfile = async (req, res) => {
   const { profile_image, skills, resume, about } = req.body; // Data from the frontend
 
   try {
-   
     const updateFields = {};
     if (profile_image) updateFields.profile_image = profile_image;
     if (skills) {
       // Split the string by commas, trim whitespace, and filter out empty strings
-      updateFields.skills = skills.split(",").map(skill => skill.trim()).filter(skill => skill);
+      updateFields.skills = skills
+        .split(",")
+        .map((skill) => skill.trim())
+        .filter((skill) => skill);
     }
     if (resume) updateFields.resume = resume;
     if (about) updateFields.about = about;
-
- 
 
     // Update the profile with only the specified fields
     const updatedProfile = await studentProfileModel.findByIdAndUpdate(
@@ -151,7 +213,6 @@ export const updateStudentProfile = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 // Controller to delete a student , a college will delete the student
 export const deleteStudent = async (req, res) => {
@@ -192,13 +253,19 @@ export const loginStudent = async (req, res) => {
   const { regNo, password } = req.body;
 
   if (!regNo || !password) {
-    return res.status(400).json({ message: "Please provide both Registration Number and Password" });
+    return res.status(400).json({
+      message: "Please provide both Registration Number and Password",
+    });
   }
 
   try {
-    const student = await studentModel.findOne({ regNo }).populate("studentProfileId");
+    const student = await studentModel
+      .findOne({ regNo })
+      .populate("studentProfileId");
     if (!student) {
-      return res.status(404).json({ message: "Student not found. Please check your Registration Number." });
+      return res.status(404).json({
+        message: "Student not found. Please check your Registration Number.",
+      });
     }
 
     const isMatch = await bcrypt.compare(password, student.password);
@@ -212,8 +279,7 @@ export const loginStudent = async (req, res) => {
       { expiresIn: process.env.JWT_EXPIRE }
     );
 
-    student.password="";
-
+    student.password = "";
 
     res.status(200).json({
       message: "Login successful",
@@ -226,15 +292,16 @@ export const loginStudent = async (req, res) => {
   }
 };
 
-
 export const updateExternalLinks = async (req, res) => {
   try {
     const { studentId } = req.params; // Extracting studentId from request parameters
-    const {  thumbnail, title, description, link } = req.body; // Extracting new link data from the request body
-  //console.log(studentId)
+    const { thumbnail, title, description, link } = req.body; // Extracting new link data from the request body
+    //console.log(studentId)
     // Validate required fields
-    if ( !thumbnail || !title || !description || !link) {
-      return res.status(400).json({ message: "Name, URL, and Thumbnail are required" });
+    if (!thumbnail || !title || !description || !link) {
+      return res
+        .status(400)
+        .json({ message: "Name, URL, and Thumbnail are required" });
     }
 
     // Find the student profile by ID
@@ -250,7 +317,10 @@ export const updateExternalLinks = async (req, res) => {
     // Save the updated student profile
     await student.save();
 
-    return res.status(200).json({ message: "External link added successfully", externalLinks: student.externalLinks });
+    return res.status(200).json({
+      message: "External link added successfully",
+      externalLinks: student.externalLinks,
+    });
   } catch (error) {
     console.error("Error updating external links:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -293,8 +363,12 @@ export const deleteExternalLink = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 
 
+=======
+// export const updateProfile = async (req, res) => {
+>>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
 //     try {
 //         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 //         if (!updatedProfile) {
@@ -320,7 +394,6 @@ export const deleteExternalLink = async (req, res) => {
 //     const {profilepic, skills, resume, about } = req.body; // Extracting new link data from the request body
 //   //console.log(studentId)
 //     // Validate required fields
-    
 
 //     // Find the student profile by ID
 //     const student = await studentProfileModel.findById(studentId);

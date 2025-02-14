@@ -156,7 +156,7 @@ const BEUAdminDash = () => {
 
   const handleEditNotice = (notice) => {
     setEditNoticeData(notice);
-    navigate(`/collegeShortName/post-update/?edit=true`);
+    navigate(`/collegeCode/post-update/?edit=true`);
   };
 
   const handleDeleteNotice = async (id) => {
@@ -454,7 +454,7 @@ const BEUAdminDash = () => {
         {activeSection === "notifications" && (
           <div className="flex flex-row">
             <BeuNotification setCollegeId={setCollegeId} />
-            <BeuChatSection collegeId={collegeId} />
+            <BeuChatSection collegeId={collegeId} postedBy={"beu"} />
           </div>
         )}
 

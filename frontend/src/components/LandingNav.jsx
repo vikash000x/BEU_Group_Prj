@@ -10,7 +10,7 @@ const LandingNav = () => {
     loggedInCollegeData,
     registeredCollege,
     loggedInStartUpData,
-    loggedInStudentData
+    loggedInStudentData,
   } = useContext(StoreContext);
   const [active, setActive] = useState("");
 
@@ -59,7 +59,7 @@ const LandingNav = () => {
     }
 
     console.log(flag1, flag2, flag3, flag4);
-  }, [location.pathname, userType]);
+  }, [location.pathname, userType, flag1, flag2, flag3, flag4]);
 
   const handleClick = (collegeCode) => {
     localStorage.setItem("collegeCode", collegeCode);
@@ -173,7 +173,7 @@ const LandingNav = () => {
           )}
 
           {flag2 && (
-            <Link to={`/${"collegeShortName"}/addStudent`}>
+            <Link to={`/${loggedInCollegeData?.collegeCode}/addStudent`}>
               <li>Add Student</li>
             </Link>
           )}
@@ -199,8 +199,14 @@ const LandingNav = () => {
             </li>
           )}
 
-          {flag1 && <Link to="/college/students">Students</Link>}
-          {flag3 && userType === "anonymous" && (
+          {flag1 && (
+            <Link
+              to={`/college/students/${localStorage.getItem("collegeCode")}`}
+            >
+              Students
+            </Link>
+          )}
+          {flag3 && (userType === "anonymous" || !userType) && (
             <li
               className={`cursor-pointer px-3 py-2 group relative hover:bg-white hover:text-slate-800 ${
                 active === "login" ? "bg-white text-slate-800" : ""
@@ -213,13 +219,13 @@ const LandingNav = () => {
                   onClick={() => navigate("/login/college")}
                   className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"
                 >
-                  Lognin as Colleg
+                  Login as College
                 </li>
                 <li
                   onClick={() => navigate("/login/startup")}
                   className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm border-b"
                 >
-                  Login as Stratup
+                  Login as Startup
                 </li>
                 <li
                   onClick={() => navigate("/login/student")}
@@ -232,7 +238,7 @@ const LandingNav = () => {
           )}
 
           {flag2 && (
-            <Link to={`/${"collegeShortName"}/post-update`}>
+            <Link to={`/${loggedInCollegeData?.collegeCode}/post-update`}>
               <li>Post an Update</li>
             </Link>
           )}
@@ -247,7 +253,7 @@ const LandingNav = () => {
               <p>View Dashboard</p>
             </Link>
           )}
-          {userType === "admin"  && (
+          {userType === "admin" && (
             <Link to={`/beu/admin`}>
               <p>View Dashboard</p>
             </Link>
@@ -257,7 +263,6 @@ const LandingNav = () => {
               <p>View Dashboard</p>
             </Link>
           )}
-
         </ul>
       </nav>
     </div>
