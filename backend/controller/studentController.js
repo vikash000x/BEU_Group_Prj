@@ -6,6 +6,37 @@ import studentProfileModel from "../models/studentProfileModel.js";
 import mailSender from "../config/mailSender.js";
 import { studentRegistrationEmail } from "../mail/templates/studentRegistrationEmail.js";
 
+
+
+// Fetch applied and saved jobs for a student
+   export const applysave =  async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Find the student by studentId
+    const student = await studentModel.findById(studentId)
+      .populate('appliedJobs') // Assuming appliedJobs is a reference to the Job model
+      .populate('savedJobs'); // Assuming savedJobs is a reference to the Job model
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Fetch applied and saved jobs
+    const appliedJobs = student.appliedJobs;
+    const savedJobs = student.savedJobs;
+
+    // Return the jobs in the response
+    return res.status(200).json({
+      appliedJobs,
+      savedJobs,
+    });
+  } catch (error) {
+    console.error('Error fetching student jobs:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export const addStudent = async (req, res) => {
   const {
     name,
@@ -332,7 +363,12 @@ export const deleteExternalLink = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+
+
+=======
 // export const updateProfile = async (req, res) => {
+>>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
 //     try {
 //         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 //         if (!updatedProfile) {

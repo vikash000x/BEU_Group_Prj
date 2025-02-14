@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Table, 
@@ -20,6 +20,8 @@ import {
   Filter,
   Search
 } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { StoreContext } from '../context/StoreContext';
 
 const applicants = {
   "applications": [
@@ -110,6 +112,9 @@ const AppliedList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('');
 
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const filteredApplicants = applicants.applications.filter(item => 
     item.applicant.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.applicant.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -137,6 +142,40 @@ const AppliedList = () => {
       }
     }
   };
+  const {url} = useContext(StoreContext);
+  console.log(url);
+
+  const {id} = useParams() ;
+
+  console.log(id);
+
+  const fetchapp = async() => {
+
+    try{
+      const response = await fetch(`${url}/job/applied-student/${id}`, {
+        method : 'GET',
+        headers : {
+          'content-type' : 'application/json'
+        }
+  
+      });
+      const data = await response.json();
+      setStudents(data.students);
+    } catch(error){
+      console.log("error", error);
+    }
+    }
+   
+
+  useEffect(() => {
+    fetchapp();
+  } , []);
+
+
+  console.log(students);
+
+    
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 py-8 px-4 sm:px-6 lg:px-8">
@@ -261,15 +300,15 @@ const AppliedList = () => {
                 <TableHead className="px-4 py-3 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {filteredApplicants.length === 0 ? (
+            <TableBody >
+              {students.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-gray-400 py-8">
                     No applicants found
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredApplicants.map((item) => (
+                students.map((item) => (
                   <motion.tr 
                     key={item._id}
                     variants={itemVariants}
@@ -286,23 +325,23 @@ const AppliedList = () => {
                     <TableCell className="px-4 py-3">
                       <div className="flex items-center">
                         <Users className="w-5 h-5 text-blue-400 mr-2 hidden md:inline-block" />
-                        {item?.applicant?.fullname}
+                        {item?.name}
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3">
                       <div className="flex items-center">
                         <Mail className="w-5 h-5 text-green-400 mr-2 hidden md:inline-block" />
-                        {item?.applicant?.email}
+                          test@gmail.com
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 hidden md:table-cell">
                       <div className="flex items-center">
                         <Phone className="w-5 h-5 text-purple-400 mr-2" />
-                        {item?.applicant?.phoneNumber}
+                         11122233345
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 hidden lg:table-cell">
-                      {item.applicant?.profile?.resume ? (
+                      {/* {item.applicant?.profile?.resume ? (
                         <a 
                           href={item?.applicant?.profile?.resume} 
                           target="_blank" 
@@ -317,14 +356,14 @@ const AppliedList = () => {
                           <FileText className="w-5 h-5 mr-2" />
                           {item?.applicant?.profile?.resumeOriginalName}
                         </a>
-                      ) : (
+                      ) : ( */}
                         <span className="text-gray-500">No Resume</span>
-                      )}
+                   {/* //   )} */}
                     </TableCell>
                     <TableCell className="px-4 py-3 hidden md:table-cell">
                       <div className="flex items-center">
                         <Calendar className="w-5 h-5 text-red-400 mr-2" />
-                        {item?.applicant.createdAt.split("T")[0]}
+                        {item?.updatedAt.split("T")[0]}
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 text-right">

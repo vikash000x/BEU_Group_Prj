@@ -44,6 +44,7 @@ app.use("/api/notice", noticeRouter);
 app.use("/api/startup", startupRouter);
 app.use("/api/beuadmin", beuAdminRouter);
 app.use("/api/chat", chatRouter);
+
 app.get("/", (req, res) => {
   res.send("API working");
 });
