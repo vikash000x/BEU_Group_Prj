@@ -53,7 +53,7 @@ function App() {
             />
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
-            <Route path="/job-section/applied-list" element={<AppliedList />} />
+            <Route path="/job-section/:id/applied-list" element={<AppliedList />} />
             <Route path="/alljob" element={<AllJob />} />
             <Route path="/description/:id" element={<JobDescription />} />
             <Route path="/student/:id" element={<Student />} />

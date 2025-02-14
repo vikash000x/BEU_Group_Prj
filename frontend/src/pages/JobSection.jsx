@@ -294,7 +294,7 @@ const JobSection = () => {
                               transition-colors
                               duration-300
                             "
-                            onClick={() => navigate("/job-section/applied-list")}
+                            onClick={() => navigate(`/job-section/${item._id}/applied-list`)}
                           >
                             <Eye className="w-4 text-green-400" />
                             <span>Applicants</span>

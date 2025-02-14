@@ -122,11 +122,21 @@ const JobsSection = () => {
 // Job Card Component
 const JobCard = ({ job }) => {
   return (
-    <div className="p-4 bg-gray-700 rounded-lg my-2">
-      <h2 className="font-bold text-lg  ">{job.title}</h2>
-      <p>{job.description}</p>
-      <p className="text-sm text-gray-400">Location: {job.location}</p>
+    <div className="p-5 bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-600 hover:border-blue-500">
+    <h2 className="font-bold text-xl text-white">{job.title}</h2>
+    <p className="text-gray-300 mt-2">{job.description}</p>
+    <p className="text-sm text-gray-400 mt-3">📍 Location: {job.location}</p>
+    
+    {/* Button Section */}
+    <div className="mt-4 flex justify-between items-center">
+      <button className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300">
+        Visit Now
+      </button>
+      
+      <span className="text-sm text-gray-400">💰 {job.salary || "Negotiable"}</span>
     </div>
+  </div>
+  
   );
 };
 

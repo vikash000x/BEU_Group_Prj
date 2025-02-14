@@ -215,17 +215,24 @@ export const applyJob = async (req, res) => {
 };
 
 
-export const stdlist = async(req, res) => {
-  try {
-
-     const {jobId} = res.body;
-      const job = await Job.findById(jobId);
-      const studentIds = job.applicants;
-      const students = await studentModel.find({ _id: { $in: studentIds } });
-      res.status(200).json({ message: "Students fetched successfully", students });
 
 
+export const appliedList = async(req, res) =>{
+  try{
+    const {id} = req.params;
+    if (!id) {
+      return res.status(400).json({ message: "Job ID is required" });
+    }
+
+    const job= await Job.findById(id);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    const studentIds = job.applicants || [];
+    const students = await studentModel.find({_id: {$in: studentIds}});
+    res.status(200).json({message: "students fetched successfully", students});
   } catch(error){
-    res.status(500).json({ message: "applied student data is not fetched", error });
+    res.status(500).json({message: "applied student data is not fetched", error});
   }
 }

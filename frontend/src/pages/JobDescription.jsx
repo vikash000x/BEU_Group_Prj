@@ -15,7 +15,13 @@ const JobDescription = () => {
     const {url} = useContext(StoreContext);
     const params = useParams();
     const jobId= params.id;
-    console.log(jobId)
+    console.log( "hiii", jobId)
+
+    const allapp = JSON.parse(localStorage.getItem("appliedJobs"));
+  console.log("hoo",allapp);
+
+  // allapp?.some(job => job._id === jobId) && setButtonText("Already Applied");
+
 
     const loggedInStudentData = JSON.parse(localStorage.getItem("loggedInStudentData"));
     const studentId = loggedInStudentData?._id; // Accessing student ID
@@ -56,6 +62,7 @@ const JobDescription = () => {
       };
   
       fetchSingleJob();
+      allapp?.some(job => job._id === jobId) && setButtonText("Already Applied");
     }, []);
   
    
