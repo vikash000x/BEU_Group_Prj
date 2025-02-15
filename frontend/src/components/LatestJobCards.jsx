@@ -1,16 +1,52 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Badge } from './BadgeCard'
 import { useNavigate } from 'react-router-dom'
 import { Bookmark, MapPin, Calendar, ExternalLink } from 'lucide-react';
 import { Avatar, AvatarImage } from './Avatar';
 import { motion } from 'framer-motion';
+import { StoreContext } from "../context/StoreContext";
+import axios from 'axios';
+
 
 const LatestJobCards = ({ job }) => {
     const navigate = useNavigate();
     const [isBookmarked, setIsBookmarked] = useState(false);
 
+     const {url} = useContext(StoreContext);
+
+  
+
+    const loggedInStudentData = JSON.parse(localStorage.getItem("loggedInStudentData"));
+const studentId = loggedInStudentData?._id; // Accessing student ID
+
+
+
+
+
+
+    const handleSaveJob = async () => {
+        try {
+          const response = await axios.post(`${url}/job/save`, {
+            studentId,
+            jobId: job._id,
+          });
     
-console.log(job);
+          alert(response.data.message);
+        
+        } catch (error) {
+          console.error("Error saving job:", error.response?.data?.message || error.message);
+          alert(error.response?.data?.message || "Failed to save job");
+        }
+      };
+
+      const savedjobs = JSON.parse(localStorage.getItem("savedJobs"));
+
+      const savedjobid = savedjobs?.map(job =>job._id);
+      console.log("hh", savedjobid);
+      
+
+    
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -102,34 +138,73 @@ console.log(job);
                         View Details
                         <ExternalLink className="w-4 h-4 ml-1" />
                     </motion.button>
-                    <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="
-                            px-5 
-                            py-3 
-                            border-2 
-                            border-slate-600 
-                            text-slate-300 
-                            font-semibold 
-                            rounded-xl 
-                            transition-all 
-                            duration-300 
-                            hover:bg-slate-700/20 
-                            hover:border-slate-500 
-                            text-sm
-                            tracking-wider
-                            uppercase
-                            flex 
-                            items-center 
-                            justify-center
-                            gap-2
-                            z-10
-                        "
-                    >
-                        Save
-                        <Bookmark className="w-4 h-4 ml-1" />
-                    </motion.button>
+
+
+                    {
+   savedjobid?.includes(job._id) ? (
+        <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="
+                px-5 
+                py-3 
+                border-2
+                bg-green-500
+                border-green-500
+                text-red-900 
+                font-semibold 
+                rounded-xl 
+                transition-all 
+                duration-300 
+                hover:bg-green-500/20 
+                hover:border-slate-500 
+                text-sm
+                tracking-wider
+                uppercase
+                flex 
+                items-center 
+                justify-center
+                gap-2
+                z-10
+            "
+        >
+            Saved 🤞
+            <Bookmark className="w-4 h-4 ml-1" />
+        </motion.button>
+    ) : (
+        <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="
+                px-5 
+                py-3 
+                border-2 
+                border-slate-600 
+                text-slate-300 
+                font-semibold 
+                rounded-xl 
+                transition-all 
+                duration-300 
+                hover:bg-slate-700/20 
+                hover:border-slate-500 
+                text-sm
+                tracking-wider
+                uppercase
+                flex 
+                items-center 
+                justify-center
+                gap-2
+                z-10
+            "
+            onClick={handleSaveJob}
+        >
+            Save 🎁
+            <Bookmark className="w-4 h-4 ml-1" />
+        </motion.button>
+    )
+}
+
+                 
                 </div>
 
                 {/* Hover Gradient Effect */}
