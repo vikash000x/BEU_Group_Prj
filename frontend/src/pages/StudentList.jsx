@@ -313,7 +313,7 @@ const FacultiesList = () => {
                       border-slate-700
                       cursor-pointer
                     "
-                    onClick={() => navigate(`/college/faculty/${faculty._id}`)}
+                    onClick={() => navigate(`/college/student/${faculty._id}`)}
                   >
                     <td className="px-4 py-3">
                       <img
@@ -334,10 +334,10 @@ const FacultiesList = () => {
                     </td>
                     <td className="px-4 py-3">{faculty.name}</td>
                     <td className="px-4 py-3 hidden md:table-cell">
-                      {faculty.department}
+                      {faculty.branch}
                     </td>
                     <td className="px-4 py-3 hidden lg:table-cell">
-                      {faculty.designation}
+                      {faculty.regNo}
                     </td>
                     {userType === "college" &&
                       loggedInCollegeData.collegeCode ===

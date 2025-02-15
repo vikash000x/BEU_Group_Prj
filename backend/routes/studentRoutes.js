@@ -5,6 +5,7 @@ import {
   deleteExternalLink,
   deleteStudent,
   getSingleCollegeStudentData,
+  getSingleStudent,
   loginStudent,
   updateExternalLinks,
   updateStudent,
@@ -32,5 +33,7 @@ studentRouter.get(
   "/get-student-data/:collegeCode",
   getSingleCollegeStudentData
 );
+
+studentRouter.get("/get-single-student/:id", getSingleStudent);
 
 export default studentRouter;

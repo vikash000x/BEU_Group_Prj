@@ -141,7 +141,26 @@ export const getSingleCollegeStudentData = async (req, res) => {
     });
   }
 };
+export const getSingleStudent = async (req, res) => {
+  const { id } = req.params;
 
+  try {
+    const student = await studentModel.findById(id);
+    if (!student) {
+      return res.json({
+        success: false,
+        message: "faculty not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      student,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 // this controller for student to update profile
 export const updateStudentProfile = async (req, res) => {
   console.log("Request parameters:", req.params);
