@@ -4,23 +4,20 @@ import { uploadImageToCloudinary } from "../config/cloudinary.js";
 export const addFaculty = async (req, res) => {
   const {
     name,
+    gender,
     department,
     designation,
     experience,
-    rating,
     email,
     phone,
-    office,
-    specialization,
     courses,
-    collegeCode,
-  } = req.body;
+    collegeId,
+    qualification,
+  } = JSON.parse(req.body.facultyData);
 
   try {
     const { image } = req.files;
-    console.log("collegecode", collegeCode, "name", name);
-
-    const college = await collegeModel.findOne({ collegeCode });
+    const college = await collegeModel.findOne({ _id: collegeId });
     if (!college) {
       return res.status(404).json({ message: "College Code incorrect" });
     }
@@ -28,21 +25,19 @@ export const addFaculty = async (req, res) => {
     const imagePaths = thumbnailImage.secure_url;
     const newFaculty = await facultyModel.create({
       name,
+      gender,
       department,
       designation,
       experience,
-      rating,
       profileImage: imagePaths,
       email,
       phone,
-      office,
-      specialization,
       courses,
-      collegeCode,
+      collegeId,
+      qualification,
     });
     college.faculties.push(newFaculty._id);
     await college.save();
-
     res.status(200).json({ message: "Faculty added", college });
   } catch (error) {
     console.error(error);
@@ -129,5 +124,56 @@ export const deleteFaculty = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getSingleCollegeFacultyData = async (req, res) => {
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("faculties");
+    if (!college) {
+      return res.json({
+        message: "college is not found",
+      });
+    }
+    const facultyData = college.faculties;
+    if (!facultyData) {
+      return res.json({
+        message: "faculty data is not availble",
+      });
+    }
+
+    res.json({
+      success: true,
+      facultyData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "error while getting faculty data",
+    });
+  }
+};
+
+export const getSingleFaculty = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const faculty = await facultyModel.findById(id);
+    if (!faculty) {
+      return res.json({
+        success: false,
+        message: "faculty not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      faculty,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

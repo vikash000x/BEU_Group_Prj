@@ -1,109 +1,142 @@
-// import React, { useState } from "react";
-
-// const UpdatesCard = ({ data }) => {
-//   const {
-//     title,
-//     description,
-//     date,
-//     College,
-//     category,
-//     targetAudience,
-//     attachments,
-//   } = data;
-//   const [isExpanded, setIsExpanded] = useState(false);
-
-//   const handleExpanding = () => {
-//     setIsExpanded(!isExpanded);
-//   }
-
-//   return (
-//     <div className="bg-slate-800 shadow-md rounded-lg p-6 mb-4 hover:bg-slate-700 transition-all duration-400 ease-in-out">
-//       <h2 className="text-xl font-semibold mb-2">{title}</h2>
-
-//       <div className="text-sm mb-2">
-//         <div className="flex items-center gap-2 mb-1">
-//           <div className="w-6 h-6 rounded-full bg-fuchsia-400"></div>
-//           <p className="text-xl">{College}</p>
-//         </div>
-
-//         <p>
-//           <strong>Date:</strong> {new Date(date).toLocaleDateString()}
-//         </p>
-//         <p>
-//           <strong>Category:</strong> {category}
-//         </p>
-//         <p>
-//           <strong>Target Audience:</strong> {targetAudience}
-//         </p>
-//       </div>
-
-//       {isExpanded && (
-//         <>
-//           <p className="mb-4">{description}</p>
-
-//           {/* Render attachments if there are any */}
-//           {attachments && attachments.length > 0 && (
-//             <div className="mt-4">
-//               <h3 className="text-md font-medium mb-2">Attachments:</h3>
-//               <ul className="list-disc list-inside">
-//                 {attachments.map((attachment, index) => (
-//                   <li key={index}>
-//                     <a
-//                       href={attachment.fileUrl}
-//                       className="text-blue-500 underline"
-//                       target="_blank"
-//                       rel="noopener noreferrer"
-//                     >
-//                       {attachment.fileName}
-//                     </a>
-//                   </li>
-//                 ))}
-//               </ul>
-//             </div>
-//           )}
-//         </>
-//       )}
-
-//       <div className="flex justify-end" onClick={handleExpanding}>
-//       <p className="bg-slate-600 cursor-pointer px-2 rounded-xl">
-//         {isExpanded ? "See less" : "Read more.."}
-//       </p> 
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UpdatesCard;
-
 import React from "react";
+import { motion } from "framer-motion";
+import { Calendar, Eye, ArrowUpRight } from "lucide-react";
 
-const UpdatesCard = ({ data, setSelectedNotice }) => {
-  const { title, College, date, category, targetAudience } = data;
+const UpdatesCard = ({ data, setSelectedNotice, formatDate }) => {
+  // Truncate description to 2 lines
+  const truncateDescription = (text, maxLength = 100) => {
+    if (!text) return '';
+    return text.length > maxLength 
+      ? text.slice(0, maxLength) + '...' 
+      : text;
+  };
 
   return (
-    <div className="bg-slate-800 shadow-md rounded-lg p-6 mb-4 hover:bg-slate-700 transition-all duration-400 ease-in-out">
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
-      <div className="text-sm mb-2">
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-6 h-6 rounded-full bg-fuchsia-400"></div>
-          <p className="text-xl">{College}</p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="
+        bg-slate-800 
+        rounded-2xl 
+        overflow-hidden 
+        shadow-lg 
+        border 
+        border-slate-700 
+        transition-all 
+        duration-300 
+        hover:-translate-y-2 
+        hover:shadow-xl
+        flex 
+        flex-col
+        h-[400px]  
+      "
+    >
+      {/* Thumbnail */}
+      {data.thumbnail && (
+        <div className="relative overflow-hidden h-48">
+          <img
+            src={data.thumbnail}
+            alt={data.headline}
+            className="
+              w-full 
+              h-full 
+              object-cover 
+              transition-transform 
+              duration-300 
+              group-hover:scale-110
+            "
+          />
         </div>
-        <p>
-          <strong>Date:</strong> {new Date(date).toLocaleDateString()}
-        </p>
-        <p>
-          <strong>Category:</strong> {category}
-        </p>
-      </div>
-      <div className="flex justify-end">
-        <button
-          onClick={() => setSelectedNotice(data)}
-          className="bg-slate-600 cursor-pointer px-2 rounded-xl hover:bg-slate-500"
+      )}
+
+      {/* Card Content */}
+      <div className="
+        p-6 
+        flex 
+        flex-col 
+        flex-grow 
+        justify-between 
+        space-y-4
+      ">
+        {/* Category and Date */}
+        <div className="flex items-center justify-between text-sm">
+          <span 
+            className="
+              bg-blue-500/20 
+              text-blue-400 
+              px-3 
+              py-1 
+              rounded-full
+            "
+          >
+            {data.category}
+          </span>
+          <div className="flex items-center gap-2 text-slate-400">
+            <Calendar className="w-4 h-4" />
+            <span>{formatDate(data.postedAt)}</span>
+          </div>
+        </div>
+
+        {/* Headline */}
+        <h3 
+          className="
+            text-xl 
+            font-bold 
+            text-white 
+            line-clamp-2 
+            mb-2
+            flex-grow
+          "
         >
-          Read more..
-        </button>
+          {data.headline}
+        </h3>
+
+        {/* Description */}
+        <p 
+          className="
+            text-slate-300 
+            line-clamp-2 
+            mb-4
+            text-sm
+            flex-grow
+          "
+        >
+          {truncateDescription(data.description, 150)}
+        </p>
+
+        {/* Actions */}
+        <div className="flex justify-between items-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setSelectedNotice(data)}
+            className="
+              flex 
+              items-center 
+              gap-2 
+              bg-blue-600 
+              text-white 
+              px-4 
+              py-2 
+              rounded-lg 
+              hover:bg-blue-700 
+              transition-colors
+              text-sm
+              min-w-[120px]  
+            "
+          >
+            <Eye className="w-4 h-4" />
+            Read More
+          </motion.button>
+
+          {/* Posted By */}
+          <span className="text-sm text-slate-400 truncate max-w-[50%]">
+            By {data.postedBy}
+          </span>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

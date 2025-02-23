@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
 const facultySchema = new mongoose.Schema({
-  // id: { type: Number, required: true },
   name: { type: String, required: true },
   department: { type: String, required: true },
+  gender: {
+    type: String,
+    enum: ["Male", "Female"],
+    required: true,
+  },
   designation: { type: String, required: true },
   experience: { type: Number, required: true },
-  rating: { type: Number, required: true },
+  qualification: { type: String },
+  rating: { type: Number, default: 0.0 },
   profileImage: {
     type: String,
     default:
@@ -14,10 +19,7 @@ const facultySchema = new mongoose.Schema({
   },
   email: { type: String, required: true },
   phone: { type: String, required: true },
-  office: { type: String, required: true },
-  specialization: { type: String, required: true },
   courses: [{ type: String }],
-  collegeCode: { type: String, required: true },
 });
 const facultyModel =
   mongoose.models.faculty || mongoose.model("faculty", facultySchema);

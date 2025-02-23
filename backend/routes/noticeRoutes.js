@@ -1,15 +1,17 @@
 import express from "express";
 import {
-    postNotice,
-    editNotice,
-    deleteNotice,
-    getAllNotices
+  postNotice,
+  editNotice,
+  deleteNotice,
+  getAllNotices,
+  getCollegeWiseNotice,
 } from "../controller/noticeController.js";
 
 const noticeRouter = express.Router();
-noticeRouter.post("/addNotice", postNotice)
-noticeRouter.post("/editNotice", editNotice)
-noticeRouter.delete("/deleteNotice", deleteNotice)
+noticeRouter.post("/addNotice", postNotice);
+noticeRouter.post("/editNotice/:id", editNotice);
+noticeRouter.delete("/deleteNotice/:id", deleteNotice);
 noticeRouter.get("/getAllNotices", getAllNotices);
+noticeRouter.get("/get-college-wise-notice/:id", getCollegeWiseNotice);
 
 export default noticeRouter;

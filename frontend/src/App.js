@@ -16,7 +16,7 @@ import CollegeAdmin from "./pages/CollegeAdmin";
 import AddFacultyForm from "./components/AddFacultyForm";
 import AddStudentForm from "./components/AddStudentForm";
 import PostUpdateForm from "./components/PostUpdateForm";
-
+import AddCollegeDetailForm from "./components/AddCollegeDetailForm";
 import AppliedList from "./pages/AppliedList";
 import FacultiesList from "./pages/FacultiesList";
 import SingleFaculty from "./pages/SingleFaculty";
@@ -24,8 +24,13 @@ import StudentList from "./pages/StudentList";
 import SingleStudent from "./pages/SingleStudent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BeuAdmin from "./pages/BeuAdmin";
 import UpdateJob from "./pages/UpdateJob";
+import Student from "./pages/Student";
+import CollegeGallery from "./pages/CollegeGallery";
+import PrivateRoute from "./routes/PrivateRoute";
+import BEUAdminDash from "./pages/BEUAdminDash";
+import CollegeUpdates from "./pages/CollegeUpdates";
+import BEUAdminLogin from "./pages/BEUAdminLogin";
 function App() {
   return (
     <>
@@ -36,26 +41,46 @@ function App() {
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/beu/admin" element={<BeuAdmin />} />
-            <Route path="/job-section" element={<JobSection />} />
+            <Route
+              path="/beu/admin"
+              element={
+                <PrivateRoute>
+                  <BEUAdminDash />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/beu/admin/login" element={<BEUAdminLogin />} />
+            <Route
+              path="startup/:startUpId/dashboard"
+              element={
+                <PrivateRoute>
+                  <JobSection />
+                </PrivateRoute>
+              }
+            />
             <Route path="/recent-update" element={<RecentUpdates />} />
             <Route path="/job-section/Job-creation" element={<JobCreation />} />
-            <Route path="/job-section/applied-list" element={<AppliedList />} />
+            <Route path="/job-section/:id/applied-list" element={<AppliedList />} />
             <Route path="/alljob" element={<AllJob />} />
             <Route path="/description/:id" element={<JobDescription />} />
+            <Route path="/student/:id" element={<Student />} />
             <Route path="/job-section/update-job/:id" element={<UpdateJob />} />
-            <Route path="/:collegeName/admin" element={<CollegeAdmin />} />
+            <Route path="/:collegeCode/admin" element={<CollegeAdmin />} />
             <Route
-              path=":collegeShortName/addFaculty"
+              path=":collegeCode/addFaculty"
               element={<AddFacultyForm />}
             />
             <Route
-              path=":collegeShortName/addStudent"
+              path=":collegeCode/addStudent"
               element={<AddStudentForm />}
             />
             <Route
-              path=":collegeShortName/post-update"
+              path=":collegeCode/post-update"
               element={<PostUpdateForm />}
+            />
+            <Route
+              path=":collegeCode/update-college"
+              element={<AddCollegeDetailForm />}
             />
 
             {/* ---- Amir's Routes------- */}
@@ -63,11 +88,17 @@ function App() {
             <Route path="/login/startup" element={<StartupLogin />} />
             <Route path="/login/student" element={<StudentLogin />} />
             <Route
-              path="beu/colleges/:college_id"
+              path="beu/college/:collegecode"
               element={<SingleCollege />}
             />
-            <Route path="/colleges/faculties" element={<FacultiesList />} />
-            <Route path="/college/students" element={<StudentList />} />
+            <Route
+              path="/college/faculties/:collegeCode"
+              element={<FacultiesList />}
+            />
+            <Route
+              path="/college/students/:collegeCode"
+              element={<StudentList />}
+            />
             <Route
               path="/college/faculty/:faculty_id"
               element={<SingleFaculty />}
@@ -75,6 +106,14 @@ function App() {
             <Route
               path="/college/student/:student_id"
               element={<SingleStudent />}
+            />
+            <Route
+              path="/college/gallery/:collegeCode"
+              element={<CollegeGallery />}
+            />
+            <Route
+              path="/college/updates/:collegeCode"
+              element={<CollegeUpdates />}
             />
           </Routes>
         </div>
