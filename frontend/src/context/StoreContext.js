@@ -8,7 +8,8 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState(null);
   const [loggedInCollegeCode, setLoggedInCollegeCode] = useState(null);
   const [loading, setLoading] = useState(null);
-  const url = "http://localhost:4000/api";
+  // const url = "http://localhost:4000/api";
+  const url = "https://beu-campus-connect-backend.onrender.com/api";
   const contextValue = {
     loading,
     setLoading,
