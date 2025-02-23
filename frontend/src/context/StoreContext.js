@@ -11,12 +11,13 @@ const StoreContextProvider = (props) => {
   const [loggedInStudentData, setloggedInStudentData] = useState(null);
   const [loggedInBEUAdminData, setloggedInBEUAdminData] = useState(null);
   const [loading, setLoading] = useState(null);
+ 
+
   const [editNoticeData, setEditNoticeData] = useState(null);
   const [registeredCollege, setRegisteredCollege] = useState(null);
   const [loggedInStartUpData, setLoggedInStartUpData] = useState(null);
-
-  const url = "http://localhost:4000/api"
-
+ const url = "https://beu-campus-connect-backend.onrender.com/api";
+ 
   const fetchRegisteredColleges = async () => {
     const res = await axios.get(`${url}/collegeadmin/all-registered-college`);
     if (res.data.success) {
