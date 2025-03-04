@@ -317,7 +317,7 @@ const FacultiesList = () => {
                   >
                     <td className="px-4 py-3">
                       <img
-                        src={faculty?.profileImage}
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                         alt={faculty?.name}
                         className="
                           w-16 

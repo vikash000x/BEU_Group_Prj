@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-import { Star, Trophy, BookOpen, GraduationCap, ExternalLink, Users } from 'lucide-react';
+import {
+  Star,
+  Trophy,
+  BookOpen,
+  GraduationCap,
+  ExternalLink,
+  Users,
+} from "lucide-react";
 
 const TopFiveStudent = ({ students }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -12,7 +19,7 @@ const TopFiveStudent = ({ students }) => {
     AOS.init({
       duration: 1000,
       once: true,
-      easing: 'ease-out-cubic'
+      easing: "ease-out-cubic",
     });
   }, []);
 
@@ -20,20 +27,24 @@ const TopFiveStudent = ({ students }) => {
     <div className="py-16 px-4" data-aos="fade-up">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-12" data-aos="fade-down">
+        <div
+          className="flex flex-col items-center text-center mb-12"
+          data-aos="fade-down"
+        >
           <Trophy className="w-12 h-12 text-yellow-500 mb-4" />
           <h1 className="text-4xl font-bold text-white mb-4">
             Top Performing Students
           </h1>
           <p className="text-slate-400 max-w-2xl">
-            Meet our outstanding students who have demonstrated exceptional academic performance
+            Meet our outstanding students who have demonstrated exceptional
+            academic performance
           </p>
         </div>
 
         {/* Student Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {topFive?.map((student, index) => (
-            <Link 
+            <Link
               key={student?.id}
               className="block group"
               onMouseEnter={() => setHoveredIndex(index)}
@@ -45,11 +56,11 @@ const TopFiveStudent = ({ students }) => {
                 {/* Background Effects */}
                 <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/10 via-slate-900/50 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
                 <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
-                
+
                 {/* Image Section */}
                 <div className="relative">
                   <img
-                    src="https://tse3.mm.bing.net/th?id=OIP.hAaNvre1Tukr7fGuT_7_YgHaHa&pid=Api&P=0&h=180"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                     alt={student?.name}
                     className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2"
                   />
@@ -79,7 +90,9 @@ const TopFiveStudent = ({ students }) => {
 
                     <div className="flex items-center gap-2 text-slate-300 group-hover:text-slate-200 transition-colors">
                       <Users className="w-4 h-4 text-yellow-400" />
-                      <p className="text-sm truncate">{student?.semester} Semester</p>
+                      <p className="text-sm truncate">
+                        {student?.semester} Semester
+                      </p>
                     </div>
 
                     <div className="flex items-center gap-2 text-slate-300 group-hover:text-slate-200 transition-colors">

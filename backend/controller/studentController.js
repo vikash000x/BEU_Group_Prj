@@ -6,20 +6,19 @@ import studentProfileModel from "../models/studentProfileModel.js";
 import mailSender from "../config/mailSender.js";
 import { studentRegistrationEmail } from "../mail/templates/studentRegistrationEmail.js";
 
-
-
 // Fetch applied and saved jobs for a student
-   export const applysave =  async (req, res) => {
+export const applysave = async (req, res) => {
   try {
     const { studentId } = req.params;
 
     // Find the student by studentId
-    const student = await studentModel.findById(studentId)
-      .populate('appliedJobs') // Assuming appliedJobs is a reference to the Job model
-      .populate('savedJobs'); // Assuming savedJobs is a reference to the Job model
+    const student = await studentModel
+      .findById(studentId)
+      .populate("appliedJobs") // Assuming appliedJobs is a reference to the Job model
+      .populate("savedJobs"); // Assuming savedJobs is a reference to the Job model
 
     if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
+      return res.status(404).json({ message: "Student not found" });
     }
 
     // Fetch applied and saved jobs
@@ -32,8 +31,8 @@ import { studentRegistrationEmail } from "../mail/templates/studentRegistrationE
       savedJobs,
     });
   } catch (error) {
-    console.error('Error fetching student jobs:', error);
-    return res.status(500).json({ message: 'Server error' });
+    console.error("Error fetching student jobs:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -381,55 +380,3 @@ export const deleteExternalLink = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-<<<<<<< HEAD
-
-
-=======
-// export const updateProfile = async (req, res) => {
->>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
-//     try {
-//         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-//         if (!updatedProfile) {
-//             return res.status(404).json({
-//                 message: "Job not found",
-//             });
-//         }
-//         res.status(200).json({
-//             message: "Job updated successfully",
-//             data: updatedJob,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             message: "Failed to update job",
-//             error: error.message,
-//         });
-//     }
-// };
-
-// export const updateProfle = async (req, res) => {
-//   try {
-//     const { studentId } = req.params; // Extracting studentId from request parameters
-//     const {profilepic, skills, resume, about } = req.body; // Extracting new link data from the request body
-//   //console.log(studentId)
-//     // Validate required fields
-
-//     // Find the student profile by ID
-//     const student = await studentProfileModel.findById(studentId);
-
-//     if (!student) {
-//       return res.status(404).json({ message: "Student not found" });
-//     }
-
-//     // Push the new external link into the externalLinks array
-//     student.push({ profilepic, skills, resume, about  });
-
-//     // Save the updated student profile
-//     await student.save();
-
-//     return res.status(200).json({ message: "External link added successfully", externalLinks: student.externalLinks });
-//   } catch (error) {
-//     console.error("Error updating external links:", error);
-//     return res.status(500).json({ message: "Internal server error" });
-//   }
-// };

@@ -66,22 +66,6 @@ const SingleStudent = () => {
     },
   };
 
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 flex items-center justify-center">
-  //       <motion.div
-  //         animate={{ rotate: 360 }}
-  //         transition={{
-  //           duration: 1,
-  //           repeat: Infinity,
-  //           ease: "linear",
-  //         }}
-  //         className="w-16 h-16 border-4 border-t-blue-500 border-r-purple-500 border-b-green-500 border-l-red-500 rounded-full"
-  //       />
-  //     </div>
-  //   );
-  // }
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -120,7 +104,7 @@ const SingleStudent = () => {
           <motion.img
             src={
               singleFacultyData?.profileImage ||
-              "https://tse1.mm.bing.net/th?id=OIP.5r2gNBXIlFTH4Azt4AdnLgHaLA&pid=Api&P=0&h=180"
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             }
             alt={singleFacultyData?.name}
             className="

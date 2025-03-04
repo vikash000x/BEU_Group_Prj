@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-import { Star, Award, Briefcase, GraduationCap, ExternalLink } from 'lucide-react';
+import {
+  Star,
+  Award,
+  Briefcase,
+  GraduationCap,
+  ExternalLink,
+} from "lucide-react";
 
 const TopFiveFaculties = ({ faculties }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -12,7 +18,7 @@ const TopFiveFaculties = ({ faculties }) => {
     AOS.init({
       duration: 1000,
       once: true,
-      easing: 'ease-out-cubic'
+      easing: "ease-out-cubic",
     });
   }, []);
 
@@ -20,20 +26,24 @@ const TopFiveFaculties = ({ faculties }) => {
     <div className="py-16 px-4" data-aos="fade-up">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-12" data-aos="fade-down">
+        <div
+          className="flex flex-col items-center text-center mb-12"
+          data-aos="fade-down"
+        >
           <Award className="w-12 h-12 text-blue-500 mb-4" />
           <h1 className="text-4xl font-bold text-white mb-4">
             Top Rated Faculty Members
           </h1>
           <p className="text-slate-400 max-w-2xl">
-            Meet our distinguished faculty members who have received exceptional ratings from students
+            Meet our distinguished faculty members who have received exceptional
+            ratings from students
           </p>
         </div>
 
         {/* Faculty Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {topFive?.map((faculty, index) => (
-            <Link 
+            <Link
               key={faculty?.id}
               className="block group"
               onMouseEnter={() => setHoveredIndex(index)}
@@ -45,12 +55,12 @@ const TopFiveFaculties = ({ faculties }) => {
                 {/* Background Effects */}
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 via-slate-900/50 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
                 <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
-                
+
                 {/* Image Section */}
                 <div className="relative">
                   <img
-                    src="https://tse3.mm.bing.net/th?id=OIP.hAaNvre1Tukr7fGuT_7_YgHaHa&pid=Api&P=0&h=180"
-                    alt={faculty?.name}
+                    src={faculty?.profileImage}
+                    alt={faculty?.profileImage}
                     className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2"
                   />
 
