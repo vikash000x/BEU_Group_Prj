@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 
-const UniversityLeadership = () => {
+const UniversityLeadership = ({headImages}) => {
+
   const leaders = [
     {
       name: 'Dr. Ramesh Kumar',
@@ -60,26 +61,27 @@ const UniversityLeadership = () => {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {leaders.map((leader, index) => (
+        {/* If image is passes */}
+          {headImages && (headImages?.map((headImage, index) => (
             <div
               key={index}
               className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="relative group">
                 <img
-                  src={leader.image}
-                  alt={leader.name}
+                  src={headImage?.url}
+                  alt={headImage?.name}
                   className="w-full h-64 object-cover rounded-t-xl"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl flex items-center justify-center">
                   <div className="flex space-x-4">
-                    <a href={leader.socialLinks.linkedin} className="text-white hover:text-blue-400 transition-colors">
+                    <a href={headImage?.socialLinks?.linkedin} className="text-white hover:text-blue-400 transition-colors">
                       <FaLinkedin size={24} />
                     </a>
-                    <a href={leader.socialLinks.twitter} className="text-white hover:text-blue-400 transition-colors">
+                    <a href={headImage?.socialLinks?.twitter} className="text-white hover:text-blue-400 transition-colors">
                       <FaTwitter size={24} />
                     </a>
-                    <a href={`mailto:${leader.socialLinks.email}`} className="text-white hover:text-blue-400 transition-colors">
+                    <a href={`mailto:${headImage?.socialLinks?.email}`} className="text-white hover:text-blue-400 transition-colors">
                       <FaEnvelope size={24} />
                     </a>
                   </div>
@@ -88,17 +90,59 @@ const UniversityLeadership = () => {
               
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  {leader.name}
+                  {headImage?.name}
                 </h3>
                 <div className="text-blue-600 font-semibold mb-3">
-                  {leader.position}
+                  {headImage?.position}
                 </div>
                 <p className="text-gray-600 text-sm">
-                  {leader.description}
+                  {headImage?.info}
                 </p>
               </div>
             </div>
-          ))}
+          )))}
+
+          {/* if image is not found */}
+          {(!headImages || headImages?.length === 0) && (leaders?.map((headImage, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+            >
+              <div className="relative group">
+                <img
+                  src={headImage?.image}
+                  alt={headImage?.name}
+                  className="w-full h-64 object-cover rounded-t-xl"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl flex items-center justify-center">
+                  <div className="flex space-x-4">
+                    <a href={headImage?.socialLinks?.linkedin} className="text-white hover:text-blue-400 transition-colors">
+                      <FaLinkedin size={24} />
+                    </a>
+                    <a href={headImage?.socialLinks?.twitter} className="text-white hover:text-blue-400 transition-colors">
+                      <FaTwitter size={24} />
+                    </a>
+                    <a href={`mailto:${headImage?.socialLinks?.email}`} className="text-white hover:text-blue-400 transition-colors">
+                      <FaEnvelope size={24} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  {headImage?.name}
+                </h3>
+                <div className="text-blue-600 font-semibold mb-3">
+                  {headImage?.position}
+                </div>
+                <p className="text-gray-600 text-sm">
+                  {headImage?.info}
+                </p>
+              </div>
+            </div>
+          )))}
+
         </div>
       </div>
     </div>

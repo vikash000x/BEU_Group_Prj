@@ -107,7 +107,7 @@ const SingleCollege = () => {
         </div>
       </div>
 
-      <UniversityLeadership />
+      <UniversityLeadership headImages={singleCollege?.headImage} />
 
       {/* Facilities Section */}
       <FacilitiesSection />

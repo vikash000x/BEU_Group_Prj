@@ -55,6 +55,7 @@ export const editNotice = async (req, res) => {
       targetAudience,
       validUntil,
       department,
+      thumbnail,
     } = req.body;
 
     const files = req.files?.attachments || [];
@@ -76,6 +77,7 @@ export const editNotice = async (req, res) => {
         ...(targetAudience && { targetAudience }),
         ...(validUntil && { validUntil }),
         ...(department && { department }),
+        ...(thumbnail) && {thumbnail},
         ...(files.length > 0 && { attachments: uploadedFiles }),
       },
       { new: true }
