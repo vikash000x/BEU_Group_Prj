@@ -8,6 +8,7 @@ import axios from 'axios'
 import { StoreContext } from '../context/StoreContext'
 import { toast } from "react-toastify";
 import Loader from '../components/loader/Loader';
+import JobsSection from '../components/studentJob'
 
 
 const Student = () => {
@@ -134,7 +135,8 @@ const skills = parsedData.studentProfileId.skills;
                 
             </div>
             <div className='mx-40 my-10 text-white shadow-xl bg-slate-800 border border-gray-100 cursor-pointer rounded-2xl '>
-                <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
+                  <JobsSection />
+                {/* <h1 className='font-bold text-lg my-5'>Applied Jobs</h1> */}
                 </div>
                     
                 {isModalOpen && (

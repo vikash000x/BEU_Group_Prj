@@ -6,6 +6,37 @@ import studentProfileModel from "../models/studentProfileModel.js";
 import mailSender from "../config/mailSender.js";
 import { studentRegistrationEmail } from "../mail/templates/studentRegistrationEmail.js";
 
+
+
+// Fetch applied and saved jobs for a student
+   export const applysave =  async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Find the student by studentId
+    const student = await studentModel.findById(studentId)
+      .populate('appliedJobs') // Assuming appliedJobs is a reference to the Job model
+      .populate('savedJobs'); // Assuming savedJobs is a reference to the Job model
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Fetch applied and saved jobs
+    const appliedJobs = student.appliedJobs;
+    const savedJobs = student.savedJobs;
+
+    // Return the jobs in the response
+    return res.status(200).json({
+      appliedJobs,
+      savedJobs,
+    });
+  } catch (error) {
+    console.error('Error fetching student jobs:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export const addStudent = async (req, res) => {
   const {
     name,
@@ -46,11 +77,9 @@ export const addStudent = async (req, res) => {
 
     const sameRegNoStudent = await studentModel.findOne({ regNo });
     if (sameRegNoStudent) {
-      return res
-        .status(500)
-        .json({
-          message: "A student is already registeres with same Registration No.",
-        });
+      return res.status(500).json({
+        message: "A student is already registeres with same Registration No.",
+      });
     }
 
     const newStudent = await studentModel.create({
@@ -114,6 +143,55 @@ export const updateStudent = async (req, res) => {
   }
 };
 
+export const getSingleCollegeStudentData = async (req, res) => {
+  const { collegeCode } = req.params;
+  try {
+    const college = await collegeModel
+      .findOne({ collegeCode })
+      .populate("students");
+    if (!college) {
+      return res.json({
+        message: "college is not found",
+      });
+    }
+    const studentData = college.students;
+    if (!studentData) {
+      return res.json({
+        message: "student data is not availble",
+      });
+    }
+
+    res.json({
+      success: true,
+      studentData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      message: "error while getting faculty data",
+    });
+  }
+};
+export const getSingleStudent = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const student = await studentModel.findById(id);
+    if (!student) {
+      return res.json({
+        success: false,
+        message: "faculty not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      student,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 // this controller for student to update profile
 export const updateStudentProfile = async (req, res) => {
   console.log("Request parameters:", req.params);
@@ -194,11 +272,9 @@ export const loginStudent = async (req, res) => {
   const { regNo, password } = req.body;
 
   if (!regNo || !password) {
-    return res
-      .status(400)
-      .json({
-        message: "Please provide both Registration Number and Password",
-      });
+    return res.status(400).json({
+      message: "Please provide both Registration Number and Password",
+    });
   }
 
   try {
@@ -206,11 +282,9 @@ export const loginStudent = async (req, res) => {
       .findOne({ regNo })
       .populate("studentProfileId");
     if (!student) {
-      return res
-        .status(404)
-        .json({
-          message: "Student not found. Please check your Registration Number.",
-        });
+      return res.status(404).json({
+        message: "Student not found. Please check your Registration Number.",
+      });
     }
 
     const isMatch = await bcrypt.compare(password, student.password);
@@ -262,12 +336,10 @@ export const updateExternalLinks = async (req, res) => {
     // Save the updated student profile
     await student.save();
 
-    return res
-      .status(200)
-      .json({
-        message: "External link added successfully",
-        externalLinks: student.externalLinks,
-      });
+    return res.status(200).json({
+      message: "External link added successfully",
+      externalLinks: student.externalLinks,
+    });
   } catch (error) {
     console.error("Error updating external links:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -310,7 +382,12 @@ export const deleteExternalLink = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+
+
+=======
 // export const updateProfile = async (req, res) => {
+>>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
 //     try {
 //         const updatedProfile = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 //         if (!updatedProfile) {
