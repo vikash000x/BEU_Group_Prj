@@ -22,14 +22,9 @@ studentRouter.delete(
   authMiddleware,
   deleteStudent
 );
-<<<<<<< HEAD
+studentRouter.get("/:studentId/apply-save", applysave);
 
-studentRouter.get("/:studentId/apply-save", applysave)
-
-studentRouter.post("/login-student", loginStudent)
-=======
 studentRouter.post("/login-student", loginStudent);
->>>>>>> 2a2aa945fff89d8f931efda7a928624c3d25a60a
 studentRouter.put("/update-studentprofile/:profileId", updateStudentProfile);
 studentRouter.post("/update-external-links/:studentId", updateExternalLinks);
 studentRouter.delete(

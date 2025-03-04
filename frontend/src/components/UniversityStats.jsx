@@ -5,25 +5,25 @@ const UniversityStats = () => {
   const stats = [
     {
       icon: "🏛️",
-      number: 9,
+      number: 38,
       label: "Colleges",
       suffix: "",
     },
     {
       icon: "🔄",
-      number: 111,
+      number: 15,
       label: "Departments",
       suffix: "+",
     },
     {
       icon: "📚",
-      number: 300,
+      number: 20,
       label: "Programs",
       suffix: "+",
     },
     {
       icon: "👥",
-      number: 3200,
+      number: 9600,
       label: "Academicians",
       suffix: "+",
     },
