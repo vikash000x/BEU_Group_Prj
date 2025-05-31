@@ -19,7 +19,7 @@ const StudyMaterialPage = () => {
   useEffect(() => {
    const fetchStudyMaterials = async () => {
     setLoading(true);
-    await axios.get("http://localhost:4000/api/college/all-study-material")
+    await axios.get("https://beu-campus-connect-backend.onrender.com/api/college/all-study-material")
       .then(res => {
         setStudyMaterials(res.data);
         setLoading(false);
