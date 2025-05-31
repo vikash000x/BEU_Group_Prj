@@ -17,7 +17,7 @@ const BeuNotification = ({ setCollegeId }) => {
   return (
     <div
       style={{ scrollbarWidth: "none" }}
-      className="py-6 px-3 grid grid-cols-1 gap-4 w-1/2 h-[83vh] overflow-y-auto "
+      className="py-6 px-3 grid grid-cols-1 gap-4 w-1/2 h-[83vh] overflow-y-auto"
     >
       {loading
         ? Array(6)
@@ -25,24 +25,28 @@ const BeuNotification = ({ setCollegeId }) => {
             .map((_, index) => (
               <div
                 key={index}
-                className="h-20 bg-gray-300 animate-pulse rounded-lg"
+                className="h-20 bg-gray-200 animate-pulse rounded-xl shadow-sm"
               ></div>
             ))
         : registeredCollege?.map((college, index) => (
             <div
               key={index}
-              className="p-4 bg-white shadow-lg rounded-lg cursor-pointer hover:translate-x-1 relative"
+              className={`p-5 bg-white border rounded-xl transition-transform duration-200 shadow-sm relative hover:translate-x-1 ${
+                selectedIndex === index
+                  ? "border-blue-500 shadow-md"
+                  : "border-gray-200"
+              }`}
               onClick={() =>
                 setSelectedIndex(index === selectedIndex ? null : index)
               }
             >
               {selectedIndex === index && (
-                <VscTriangleRight className="size-12 absolute -right-7 top-1/2 -translate-y-1/2" />
+                <VscTriangleRight className="size-10 text-blue-500 absolute -right-6 top-1/2 -translate-y-1/2" />
               )}
 
               <h2
                 onClick={() => setCollegeId(college.collegecode)}
-                className="text-xl font-semibold text-blue-500"
+                className="text-lg font-semibold text-gray-800 hover:text-blue-600 cursor-pointer"
               >
                 {college.collegename}
               </h2>

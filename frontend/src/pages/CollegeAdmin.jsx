@@ -18,8 +18,10 @@ import {
   Tag,
   Paperclip,
   Info,
+  BookOpen,
 } from "lucide-react";
 import BeuChatSection from "../components/BeuChatSection";
+import StudyMaterial from "../components/AddStudyMaterial";
 
 const CollegeAdmin = () => {
   const [uploadingImage, setUploadingImage] = useState(null);
@@ -300,6 +302,30 @@ const CollegeAdmin = () => {
           <Grid className="w-5 h-5" />
           BEU Notices
         </button>
+        <button
+          className={`
+            p-2 
+            text-left 
+            rounded-md 
+            transition-all 
+            duration-300 
+            flex 
+            items-center 
+            gap-3
+            ${
+              activeSection === "studyMaterial"
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-700 hover:text-white"
+            }
+          `}
+          onClick={() => setActiveSection("studyMaterial")}
+        >
+          <BookOpen className="w-5 h-5" />
+          Study Material
+        </button>
+
+
+
         <button
           className={`
             p-2 
@@ -645,6 +671,16 @@ const CollegeAdmin = () => {
             </Link>
           </div>
         )}
+        {
+          activeSection === "studyMaterial" && (
+            <div>
+              <h2 className="text-xl font-bold text-blue-400 border-b border-slate-700 mb-4">
+                Add Study Material
+              </h2>
+              <StudyMaterial />
+            </div>
+          )
+        }
 
         {logoutModal && (
           <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">

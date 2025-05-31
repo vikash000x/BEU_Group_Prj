@@ -11,4 +11,5 @@ collegeAdminRouter.delete("/remove-college/:id", removeCollege);
 collegeAdminRouter.post("/login-college", loginCollege);
 collegeAdminRouter.get("/all-registered-college", getAllRegisteredCollege);
 
+
 export default collegeAdminRouter;

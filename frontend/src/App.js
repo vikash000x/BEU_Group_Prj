@@ -31,6 +31,9 @@ import PrivateRoute from "./routes/PrivateRoute";
 import BEUAdminDash from "./pages/BEUAdminDash";
 import CollegeUpdates from "./pages/CollegeUpdates";
 import BEUAdminLogin from "./pages/BEUAdminLogin";
+import BoysHostelPage from "./components/BoysHostelPage";
+import GirlsHostelPage from "./components/GirlsHostelPage";
+import StudyMaterialPage from "./components/StudyMaterialPage";
 function App() {
   return (
     <>
@@ -90,6 +93,18 @@ function App() {
             <Route
               path="beu/college/:collegecode"
               element={<SingleCollege />}
+            />
+            <Route
+              path="beu/college/:collegecode/boys-hostel/:hostelName"
+              element={<BoysHostelPage />}
+            />
+            <Route
+              path="beu/college/:collegecode/girls-hostel/:hostelName"
+              element={<GirlsHostelPage />}
+            />
+            <Route
+              path="/study-materials/"
+              element={<StudyMaterialPage />}
             />
             <Route
               path="/college/faculties/:collegeCode"

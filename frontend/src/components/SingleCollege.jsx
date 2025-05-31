@@ -13,6 +13,7 @@ import axios from "axios";
 import FacilitiesSection from "./FacilitiesSection";
 import CollegeStatsSection from "./CollegeStatsSection";
 import UniversityLeadership from "./UniversityLeadership";
+import HostelSection from "./HostelSection";
 
 const SingleCollege = () => {
   const { url } = useContext(StoreContext);
@@ -128,6 +129,9 @@ const SingleCollege = () => {
 
       {/* Facilities Section */}
       <FacilitiesSection />
+
+      {/* Hostel Section */}
+      <HostelSection collegeCode={collegecode}/>
 
       {/* College Stats Section */}
       <CollegeStatsSection

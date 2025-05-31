@@ -13,6 +13,13 @@ import {
 } from "../controller/collegeController.js";
 import { uploadImage } from "../config/uploadImage.js";
 import authMiddleware from "../middleware/auth.js";
+import {
+  createStudyMaterial,
+  deleteStudyMaterial,
+  getAllStudyMaterial,
+  getStudyMaterialById,
+  updateStudyMaterial,
+} from "../controller/studyMaterialController.js";
 
 const collegeRouter = express.Router();
 
@@ -31,5 +38,10 @@ collegeRouter.delete(
   deleteGalleryImage
 );
 collegeRouter.get("/get-gallery-image/:collegeCode", getGalleryImage);
+collegeRouter.post("/create-study-material", createStudyMaterial);
+collegeRouter.get("/all-study-material", getAllStudyMaterial);
+collegeRouter.get("/study-material/:id", getStudyMaterialById);
+collegeRouter.put("/update-study-material/:id", updateStudyMaterial);
+collegeRouter.delete("/delete-study-material/:id", deleteStudyMaterial);
 
 export default collegeRouter;
