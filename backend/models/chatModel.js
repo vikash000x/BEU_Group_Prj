@@ -9,10 +9,25 @@ const chatSchema = new mongoose.Schema({
     {
       postedBy: {
         type: String,
+        required: true
       },
       message: {
         type: String,
+        default: ""
       },
+      mediaUrl: {
+        type: String,
+        default: null
+      },
+      mediaType: {
+        type: String,
+        enum: ['image', 'video', null],
+        default: null
+      },
+      timestamp: {
+        type: Date,
+        default: Date.now
+      }
     },
   ],
 });
